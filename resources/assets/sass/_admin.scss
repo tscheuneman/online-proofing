@@ -1,0 +1,125 @@
+body {
+  background:$body-bg;
+  font-family:$font-family-sans-serif;
+}
+div.clear {
+  clear:both;
+}
+sidebar {
+  width:15%;
+  height:100%;
+  position:fixed;
+  background:$sidebar-bg;
+  box-shadow:0 0 40px rgba(0,0,0,.1);
+
+  div.logo {
+    margin:15px auto;
+    width:80%;
+    padding:5px 0;
+    text-align:center;
+    font-size:30px;
+    color:$nav-link-color;
+    font-weight:bold;
+  }
+  button.action {
+    width:auto;
+    margin:0 auto;
+    display:block;
+    background:$brand-primary;
+    border:none;
+
+    &:hover {
+      background:$brand-primary-hover;
+    }
+  }
+
+  nav {
+    margin-top:25px;
+
+    a {
+      display:block;
+      width:100%;
+      text-align:center;
+      color:$nav-link-color;
+      text-decoration:none;
+      transition:.5s all;
+      height: 38px;
+      line-height:38px;
+      margin-bottom:15px;
+      font-size:16px;
+
+        &:hover {
+          color:$brand-primary;
+          text-decoration:none;
+        }
+      &.active {
+        color:$brand-primary;
+        font-weight:bold;
+
+        &:before {
+          width:7px;
+          background: $brand-primary;
+          height: 38px;
+          content: "";
+          display: block;
+          position: absolute;
+          left:0;
+          border-radius: 0 20px 20px 0;
+        }
+      }
+    }
+  }
+}
+#content {
+  width:85%;
+  float:right;
+
+  .mainContent {
+    width:90%;
+    margin:0 auto;
+  }
+
+  div.topbar{
+    margin:15px 0;
+    margin-left:3%;
+
+    .search {
+      float:left;
+      width:60%;
+      height:50px;
+
+      i {
+        line-height:50px;
+        font-size:19px;
+      }
+      input#search {
+        height:50px;
+        border:none;
+        display:inline-block;
+        width:80%;
+        background:none;
+        outline:none;
+        margin-left:5px;
+      }
+    }
+  }
+}
+
+table.table {
+  thead {
+      background: $brand-primary;
+      color: $brand-primary-color;
+      text-shadow:0 0 10px rgba(0,0,0,.35);
+      tr th {
+        border:none;
+      }
+  }
+  tbody {
+    tr {
+      background:$table-odd;
+    }
+    tr:nth-child(even) {
+      background:$table-even;
+    }
+  }
+}
