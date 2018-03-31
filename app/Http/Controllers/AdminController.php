@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Admin;
 use Illuminate\Http\Request;
+use Validator;
+use Redirect;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AdminCreated;
 
 class AdminController extends Controller
 {
@@ -14,10 +19,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $user = Admin::get();
-        return view('admin.users.index',
+        $admins = Admin::get();
+        return view('admin.admins.index',
             [
-                'users' => $user,
+                'admins' => $admins,
             ]
         );
     }
@@ -29,7 +34,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.admins.create');
     }
 
     /**
@@ -40,7 +45,32 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $rules = array(
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email|unique:admins'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+
+        $pwReturn = md5(microtime());
+
+        $admin = new Admin();
+            $admin->first_name = $request->first_name;
+            $admin->last_name = $request->last_name;
+            $admin->email = $request->email;
+            $admin->password = $pwReturn;
+            $admin->save();
+
+        Mail::to($request->email)->send(new AdminCreated($admin));
+
+        return $pwReturn;
     }
 
     /**
