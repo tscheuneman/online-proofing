@@ -19,6 +19,17 @@
             <i class="fa fa-search" aria-hidden="true"></i>
             <input type="text" id="search" placeholder="Search for Projects or Users..."/>
         </div>
+
+        <div class="profile">
+            <div class="profileImage">
+                TS
+            </div>
+            <div class="clear"></div>
+            <div class="profileMenu">
+                <span class="name">Thomas Scheuneman</span>
+                <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i> Settings</a>
+            </div>
+        </div>
     </div>
     <div class="clear"> </div>
     <hr>
