@@ -9,6 +9,28 @@ div.clear {
   clear: both;
 }
 
+.btn-main {
+  background: #5C6670;
+  color: #ffffff;
+  outline: none;
+}
+
+.btn-main:hover {
+  background: #73808c;
+  color: #ffffff;
+}
+
+.btn-submission {
+  background: #78BE20;
+  color: #ffffff;
+  outline: none;
+}
+
+.btn-submission:hover {
+  background: #92dd34;
+  color: #ffffff;
+}
+
 sidebar {
   width: 15%;
   height: 100%;
@@ -36,8 +58,15 @@ sidebar button.action {
   border: none;
 }
 
-sidebar button.action:hover {
-  background: #cd224f;
+sidebar button.action:hover,
+sidebar button.action:active {
+  background: #cd224f !important;
+}
+
+sidebar button.action:focus,
+sidebar button.action:active:focus {
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 
 sidebar nav {
@@ -96,7 +125,7 @@ sidebar nav a.active:before {
 
 #content div.topbar .search {
   float: left;
-  width: 60%;
+  width: 80%;
   height: 50px;
 }
 
@@ -109,10 +138,53 @@ sidebar nav a.active:before {
   height: 50px;
   border: none;
   display: inline-block;
-  width: 80%;
+  width: 90%;
   background: none;
   outline: none;
   margin-left: 5px;
+}
+
+#content div.topbar .profile {
+  width: 20%;
+  float: right;
+  height: 50px;
+}
+
+#content div.topbar .profile .profileImage {
+  width: 50px;
+  height: 50px;
+  margin-right: 75px;
+  background: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  float: right;
+  text-align: center;
+  line-height: 50px;
+  font-size: 20px;
+}
+
+#content div.topbar .profile .profileMenu {
+  font-size: 15px;
+  float: right;
+  padding: 8px;
+  background: #fff;
+  margin-top: 5px;
+  margin-right: 75px;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  display: none;
+}
+
+#content div.topbar .profile .profileMenu span.name {
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  display: block;
+}
+
+#content div.topbar .profile .profileMenu a {
+  display: block;
+  color: #000;
 }
 
 table.table thead {
