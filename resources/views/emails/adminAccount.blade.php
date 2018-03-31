@@ -1,0 +1,3 @@
+Testing
+<br>
+{{$admin->password}}
