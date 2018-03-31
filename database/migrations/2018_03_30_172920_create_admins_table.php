@@ -23,6 +23,7 @@ class CreateAdminsTable extends Migration
             $table->string('password');
             $table->string('picture')->nullable(true)->default(null);
             $table->dateTime('deleted_at')->nullable(true)->default(null);
+            $table->boolean('active')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -32,6 +33,7 @@ class CreateAdminsTable extends Migration
             $admin->last_name = "Scheuneman";
             $admin->email = "thomas.scheuneman@asu.edu";
             $admin->password = "testing";
+            $admin->active = true;
             $admin->save();
     }
 

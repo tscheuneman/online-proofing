@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('org')->nullable(false);
             $table->string('picture')->nullable(true)->default(null);
             $table->dateTime('deleted_at')->nullable(true)->default(null);
+            $table->boolean('active')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -36,6 +37,7 @@ class CreateUsersTable extends Migration
             $user->org = "PIL";
             $user->email = "thomas.scheuneman@asu.edu";
             $user->password = "testing";
+            $user->active = true;
             $user->save();
     }
 
