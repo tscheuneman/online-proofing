@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
 
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('name')->unique();
             $table->string('email')->unique();
             $table->string('password');
             $table->string('org')->nullable(false);
@@ -31,14 +32,6 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        $user = new User();
-            $user->first_name = 'Thomas';
-            $user->last_name = "Scheuneman";
-            $user->org = "PIL";
-            $user->email = "thomas.scheuneman@asu.edu";
-            $user->password = "testing";
-            $user->active = true;
-            $user->save();
     }
 
     /**
