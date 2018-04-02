@@ -5,12 +5,22 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Emadadly\LaravelUuid\Uuids;
+use Illuminate\Support\Facades\Hash;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class User extends Authenticatable
 {
     use Uuids;
-
+    use SearchableTrait;
     public $incrementing = false;
+
+    protected $searchable = [
+        'columns' => [
+            'users.first_name' => 10,
+            'users.last_name' => 10,
+            'users.email' => 8,
+        ],
+    ];
 
     use Notifiable;
 
@@ -31,4 +41,5 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
 }
