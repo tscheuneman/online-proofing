@@ -17,24 +17,14 @@ class CreateAdminsTable extends Migration
             $table->uuid('id')->unique();
             $table->primary('id');
 
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('picture')->nullable(true)->default(null);
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->dateTime('deleted_at')->nullable(true)->default(null);
             $table->boolean('active')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
-
-        $admin = new Admin();
-            $admin->first_name = 'Thomas';
-            $admin->last_name = "Scheuneman";
-            $admin->email = "thomas.scheuneman@asu.edu";
-            $admin->password = "testing";
-            $admin->active = true;
-            $admin->save();
     }
 
     /**
