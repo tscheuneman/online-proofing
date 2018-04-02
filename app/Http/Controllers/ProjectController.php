@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Categories;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -15,6 +16,7 @@ class ProjectController extends Controller
     public function index()
     {
         $project = Project::get();
+
         return view('admin.projects.index',
             [
                 'projects' => $project,
@@ -29,7 +31,12 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $cats = Categories::get();
+        return view('admin.projects.create',
+        [
+            'cats' => $cats,
+        ]
+        );
     }
 
     /**
