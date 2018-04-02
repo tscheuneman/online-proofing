@@ -7,6 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Admin;
+use App\User;
 
 class AdminCreated extends Mailable
 {
@@ -17,9 +18,10 @@ class AdminCreated extends Mailable
      *
      * @return void
      */
-    public function __construct(Admin $admin)
+    public function __construct(User $user, $pwReturn)
     {
-        $this->admin = $admin;
+        $this->admin = $user;
+        $this->pw = $pwReturn;
     }
 
     /**
@@ -31,6 +33,7 @@ class AdminCreated extends Mailable
     {
         return $this->view('emails.adminAccount', [
             'admin' => $this->admin,
+            'pw' => $this->pw,
         ]);
     }
 }
