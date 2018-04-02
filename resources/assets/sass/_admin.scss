@@ -17,6 +17,17 @@ div.clear {
   }
 }
 
+.btn-second {
+  background:$btn-secondary-color;
+  color:$brand-primary-color;
+  outline:none;
+
+  &:hover {
+    background:$btn-secondary-color-hover;
+    color:$brand-primary-color;
+  }
+}
+
 .btn-submission {
   background:$btn-submission-color;
   color:$brand-primary-color;
@@ -45,12 +56,14 @@ sidebar {
     color:$nav-link-color;
     font-weight:bold;
   }
-  button.action {
+  a.action {
     width:auto;
     margin:0 auto;
     display:block;
     background:$brand-primary;
+    color:$brand-primary-color !important;
     border:none;
+    width:60%;
 
     &:hover, &:active  {
       background:$brand-primary-hover !important;
@@ -96,6 +109,11 @@ sidebar {
       }
     }
   }
+}
+#wholeContent {
+  width:100%;
+  max-width:1170px;
+  margin:0 auto;
 }
 #content {
   width:85%;

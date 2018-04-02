@@ -20,6 +20,17 @@ div.clear {
   color: #ffffff;
 }
 
+.btn-second {
+  background: #292b3e;
+  color: #ffffff;
+  outline: none;
+}
+
+.btn-second:hover {
+  background: #3d405d;
+  color: #ffffff;
+}
+
 .btn-submission {
   background: #78BE20;
   color: #ffffff;
@@ -50,21 +61,23 @@ sidebar div.logo {
   font-weight: bold;
 }
 
-sidebar button.action {
+sidebar a.action {
   width: auto;
   margin: 0 auto;
   display: block;
   background: #8C1D40;
+  color: #ffffff !important;
   border: none;
+  width: 60%;
 }
 
-sidebar button.action:hover,
-sidebar button.action:active {
+sidebar a.action:hover,
+sidebar a.action:active {
   background: #cd224f !important;
 }
 
-sidebar button.action:focus,
-sidebar button.action:active:focus {
+sidebar a.action:focus,
+sidebar a.action:active:focus {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -106,6 +119,12 @@ sidebar nav a.active:before {
   position: absolute;
   left: 0;
   border-radius: 0 20px 20px 0;
+}
+
+#wholeContent {
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
 }
 
 #content {
