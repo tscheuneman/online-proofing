@@ -15,9 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('admin/customers', 'UserController');
+Route::get('admin/password', 'AdminController@password');
+Route::post('admin/password', 'AdminController@passwordSave');
 
-Route::resource('admin/users', 'AdminController');
+Route::group(['middleware' => ['admin']], function () {
+    /* Admin Routes */
+    Route::resource('admin/customers', 'UserController');
+    Route::resource('admin/users', 'AdminController');
+    Route::resource('admin/projects', 'ProjectController');
+    Route::resource('admin/categories', 'CategoriesController');
+});
+
+
 
 
 Auth::routes();
