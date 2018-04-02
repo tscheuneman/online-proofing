@@ -14,7 +14,12 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $project = Project::get();
+        return view('admin.projects.index',
+            [
+                'projects' => $project,
+            ]
+        );
     }
 
     /**
