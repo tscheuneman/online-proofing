@@ -9,6 +9,12 @@ div.clear {
   clear: both;
 }
 
+.form-control:focus {
+  border-color: #8C1D40 !important;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(140, 29, 64, 0.5) !important;
+          box-shadow: 0 0 0 0.2rem rgba(140, 29, 64, 0.5) !important;
+}
+
 .btn-main {
   background: #5C6670;
   color: #ffffff;
@@ -222,6 +228,95 @@ table.table tbody tr {
 
 table.table tbody tr:nth-child(even) {
   background: #ffffff;
+}
+
+div.adminAutocomplete,
+div.usersAutocomplete {
+  margin-top: 12px;
+  background: #f8f8f8;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  float: left;
+}
+
+div.adminAutocomplete ul,
+div.usersAutocomplete ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+div.adminAutocomplete ul li,
+div.usersAutocomplete ul li {
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  -webkit-transition: .5s all;
+  transition: .5s all;
+}
+
+div.adminAutocomplete ul li:hover,
+div.usersAutocomplete ul li:hover {
+  background: -webkit-gradient(linear, left bottom, left top, from(#8C1D40), to(#cd224f));
+  background: linear-gradient(to top, #8C1D40, #cd224f);
+  color: #fff;
+}
+
+div.adminAutocomplete ul li:last-child,
+div.usersAutocomplete ul li:last-child {
+  border: none;
+}
+
+div.addedAdmins,
+div.addedUsers {
+  clear: both;
+}
+
+div.addedAdmins .theAdmin,
+div.addedUsers .theAdmin {
+  float: left;
+  padding: 10px;
+  font-weight: bold;
+  margin: 15px 15px;
+  background: #ffffff;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.loader,
+.loaderSecond {
+  border: 7px solid #000;
+  border-top: 7px solid #FFC627;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  -webkit-animation: spin 1s linear infinite;
+          animation: spin 1s linear infinite;
+  margin-top: 20px;
+  display: none;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
 
 /*!
