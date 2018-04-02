@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Categories;
 use Illuminate\Http\Request;
+use Validator;
+use Redirect;
 
 class CategoriesController extends Controller
 {
@@ -14,7 +16,12 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        $cats = Categories::get();
+        return view('admin.categories.index',
+            [
+                'cats' => $cats,
+            ]
+        );
     }
 
     /**
@@ -24,7 +31,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -35,7 +42,23 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = array(
+            'name' => 'required|unique:categories',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+        $cat = new Categories();
+             $cat->name = $request->name;
+             $cat->slug = str_slug($request->name, '-');
+            $cat->save();
+
+        \Session::flash('flash_created',$request->name . ' has been created');
+        return redirect('/admin/categories');
     }
 
     /**
