@@ -24,6 +24,10 @@ Route::group(['middleware' => ['admin']], function () {
     Route::resource('admin/users', 'AdminController');
     Route::resource('admin/projects', 'ProjectController');
     Route::resource('admin/categories', 'CategoriesController');
+
+    Route::get('admin/search/admin', 'SearchController@findAdmin');
+    Route::get('admin/search/users', 'SearchController@findUser');
+
 });
 
 
