@@ -54,7 +54,7 @@ class AdminController extends Controller
         $rules = array(
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'email' => 'required|email|unique:admins'
+            'email' => 'required|email|unique:users'
         );
 
         $validator = Validator::make($request->all(), $rules);
