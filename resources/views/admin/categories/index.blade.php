@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Premedia Team')
+@section('title', 'Project Categories')
 
 @section('content')
     @if(Session::has('flash_deleted'))
@@ -10,24 +10,24 @@
         <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_created') !!}</em></div>
     @endif
     <h2>
-        Premedia Team
+        Project Categories
     </h2>
-    <br>
-    <a class="btn btn-main" href="/admin/users/create"><i class="fa fa-plus" aria-hidden="true"></i> Add Premedia Member</a>
+
+    <a class="btn btn-main" href="/admin/categories/create"><i class="fa fa-plus" aria-hidden="true"></i> Add Category</a>
     <br>
     <br>
     <table class="table">
         <thead>
         <tr>
             <th scope="col">Name</th>
-            <th scope="col">Email</th>
+            <th scope="col">slug</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($admins as $user)
+        @foreach($cats as $cat)
             <tr>
-                <td>{{$user->user->first_name . ' ' . $user->user->last_name}} </td>
-                <td>{{$user->user->email}} </td>
+                <td>{{$cat->name}}</td>
+                <td>{{$cat->slug}}</td>
             </tr>
         @endforeach
         </tbody>

@@ -9,6 +9,7 @@
     <meta content="{{csrf_token()}}" name="csrf-token" />
 </head>
 <body>
+
 <sidebar>
     @include('layouts.includes.admin.sidebar')
 </sidebar>
@@ -27,7 +28,7 @@
             <div class="clear"></div>
             <div class="profileMenu">
                 <span class="name">Thomas Scheuneman</span>
-                <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i> Settings</a>
+                <a href="{{ url('/admin/user') }}"><i class="fa fa-cogs" aria-hidden="true"></i> Settings</a>
             </div>
         </div>
     </div>
@@ -38,6 +39,12 @@
     </div>
 
 </div>
-
+<script>
+    $(document).ready(function() {
+       $('.profileImage').on('click', function(){
+           $('.profileMenu').fadeToggle(500);
+       });
+    });
+</script>
 </body>
 </html>
