@@ -27,7 +27,23 @@
         </tr>
         </thead>
         <tbody>
-
+        @foreach($projects as $proj)
+            <tr>
+                <td>{{$proj->project_name}}</td>
+                <td>{{$proj->category->name}}</td>
+                <td>{{$proj->file_path}}</td>
+                <td>
+                    @foreach($proj->users as $user)
+                        <strong> {{$user->user->first_name . ' ' . $user->user->last_name}}, </strong>
+                    @endforeach
+                </td>
+                <td>
+                    @foreach($proj->admins as $admin)
+                        <strong> {{$admin->admin->userSearch->first_name . ' ' . $admin->admin->userSearch->last_name}}, </strong>
+                    @endforeach
+                </td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 @endsection
