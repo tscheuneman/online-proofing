@@ -24,7 +24,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $project = Project::get();
+        $project = Project::with('category', 'users.user', 'admins.admin.userSearch')->get();
 
         return view('admin.projects.index',
             [
@@ -106,14 +106,14 @@ class ProjectController extends Controller
         if($errors) {
             return redirect()->back()->withErrors($errorArray)->withInput($request->all());
         }
-
-        $path = date('Y') . '/' . date('F') . '/' . md5(microtime());
+        $rand = md5(microtime());
+        $path = date('Y') . '/' . date('F') . '/' . $rand;
 
         if(Storage::disk('local')->makeDirectory('projects/' . $path)) {
 
             $project = new Project();
                 $project->project_name = $request->name;
-                $project->file_path = $path;
+                $project->file_path = $rand;
                 $project->cat_id = $request->category;
                 $project->hidden = $hidden;
                 $project->notify_users = $notify_users;
@@ -135,11 +135,13 @@ class ProjectController extends Controller
                 $assign->save();
             }
 
-            return "it worked";
+            \Session::flash('flash_created',$project->project_name . ' has been created');
+            return redirect('/admin/projects');
         }
 
 
-        return $admins;
+        \Session::flash('flash_deleted','Failed to create project');
+        return redirect('/admin/projects');
 
 
     }
