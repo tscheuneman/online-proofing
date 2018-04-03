@@ -11,5 +11,16 @@ class Project extends Model
 
     public $incrementing = false;
 
-    //
+    public function category()
+    {
+        return $this->hasOne('App\Categories', 'id','cat_id')->select('id', 'name');
+    }
+    public function users()
+    {
+        return $this->hasMany('App\UserAssign', 'project_id','id')->select('id', 'user_id', 'project_id');
+    }
+    public function admins()
+    {
+        return $this->hasMany('App\AdminAssign', 'project_id','id')->select('id', 'user_id', 'project_id');
+    }
 }
