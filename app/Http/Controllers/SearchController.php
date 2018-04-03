@@ -15,6 +15,6 @@ class SearchController extends Controller
     
     public function findUser(Request $request)
     {
-        return User::search($request->get('q'))->get(['id', 'first_name', 'last_name', 'email']);
+        return User::search($request->get('q'))->where('org', '!=', 'Admin')->get(['id', 'first_name', 'last_name', 'email']);
     }
 }
