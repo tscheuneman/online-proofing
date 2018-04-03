@@ -82,7 +82,8 @@ class AdminController extends Controller
 
         Mail::to($request->email)->send(new AdminCreated($user, $pwReturn));
 
-        return $pwReturn;
+        \Session::flash('flash_created','Account for' . $user->first_name . ' has been created');
+        return redirect('/admin/users');
     }
 
     /**
