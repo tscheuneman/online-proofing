@@ -2,7 +2,7 @@ body {
   background:$body-bg;
   font-family:$font-family-sans-serif;
 }
-div.clear {
+div.clear, br.clear {
   clear:both;
 }
 .form-control:focus {
@@ -242,7 +242,7 @@ div.adminAutocomplete, div.usersAutocomplete{
 div.addedAdmins, div.addedUsers{
   clear:both;
 
-  .theAdmin {
+  .theAdmin, .theUser {
     float:left;
     padding:10px;
     font-weight:bold;
@@ -267,4 +267,8 @@ div.addedAdmins, div.addedUsers{
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.form-control.left {
+  width:auto;
 }

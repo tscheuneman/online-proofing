@@ -13,7 +13,7 @@
         Create Project
     </h2>
     <br>
-    <form method="POST" action="{{ url('/admin/categories') }}" enctype="multipart/form-data" id="submit">
+    <form method="POST" action="{{ url('/admin/projects') }}" enctype="multipart/form-data" id="submit">
         {{csrf_field()}}
 
 
@@ -33,6 +33,11 @@
         </div>
 
         <div class="form-group">
+            <label for="notify_admins">Notify Premedia</label>
+            <input type="checkbox" class="form-control left" id="notify_admins" name="notify_admins" autocomplete="nope" />
+        </div>
+
+        <div class="form-group">
             <label for="admins">Assign Premedia</label>
             <input type="text" class="form-control" id="admins" name="admins" autocomplete="nope" />
             <div class="loader"></div>
@@ -42,11 +47,15 @@
             <div class="addedAdmins">
 
             </div>
-
             <br class="clear" />
         </div>
 
         <br class="clear" />
+
+        <div class="form-group">
+            <label for="notify_users">Notify Customers</label>
+            <input type="checkbox" class="form-control left" id="notify_users" name="notify_users" autocomplete="nope" />
+        </div>
 
         <div class="form-group">
             <label for="users">Assign Customer (Use Email)</label>
@@ -63,12 +72,19 @@
         </div>
         <br class="clear" />
 
+        <div class="form-group">
+            <label for="hidden">Only show to assisned customer?</label>
+            <input type="checkbox" class="form-control left" id="hidden" name="hidden" autocomplete="nope" />
+        </div>
+
         <hr>
-        <button type="submit" class="btn btn-submission">Submit</button>
+        <input type="hidden" id="adminValues" name="adminValues" />
+        <input type="hidden" id="userValues" name="userValues" />
+        <button id="submit" type="submit" class="btn btn-submission">Submit</button>
         <br>
         @include('layouts.errors')
-
     </form>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 
     <script>
@@ -119,6 +135,30 @@
                 }
 
             });
+
+            $('#submit').submit(function() {
+                if(!$('.theAdmin').length) {
+                    alert('Please Assign a Premedia Member');
+                    return false;
+                }
+                if(!$('.theUser').length) {
+                    alert('Please Assign a Customer');
+                    return false;
+                }
+                let returnVal = [];
+                $('.theAdmin').each(function() {
+                    returnVal.push($(this).data('id'));
+                });
+                returnVal = JSON.stringify(returnVal);
+                $('#adminValues').val(returnVal);
+
+                let returnVal2 = [];
+                $('.theUser').each(function() {
+                    returnVal2.push($(this).data('id'));
+                });
+                returnVal2 = JSON.stringify(returnVal2);
+                $('#userValues').val(returnVal2);
+            });
         });
 
         function searchAdmins(inputVal) {
@@ -146,7 +186,7 @@
         function populateAutofill(data) {
             let returnData = '<ul>';
                 data.forEach(function(elm) {
-                    returnData += '<li onClick="addAdmin(\''+elm.user.first_name+'\', \''+elm.user.last_name+'\', \''+elm.user.id+'\')">'+elm.user.first_name+' '+elm.user.last_name+'</li>';
+                    returnData += '<li onClick="addAdmin(\''+elm.user_search.first_name+'\', \''+elm.user_search.last_name+'\', \''+elm.id+'\')">'+elm.user_search.first_name+' '+elm.user_search.last_name+'</li>';
                     console.log(elm);
                 });
             returnData += '</ul>';
@@ -155,7 +195,7 @@
         function populateAutofillUsers(data) {
             let returnData = '<ul>';
             data.forEach(function(elm) {
-                returnData += '<li onClick="addUser(\''+elm.email+'\')">'+elm.email+'</li>';
+                returnData += '<li onClick="addUser(\''+elm.email+'\', \''+elm.id+'\')">'+elm.email+'</li>';
                 console.log(elm);
             });
             returnData += '</ul>';
@@ -165,10 +205,13 @@
             $('.adminAutocomplete').empty();
             let returnVal = '<div class="theAdmin" data-id="'+id+'">'+first+' '+last+'</div>';
             $('.addedAdmins').append(returnVal);
+            $('input#admins').val('');
         }
-        function addUser(email) {
-            $('input#users').val(email);
+        function addUser(email, id) {
             $('.usersAutocomplete').empty();
+            let returnVal = '<div class="theUser" data-id="'+id+'">'+email+'</div>';
+            $('.addedUsers').append(returnVal);
+            $('input#users').val('');
         }
     </script>
 @endsection
