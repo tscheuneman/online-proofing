@@ -11,5 +11,8 @@ class AdminAssign extends Model
 
     public $incrementing = false;
 
-    //
+    public function admin()
+    {
+        return $this->belongsTo('App\Admin', 'user_id', 'id')->select('id', 'user_id');
+    }
 }
