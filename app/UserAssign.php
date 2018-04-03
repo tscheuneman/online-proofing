@@ -11,5 +11,8 @@ class UserAssign extends Model
 
     public $incrementing = false;
 
-    //
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id', 'id')->select('id', 'first_name', 'last_name');
+    }
 }
