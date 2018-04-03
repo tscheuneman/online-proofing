@@ -21,6 +21,11 @@ class CreateProjectsTable extends Migration
             $table->string('file_path');
             $table->dateTime('deleted_at')->nullable(true)->default(null);
 
+            $table->boolean('hidden')->default(false);
+
+            $table->boolean('notify_users')->default(false);
+            $table->boolean('notify_admins')->default(false);
+
             $table->uuid('cat_id');
             $table->foreign('cat_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
