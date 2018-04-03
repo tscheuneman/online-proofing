@@ -5,8 +5,7 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
-div.clear,
-br.clear {
+div.clear {
   clear: both;
 }
 
@@ -273,9 +272,7 @@ div.addedUsers {
 }
 
 div.addedAdmins .theAdmin,
-div.addedAdmins .theUser,
-div.addedUsers .theAdmin,
-div.addedUsers .theUser {
+div.addedUsers .theAdmin {
   float: left;
   padding: 10px;
   font-weight: bold;
@@ -320,10 +317,6 @@ div.addedUsers .theUser {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
   }
-}
-
-.form-control.left {
-  width: auto;
 }
 
 /*!

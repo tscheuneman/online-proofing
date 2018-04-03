@@ -10,11 +10,11 @@ class SearchController extends Controller
 {
     public function findAdmin(Request $request)
     {
-        return Admin::search($request->get('q'))->with('userSearch')->get(['id', 'user_id']);
+        return Admin::search($request->get('q'))->with('user')->get();
     }
     
     public function findUser(Request $request)
     {
-        return User::search($request->get('q'))->get(['id', 'first_name', 'last_name', 'email']);
+        return User::search($request->get('q'))->get();
     }
 }
