@@ -21,26 +21,68 @@
         <tr>
             <th scope="col">Project Name</th>
             <th scope="col">Categories</th>
-            <th scope="col">Path</th>
             <th scope="col">Assigned Customers</th>
             <th scope="col">Assigned PreMedia</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
+        @php
+            $class = '';
+        @endphp
         @foreach($projects as $proj)
-            <tr>
+            @foreach($proj->admins as $admin)
+                @if($admin->admin->user_id == Auth::id())
+                    @php
+                        $class = 'belongs';
+                    @endphp
+                    @break
+                 @endif
+         @endforeach
+            <tr class="{{$class}}">
                 <td>{{$proj->project_name}}</td>
                 <td>{{$proj->category->name}}</td>
-                <td>{{$proj->file_path}}</td>
                 <td>
-                    @foreach($proj->users as $user)
-                        <strong> {{$user->user->first_name . ' ' . $user->user->last_name}}, </strong>
+
+                    @foreach($proj->users as $key => $user)
+                        <strong>
+                            @if($key++ > 0)
+                                ,
+                            @endif
+                            {{$user->user->first_name . ' ' . $user->user->last_name}}
+                        </strong>
                     @endforeach
                 </td>
                 <td>
-                    @foreach($proj->admins as $admin)
-                        <strong> {{$admin->admin->userSearch->first_name . ' ' . $admin->admin->userSearch->last_name}}, </strong>
+                    @foreach($proj->admins as $key => $admin)
+                        <strong> {{$admin->admin->userSearch->first_name . ' ' . $admin->admin->userSearch->last_name}} </strong>
+                        @if($key++ > 1)
+                            ,
+                        @endif
                     @endforeach
+                </td>
+                <td>
+                    @if(!$proj->active)
+                        Awaiting Initial Upload
+                    @endif
+                    @if(isset($proj->admin_entries[0]))
+                      @if($proj->admin_entries[0]->admin)
+                          Awaiting User Response
+                       @else
+                          <strong> Awaiting Premedia Response </strong>
+                       @endif
+                    @endif
+
+                </td>
+                <td>
+                    <a class="btn btn-dark" href="/admin/project/{{$proj->file_path}}"><i class="fa fa-arrow-right" aria-hidden="true"></i> Go to project</a>
+                    @if(isset($proj->admin_entries[0]))
+                        @if(!$proj->admin_entries[0]->admin)
+                            <a class="btn btn-dark" href="/admin/project/{{$proj->file_path}}"><i class="fa fa-arrow-right" aria-hidden="true"></i> Go to project</a>
+                        @endif
+                    @endif
+
                 </td>
             </tr>
         @endforeach
