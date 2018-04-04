@@ -26,7 +26,8 @@ class CreateProjectsTable extends Migration
             $table->boolean('notify_users')->default(false);
             $table->boolean('notify_admins')->default(false);
 
-            $table->boolean('active')->default(true);
+            $table->boolean('active')->default(false);
+            $table->boolean('completed')->default(false);
 
             $table->uuid('cat_id');
             $table->foreign('cat_id')->references('id')->on('categories')->onDelete('cascade');
