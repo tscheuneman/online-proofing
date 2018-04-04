@@ -132,12 +132,13 @@ class AdminController extends Controller
     }
 
     public function password() {
-        $admin = Auth::user();
+        $user = Auth::user();
+            $admin = Admin::where('user_id', '=', $user->id)->first();
         if(!$admin->active) {
             if (Auth::check()) {
                 return view('admin.admins.password',
                     [
-                        'admin' => $admin,
+                        'admin' => $user,
                     ]
                 );
             }
@@ -148,7 +149,8 @@ class AdminController extends Controller
 
     public function passwordSave(Request $request)
     {
-        $admin = Auth::user();
+        $theUser = Auth::user();
+            $admin = Admin::where('user_id', '=', $theUser->id)->first();
         if (!$admin->active) {
             if (Auth::check()) {
                 $rules = array(
@@ -163,14 +165,14 @@ class AdminController extends Controller
                 }
 
                 if ($request->user_id == Auth::id()) {
-                    $user = User::find($request->user_id)->first();
+                    $user = User::find($request->user_id);
                     if ($user != null) {
                         $user->password = Hash::make($request->password);
                         $user->save();
 
-                        $admin = Admin::where('user_id', '=', $request->user_id)->first();
-                        $admin->active = true;
-                        $admin->save();
+                        $adminMain = Admin::where('user_id', '=', $request->user_id)->first();
+                        $adminMain->active = true;
+                        $adminMain->save();
                         return redirect('/admin');
                     }
                 }
