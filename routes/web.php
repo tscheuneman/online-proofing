@@ -11,12 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::get('admin/password', 'AdminController@password');
 Route::post('admin/password', 'AdminController@passwordSave');
+
+Route::get('password', 'UserController@password');
+Route::post('password', 'UserController@passwordSave');
 
 Route::group(['middleware' => ['admin']], function () {
     /* Admin Routes */
@@ -28,11 +29,18 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('admin/search/admin', 'SearchController@findAdmin');
     Route::get('admin/search/users', 'SearchController@findUser');
 
+    Route::get('admin/profile', 'ProfileController@index');
+
 });
+
+Route::group(['middleware' => ['user']], function () {
+    Route::get('/', 'HomeController@index');
+});
+
 
 
 
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
