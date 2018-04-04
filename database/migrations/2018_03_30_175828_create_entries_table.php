@@ -17,9 +17,14 @@ class CreateEntriesTable extends Migration
             $table->uuid('id')->unique();
             $table->primary('id');
 
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->string('path')->unique();
 
             $table->string('file');
+            $table->boolean('admin')->default(false);
+            
             $table->text('notes');
         });
     }
