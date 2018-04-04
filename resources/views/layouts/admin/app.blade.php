@@ -28,7 +28,7 @@
             <div class="clear"></div>
             <div class="profileMenu">
                 <span class="name">Thomas Scheuneman</span>
-                <a href="{{ url('/admin/user') }}"><i class="fa fa-cogs" aria-hidden="true"></i> Settings</a>
+                <a href="{{ url('/admin/profile') }}"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
             </div>
         </div>
     </div>
