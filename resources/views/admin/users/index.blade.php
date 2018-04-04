@@ -12,6 +12,8 @@
     <h2>
         Customers
     </h2>
+    <a class="btn btn-main" href="/admin/customers/create"><i class="fa fa-plus" aria-hidden="true"></i> Add Customer</a>
+    <br>
     <br>
     <table class="table">
         <thead>
