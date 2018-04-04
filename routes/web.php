@@ -21,6 +21,8 @@ Route::post('password', 'UserController@passwordSave');
 
 Route::group(['middleware' => ['admin']], function () {
     /* Admin Routes */
+
+
     Route::resource('admin/customers', 'UserController');
     Route::resource('admin/users', 'AdminController');
     Route::resource('admin/projects', 'ProjectController');
@@ -30,6 +32,10 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('admin/search/users', 'SearchController@findUser');
 
     Route::get('admin/profile', 'ProfileController@index');
+    Route::get('admin', 'AdminIndexController@index');
+
+    //Route::get('admin/project/{id}', 'ProjectActionsController@index');
+    Route::resource('admin/project', 'ProjectActionsController');
 
 });
 
