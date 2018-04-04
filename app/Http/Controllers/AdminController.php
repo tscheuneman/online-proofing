@@ -133,48 +133,53 @@ class AdminController extends Controller
 
     public function password() {
         $admin = Auth::user();
-
-        if (Auth::check()) {
-            return view('admin.admins.password',
-                [
-                    'admin' => $admin,
-                ]
-            );
+        if(!$admin->active) {
+            if (Auth::check()) {
+                return view('admin.admins.password',
+                    [
+                        'admin' => $admin,
+                    ]
+                );
+            }
+            return redirect('/login');
         }
-        return redirect('/login');
+        return redirect('/admin');
     }
 
-    public function passwordSave(Request $request) {
+    public function passwordSave(Request $request)
+    {
         $admin = Auth::user();
+        if (!$admin->active) {
+            if (Auth::check()) {
+                $rules = array(
+                    'password' => 'required|string|min:6|confirmed',
+                    'user_id' => 'required|exists:users,id',
+                );
 
-        if (Auth::check()) {
-            $rules = array(
-                'password' => 'required|string|min:6|confirmed',
-                'user_id' => 'required|exists:users,id',
-            );
+                $validator = Validator::make($request->all(), $rules);
 
-            $validator = Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->withInput($request->all());
+                }
 
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput($request->all());
-            }
+                if ($request->user_id == Auth::id()) {
+                    $user = User::find($request->user_id)->first();
+                    if ($user != null) {
+                        $user->password = Hash::make($request->password);
+                        $user->save();
 
-            if($request->user_id == Auth::id()) {
-                $user = User::find($request->user_id)->first();
-                if($user != null) {
-                    $user->password = $user->password = Hash::make($request->password);
-                    $user->save();
-
-                    $admin = Admin::where('user_id', '=', $request->user_id)->first();
+                        $admin = Admin::where('user_id', '=', $request->user_id)->first();
                         $admin->active = true;
                         $admin->save();
-                    return redirect('/admin');
+                        return redirect('/admin');
+                    }
                 }
+
+                return redirect()->back()->withErrors('Failed');
+
             }
-
-            return redirect()->back()->withErrors('Failed');
-
+            return redirect('/login');
         }
-        return redirect('/login');
+        return redirect('/admin');
     }
 }
