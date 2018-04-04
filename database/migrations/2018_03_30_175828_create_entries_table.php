@@ -17,15 +17,20 @@ class CreateEntriesTable extends Migration
             $table->uuid('id')->unique();
             $table->primary('id');
 
+            $table->uuid('project_id');
+            $table->foreign('project_id')->references('id')->on('projects')->delete('cascade');
+
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->string('path')->unique();
 
-            $table->string('file');
+            $table->json('files')->nullable(true);
             $table->boolean('admin')->default(false);
-            
+
             $table->text('notes');
+            $table->timestamps();
+
         });
     }
 
