@@ -24,7 +24,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $project = Project::with('category', 'users.user', 'admins.admin.userSearch')->get();
+        $project = Project::with('category', 'users.user', 'admins.admin.userSearch', 'admin_entries')->get();
 
         return view('admin.projects.index',
             [
@@ -106,10 +106,10 @@ class ProjectController extends Controller
         if($errors) {
             return redirect()->back()->withErrors($errorArray)->withInput($request->all());
         }
-        $rand = md5(microtime());
+        $rand = str_random(12);
         $path = date('Y') . '/' . date('F') . '/' . $rand;
 
-        if(Storage::disk('local')->makeDirectory('projects/' . $path)) {
+        if(Storage::disk('public')->makeDirectory('projects/' . $path)) {
 
             $project = new Project();
                 $project->project_name = $request->name;
