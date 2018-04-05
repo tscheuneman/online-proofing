@@ -7,35 +7,36 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Spatie\PdfToImage\Exceptions\PageDoesNotExist;
-use Spatie\PdfToImage\Pdf;
-use Spatie\PdfToImage\Exceptions\PdfDoesNotExist;
 
 use Storage;
 use File;
+use Imagick;
 
 use App\Entry;
-use Intervention\Image\ImageManager;
+use App\Project;
+
 
 use Mockery\Exception;
 
 class ConvertPDF implements ShouldQueue
 {
-    public $tries = 3;
-    public $timeout = 50;
+    public $tries = 1;
+    public $timeout = 500;
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $dir, $storageName, $width;
+    protected $dir, $storageName, $width, $project, $entry;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($dir, $storageName, $width = 60)
+    public function __construct($dir, $storageName, $width = 60, Project $project, Entry $entry)
     {
         $this->dir = $dir;
         $this->storageName = $storageName;
         $this->width = $width;
+        $this->project = $project;
+        $this->entry = $entry;
     }
 
     /**
@@ -46,37 +47,41 @@ class ConvertPDF implements ShouldQueue
     public function handle()
     {
         try {
-            $realPath = realpath(public_path('/storage/' . $this->dir . '/pdf/' . $this->storageName));
-            \Log::info($realPath);
+            $realPath = public_path('/storage/' . $this->dir . '/pdf/' . $this->storageName);
 
-            try {
-                if($pdf = new Pdf(public_path('/storage/' . $this->dir . '/pdf/' . $this->storageName))){
-                    return "Test";
-                }
-                else {
-                    throw new PageDoesNotExist();
-                }
+            if(File::makeDirectory( public_path('/storage/' . $this->dir . '/images'), 0777, true)) {
+                $savePath = public_path('/storage/' . $this->dir . '/images/');
+                try {
+                    $im = new Imagick();
 
-            } catch(\Exception $e) {
-                report($e);
+                    $im->setResolution(300,300);
+                    $im->readimage($realPath);
+                    $numPages = $im->getNumberImages();
+                    \Log::info($numPages);
+                    for($x = 0; $x < $numPages; $x++) {
+                        $num_padded = sprintf("%02d", $x);
+                        $im->nextImage();
+                        $im->thumbnailImage(650, 0);
+                        $im->setImageFormat('png');
+                        $im->writeImage($savePath . 'image_' . $num_padded . '.png');
+                    }
+                    $im->clear();
+                    $im->destroy();
+
+                    $this->project->active = true;
+                    $this->project->save();
+
+                    $this->entry->active = true;
+                    $this->entry->save();
+                } catch(\Exception $e) {
+                    report($e);
+                }
             }
 
 
-
-            /*
-            $numPages = $pdf->getNumberOfPages();
-            for($x = 0; $x < $numPages; $x++) {
-                $pdf->setPage($x)
-                    ->saveImage(storage_path() . '/app/' . $this->dir . '/' . $x);
-            }
-
-            \Log::info($numPages);
-
-            return 'test';
-*/
         }
         catch (Exception $e) {
-            report(storage_path() . '/app/projects/' . $this->dir . '/pdf/' . $this->storageName);
+            report($e);
         }
     }
 }
