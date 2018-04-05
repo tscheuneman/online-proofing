@@ -14,6 +14,7 @@ use Validator;
 use Redirect;
 use Storage;
 use File;
+use Imagick;
 
 class ProjectActionsController extends Controller
 {
@@ -82,15 +83,11 @@ class ProjectActionsController extends Controller
 
 
 
-            if(Storage::disk('public')->makeDirectory('projects/' . $projectPath . '/' . $rand)) {
+            if(File::makeDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand), 0777, true)) {
                 $dir = 'projects/' . $projectPath . '/' . $rand;
 
-                if($path = Storage::disk('public')->put($dir . '/pdf', $request->file('pdf'))) {
+                if($path = Storage::disk('public')->put($dir . '/pdf', $request->file('pdf'), 'public')) {
                     $storageName = basename($path);
-
-                    /*
-                    $project->active = true;
-                    $project->save();
 
                     $entry = new Entry();
                         $entry->project_id = $project->id;
@@ -99,14 +96,14 @@ class ProjectActionsController extends Controller
                         $entry->admin = true;
                         $entry->notes = $request->comments;
                     $entry->save();
-                    */
-                    ConvertPDF::dispatch($dir, $storageName, 500);
+
+                    ConvertPDF::dispatch($dir, $storageName, 500, $project, $entry);
 
                     \Session::flash('flash_created','Wow');
                     return redirect('/admin');
                 }
                 else {
-                    File::deleteDirectory(storage_path() . '/app/projects/' . $projectPath . '/' . $rand);
+                    File::deleteDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand));
                     return redirect()->back()->withErrors(array('failed'))->withInput($request->all());
                 }
 
