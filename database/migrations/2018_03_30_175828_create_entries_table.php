@@ -28,6 +28,8 @@ class CreateEntriesTable extends Migration
             $table->json('files')->nullable(true);
             $table->boolean('admin')->default(false);
 
+            $table->boolean('active')->default(false);
+
             $table->text('notes');
             $table->timestamps();
 
