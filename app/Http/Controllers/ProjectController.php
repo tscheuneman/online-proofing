@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Validator;
 use Redirect;
 use Storage;
+use File;
 
 class ProjectController extends Controller
 {
@@ -109,7 +110,7 @@ class ProjectController extends Controller
         $rand = str_random(12);
         $path = date('Y') . '/' . date('F') . '/' . $rand;
 
-        if(Storage::disk('public')->makeDirectory('projects/' . $path)) {
+        if(File::makeDirectory(public_path('storage/projects/' . $path), 0777, true)) {
 
             $project = new Project();
                 $project->project_name = $request->name;
