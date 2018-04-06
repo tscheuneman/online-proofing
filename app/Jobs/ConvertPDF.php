@@ -60,7 +60,7 @@ class ConvertPDF implements ShouldQueue
                     \Log::info($numPages);
                     for($x = 0; $x < $numPages; $x++) {
                         $num_padded = sprintf("%02d", $x);
-                        $im->nextImage();
+                        $im->setIteratorIndex($x);
                         $im->thumbnailImage(650, 0);
                         $im->setImageFormat('png');
                         $im->writeImage($savePath . 'image_' . $num_padded . '.png');
