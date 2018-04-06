@@ -127,18 +127,26 @@ class ProjectActionsController extends Controller
         $project = Project::where('file_path', '=', $id)->first();
         if($project != null) {
             if($project->active) {
-                $thisProject = Project::where('file_path', '=', $id)->with('entries', 'users.user', 'admins.admin.user')->first();
+                $thisProject = Project::where('file_path', '=', $id)->with('entries.user', 'users.user', 'admins.admin.user')->first();
                 return view('admin.projectActions.index',
                     [
                         'project' => $thisProject,
                     ]
                 );
             } else {
-                return view('admin.projectActions.create',
-                    [
-                        'project' => $project,
-                    ]
-                );
+                $thisProj = Project::where('file_path', '=', $id)->with('admin_entries')->first();
+                if(isset($thisProj->admin_entries[0])) {
+                    return 'Outout Pending';
+                }
+                else {
+                    return view('admin.projectActions.create',
+                        [
+                            'project' => $project,
+                        ]
+                    );
+                }
+
+
             }
         } else {
             return redirect()->back();
