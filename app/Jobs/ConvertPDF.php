@@ -53,7 +53,7 @@ class ConvertPDF implements ShouldQueue
                 $savePath = public_path('/storage/' . $this->dir . '/images/');
                 try {
                     $im = new Imagick();
-
+                    $files = array();
                     $im->setResolution(300,300);
                     $im->readimage($realPath);
                     $numPages = $im->getNumberImages();
@@ -64,6 +64,7 @@ class ConvertPDF implements ShouldQueue
                         $im->thumbnailImage(650, 0);
                         $im->setImageFormat('png');
                         $im->writeImage($savePath . 'image_' . $num_padded . '.png');
+                        $files[] = 'image_' . $num_padded . '.png';
                     }
                     $im->clear();
                     $im->destroy();
@@ -72,6 +73,7 @@ class ConvertPDF implements ShouldQueue
                     $this->project->save();
 
                     $this->entry->active = true;
+                    $this->entry->files = json_encode($files);
                     $this->entry->save();
                 } catch(\Exception $e) {
                     report($e);
