@@ -76,13 +76,15 @@
             </div>
         </div>
         <div class="col-md-8">
-            <button id="prev" class="btn btn-outline-secondary left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</button>
-            <button id="next" class="btn btn-outline-secondary right"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Next</button>
-            <br class="clear" />
-            <div class="card topSpacing">
+            <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-picture-o" aria-hidden="true"></i>
-                    Images
+
+                    <button id="prev" class="btn btn-outline-secondary left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</button>
+                    <button id="next" class="btn btn-outline-secondary right"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Next</button>
+                    <span style="text-align:center; display:block;">
+                        <i class="fa fa-picture-o" aria-hidden="true"></i>
+                        Images
+                    </span>
                 </div>
                 <div class="card-body">
                     @foreach($project->entries as $enCnt => $entry)
