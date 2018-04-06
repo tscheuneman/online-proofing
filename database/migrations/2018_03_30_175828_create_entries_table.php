@@ -24,6 +24,7 @@ class CreateEntriesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->string('path')->unique();
+            $table->string('pdf_name')->nullable(true);
 
             $table->json('files')->nullable(true);
             $table->boolean('admin')->default(false);
