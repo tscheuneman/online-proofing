@@ -127,7 +127,7 @@ class ProjectActionsController extends Controller
         $project = Project::where('file_path', '=', $id)->first();
         if($project != null) {
             if($project->active) {
-                $thisProject = Project::where('file_path', '=', $id)->with('entries')->first();
+                $thisProject = Project::where('file_path', '=', $id)->with('entries', 'users.user', 'admins.admin.user')->first();
                 return view('admin.projectActions.index',
                     [
                         'project' => $thisProject,

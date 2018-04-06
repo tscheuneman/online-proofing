@@ -16,38 +16,48 @@
         </h1>
     </div>
     <br>
-    @foreach($project->entries as $entry)
-        <div class="entry">
-            <div class="row justify-content-center">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            Project Info
-                        </div>
-                        <div class="card-body">
-                            <strong>Assigned Premedia</strong>
-
-                            <br><br>
-                            <strong>Assigned Customers</strong>
-                        </div>
-                    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Project Info
                 </div>
-
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">
-                            Images
-                        </div>
-                        <div class="card-body">
+                <div class="card-body">
+                    <strong>Assigned Premedia</strong>
+                    <ul>
+                        @foreach($project->admins as $admin)
+                            <li>
+                                @if($admin->admin->user->)
+                                {{$admin->admin->user->first_name . ' ' . $admin->admin->user->last_name}}
+                            </li>
+                        @endforeach
+                    </ul>
+                    <strong>Assigned Customers</strong>
+                    <ul>
+                        @foreach($project->users as $user)
+                            <li>{{$user->user->first_name . ' ' . $user->user->last_name}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    Images
+                </div>
+                <div class="card-body">
+                    @foreach($project->entries as $entry)
+                        <div class="entry">
                             @foreach(json_decode($entry->files) as $key => $file)
                                 <div class="image" id="proj_{{$key++}}">
                                     <img src="{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/' . $file)}}" alt="">
                                 </div>
                             @endforeach
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
-    @endforeach
+    </div>
 @endsection
