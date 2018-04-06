@@ -92,7 +92,8 @@ class ProjectActionsController extends Controller
                     $entry = new Entry();
                         $entry->project_id = $project->id;
                         $entry->user_id = Auth::id();
-                        $entry->path = $storageName;
+                        $entry->path = $rand;
+                        $entry->pdf_name = $storageName;
                         $entry->admin = true;
                         $entry->notes = $request->comments;
                     $entry->save();
@@ -126,7 +127,12 @@ class ProjectActionsController extends Controller
         $project = Project::where('file_path', '=', $id)->first();
         if($project != null) {
             if($project->active) {
-
+                $thisProject = Project::where('file_path', '=', $id)->with('entries')->first();
+                return view('admin.projectActions.index',
+                    [
+                        'project' => $thisProject,
+                    ]
+                );
             } else {
                 return view('admin.projectActions.create',
                     [
