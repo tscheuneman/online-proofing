@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Admin;
+use App\UserAssign;
+use App\Project;
 
 class HomeController extends Controller
 {
@@ -31,6 +33,12 @@ class HomeController extends Controller
         if($admin != null) {
             return redirect('/admin');
         }
+        $projects = Project::with(array('users.user' => function($query)
+        {
+            $query->where('id', '=', Auth::id());
+        }))->with('admin_entries')->get();
+        return $projects;
+
         return view('home');
     }
 }
