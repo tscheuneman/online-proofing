@@ -63,15 +63,20 @@
                     @endforeach
                 </td>
                 <td>
-                    @if(!$proj->active)
-                        Awaiting Initial Upload
-                    @endif
                     @if(isset($proj->admin_entries[0]))
-                      @if($proj->admin_entries[0]->admin)
-                          Awaiting User Response
-                       @else
-                          <strong> Awaiting Premedia Response </strong>
-                       @endif
+                        @if(!$proj->admin_entries[0]->active)
+                            Waiting on Output
+                        @else
+                            @if($proj->admin_entries[0]->admin)
+                                Awaiting User Response
+                            @else
+                                <strong> Awaiting Premedia Response </strong>
+                            @endif
+                         @endif
+                        @else
+                            @if(!$proj->active)
+                                Awaiting Initial Upload
+                            @endif
                     @endif
 
                 </td>
