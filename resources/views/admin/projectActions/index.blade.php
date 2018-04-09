@@ -68,7 +68,7 @@
                                 {{mb_substr($entry->user->first_name,0,1) . mb_substr($entry->user->last_name,0,1)}}
                             </div>
                         @endif
-                        {{$entry->user->first_name . ' ' . $entry->user->last_name}}
+                        {{$entry->user->first_name . ' ' . $entry->user->last_name . ' - ' . date('Y-m-d g:ia', strtotime($entry->created_at))}}
                          </div>
 
                     @endforeach
