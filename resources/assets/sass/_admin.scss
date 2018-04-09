@@ -1,3 +1,25 @@
+div#loader {
+  background:rgba(0,0,0,.8);
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:99999;
+
+  .loader {
+    border: 22px solid #fff;
+    border-top: 22px solid $brand-primary;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    animation: spin 1s linear infinite;
+    position:relative;
+    margin:0 auto;
+    top:calc(50% - 75px);
+    display:block;
+  }
+}
 body {
   background:$body-bg;
   font-family:$font-family-sans-serif;
@@ -421,26 +443,95 @@ div.entryNav {
   }
 }
 
+#mask {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.5);
+  z-index:9999;
+  display:none;
+}
+div.comment {
+  position: fixed;
+  right: 0;
+  top: 250px;
+  background: $brand-primary;
+  color: #fff;
+  padding: 10px;
+  font-weight: bold;
+  transform: rotate(270deg);
+  transform-origin: 70% 0;
+  transition:.5s all;
+  cursor:pointer;
+  &:hover {
+    background:$brand-primary-hover;
+  }
+}
+
+
+.literally {
+  position:static !important;
+
+  .lc-clear {
+    display:none !important;
+  }
+}
+
 div.entry {
-  width:650px;
   margin:0 auto;
   position:relative;
+  .convasContainer canvas{
+    background:#fff;
+  }
   div.counter {
     text-align:center;
     margin-bottom:5px;
     display: block;
   }
   .image {
-    display:none;
+    position:relative;
     background:#fff;
     padding:10px;
     box-shadow:0 0 25px rgba(0,0,0,.22);
+
+    div.textboxHolder {
+      background:rgba(0,0,0,.8);
+      padding:10px;
+      position:absolute;
+      width:100%;
+      top: 0;
+      left: 0;
+      z-index:99999;
+      display:none;
+
+      .closeText {
+        display:block;
+        float:right;
+        font-size:25px;
+        color:#fff;
+        margin-bottom:10px;
+        cursor:pointer;
+      }
+    }
     &.active {
       display:block;
     }
   }
 }
 
+footer {
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:40px;
+  border-top:1px solid rgba(0,0,0,.15);
+  background:$footer-bg;
+  z-index:9999;
+
+}
 /*
 User
  */
@@ -457,4 +548,17 @@ div.navPic {
   line-height:40px;
   text-align:center;
   font-weight:bold;
+}
+div.pendingProject {
+  background:$brand-primary;
+  color:#fff;
+  font-weight:bold;
+  clear:both;
+  float:left;
+  padding:10px;
+  cursor:pointer;
+  transition:.5s all;
+  &:hover {
+    background:$brand-primary-hover;
+  }
 }
