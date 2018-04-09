@@ -62,9 +62,12 @@ class ConvertPDF implements ShouldQueue
                         $num_padded = sprintf("%02d", $x);
                         $im->setIteratorIndex($x);
                         $im->thumbnailImage(650, 0);
+                        $d = $im->getImageGeometry();
                         $im->setImageFormat('png');
                         $im->writeImage($savePath . 'image_' . $num_padded . '.png');
-                        $files[] = 'image_' . $num_padded . '.png';
+                        $files[$x]['width'] = 650;
+                        $files[$x]['height'] = $d['height'];
+                        $files[$x]['file'] = 'image_' . $num_padded . '.png';
                     }
                     $im->clear();
                     $im->destroy();
