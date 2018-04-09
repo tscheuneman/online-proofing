@@ -165,6 +165,7 @@
                     {
                         imageSize: imageSize,
                         imageURLPrefix: '../storage/icons',
+                        secondaryColor: 'transparent'
                     },
                 );
                 img = new Image;
