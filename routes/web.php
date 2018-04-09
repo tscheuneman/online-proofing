@@ -41,6 +41,7 @@ Route::group(['middleware' => ['admin']], function () {
 
 Route::group(['middleware' => ['user']], function () {
     Route::get('/', 'HomeController@index');
+    Route::resource('project', 'UserProjectController');
 });
 
 
