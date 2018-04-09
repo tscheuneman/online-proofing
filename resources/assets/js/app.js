@@ -6,9 +6,11 @@
  */
 
 require('./bootstrap');
-
 window.Vue = require('vue');
 
+window.LC = require('literallycanvas');
+
+LC.init(document.getElementById('main'), {imageURLPrefix: "/build/lc-assets/img"})
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
