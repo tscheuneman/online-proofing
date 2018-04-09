@@ -68,6 +68,7 @@ class ConvertPDF implements ShouldQueue
                         $files[$x]['width'] = 650;
                         $files[$x]['height'] = $d['height'];
                         $files[$x]['file'] = 'image_' . $num_padded . '.png';
+                        $files[$x]['comments'] = '';
                     }
                     $im->clear();
                     $im->destroy();
