@@ -36,9 +36,11 @@ class HomeController extends Controller
         $projects = Project::with(array('users.user' => function($query)
         {
             $query->where('id', '=', Auth::id());
-        }))->with('admin_entries')->get();
-        return $projects;
+        }))->with('admin_entries')->where('completed', false)->where('active', true)->get();
 
-        return view('home');
+        return view('home',
+            [
+                'projects' => $projects,
+            ]);
     }
 }
