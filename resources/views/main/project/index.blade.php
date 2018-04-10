@@ -12,6 +12,19 @@
     </div>
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-md-12">
+                @if($project->entries[0]->admin)
+                    <div class="status waiting">
+                        Waiting on approval
+                    </div>
+                @else
+                    <div class="status looked">
+                        Your revision is being reviewed by our premedia team!
+                    </div>
+                @endif
+            </div>
+        </div>
+        <div class="row justify-content-center">
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-header">
@@ -55,10 +68,18 @@
                     </div>
                     <div class="card-body">
                         @foreach($project->entries as $enCnt => $entry)
-                            @if($entry->admin)
-                                <div data-id="{{$entry->id}}" class="entryNav admin">
+                            @if($enCnt++ == 0)
+                                @if($entry->admin)
+                                    <div data-id="{{$entry->id}}" class="entryNav active admin">
+                                @else
+                                    <div data-id="{{$entry->id}}" class="entryNav active">
+                                @endif
                             @else
-                                <div data-id="{{$entry->id}}" class="entryNav">
+                                @if($entry->admin)
+                                    <div data-id="{{$entry->id}}" class="entryNav admin">
+                                @else
+                                    <div data-id="{{$entry->id}}" class="entryNav">
+                                @endif
                             @endif
                             @if($entry->user->picture == null)
                                 <div class="navPic">
@@ -92,26 +113,37 @@
                             @if($enCnt == 0)
                                 <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active submissionEntry" id="entry_{{$enCnt++}}">
                             @else
-                                <div data-id="{{$entry->id}}" class="entry" id="entry_{{$enCnt++}}">
+                                <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry" id="entry_{{$enCnt++}}">
                             @endif
 
                             @foreach(json_decode($entry->files) as $key => $file)
                                 @if($key == 0)
-                                    <div data-num="{{$key}}" class="image active proj_{{$key++}}">
+                                    @if($entry->admin)
+                                        <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                    @else
+                                        <div data-num="{{$key}}" class="image imageAdmin active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                    @endif
                                 @else
-                                     <div data-num="{{$key}}" class="image proj_{{$key++}}">
+                                     <div data-num="{{$key}}" class="image imageAdmin proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
                                 @endif
                                 @if($enCnt == 1)
-                                    <div class="textboxHolder">
-                                        <span class="closeText">
-                                            <i class="fa fa-times" aria-hidden="true"></i>
-                                        </span>
-                                        <textarea class="form-control" id="" cols="30" rows="10"></textarea>
-                                    </div>
-                                @endif
-                                 <div class="convasContainer" data-id="{{$key - 1}}" id="canvas_{{$key - 1}}" style="height:{{$file->height}}px;">
+                                    @if($entry->admin)
+                                        <div class="textboxHolder">
+                                            <span class="closeText">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </span>
+                                            <textarea class="form-control" id="" cols="30" rows="10"></textarea>
+                                        </div>
+                                        <div class="convasContainer" data-id="{{$key - 1}}" id="canvas_{{$key - 1}}" style="height:{{$file->height}}px;">
 
-                                 </div>
+                                        </div>
+                                    @else
+                                        <img src="{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/' . $file->file)}}" alt="">
+                                    @endif
+                                @else
+                                    <img src="{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/' . $file->file)}}" alt="">
+                                @endif
+
                               </div>
                             @endforeach
                                 </div>
@@ -137,6 +169,7 @@
     let returnValues = {};
     window.items = [];
     window.bounds = [];
+    @if($project->entries[0]->admin)
     @foreach(json_decode($project->entries[0]->files) as $key => $file)
         holder = {};
             holder['file'] = '{{$file->file}}';
@@ -146,7 +179,9 @@
     @endforeach
     returnValues['linkAddy'] = "{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/')}}";
     returnValues['data'] = entryValues;
-
+    @else
+        returnValues = false;
+    @endif
     $(document).ready(function() {
         populateCanvas(returnValues);
         $('div#comment').on('click', function() {
