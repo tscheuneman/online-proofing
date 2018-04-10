@@ -9,6 +9,19 @@
     @if(Session::has('flash_created'))
         <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_created') !!}</em></div>
     @endif
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            @if($project->entries[0]->admin)
+                <div class="status waiting">
+                    Waiting on user action
+                </div>
+            @else
+                <div class="status looked">
+                    Proof Ready to View!
+                </div>
+            @endif
+        </div>
+    </div>
     <div class="row">
         <h1>
             {{$project->project_name}}
@@ -99,16 +112,24 @@
                         @if($enCnt == 0)
                             <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active" id="entry_{{$enCnt++}}">
                         @else
-                            <div data-id="{{$entry->id}}" class="entry" id="entry_{{$enCnt++}}">
+                            <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry" id="entry_{{$enCnt++}}">
                         @endif
                             @foreach(json_decode($entry->files) as $key => $file)
                                 @if($key == 0)
                                     <div data-num="{{$key}}" class="image imageAdmin active proj_{{$key++}}" style="width:{{$file->width + 20}}; margin:0 auto;">
                                 @else
-                                    <div data-num="{{$key}}" class="image imageAdmin proj_{{$key++}}">
+                                    <div data-num="{{$key}}" class="image imageAdmin proj_{{$key++}}" style="width:{{$file->width + 20}}; margin:0 auto;">
                                 @endif
                                         <img src="{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/' . $file->file)}}" alt="">
+                                   @if(!$entry->admin)
+                                   <br>
+                                   <br>
+                                  <h3>User Comments</h3>
+                                  <p>{{json_decode($entry->user_notes)[$key - 1]}}</p>
+                                   @endif
+
                                     </div>
+
                             @endforeach
                         </div>
                     @endforeach
