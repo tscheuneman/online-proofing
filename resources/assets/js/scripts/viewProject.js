@@ -50,8 +50,18 @@ function updatePageCount() {
 }
 
 function goToEntryItemById(id) {
-    $('.entry ').each(function() {
-        $(this).hide();
+    $('.entry.active').fadeOut(500, function() {
+        $(this).removeClass('active');
+
+        $('.entry ').each(function() {
+            let currentVal = $(this).data('id');
+            if(currentVal === id) {
+                $(this).fadeIn(500, function() {
+                    $(this).addClass('active');
+                    updatePageCount();
+                });
+            }
+        });
     });
-    alert(id);
+
 }
