@@ -419,6 +419,7 @@ ul.userList {
     height:40px;
     line-height:40px;
     list-style:none;
+    margin-bottom:6px;
   }
   .navPic {
     margin-right:8px;
@@ -432,11 +433,14 @@ div.entryNav {
   line-height:40px;
   cursor:pointer;
 
-  &.admin {
+  &.active {
     background: #8C1D40;
     box-shadow:0 2px 2px rgba(0, 0, 0, 0.2);
     color: #fff;
     font-weight: bold;
+  }
+  &.admin {
+    border:2px solid $brand-gold;
   }
   .navPic {
     margin-right:5px;
@@ -482,6 +486,8 @@ div.comment {
 div.entry {
   margin:0 auto;
   position:relative;
+  display:none;
+
   .convasContainer canvas{
     background:#fff;
   }
@@ -495,6 +501,9 @@ div.entry {
     background:#fff;
     padding:10px;
     box-shadow:0 0 25px rgba(0,0,0,.22);
+    &.imageAdmin {
+      display:none;
+    }
 
     div.textboxHolder {
       background:rgba(0,0,0,.8);
@@ -518,6 +527,9 @@ div.entry {
     &.active {
       display:block;
     }
+  }
+  &.active {
+    display:block;
   }
 }
 
