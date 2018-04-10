@@ -474,7 +474,7 @@ div.comment {
 .literally {
   position:static !important;
 
-  .lc-clear {
+  .lc-clear, .lc-zoom-out, .lc-zoom-in, .lc-pick-tool[Title="Eraser"] {
     display:none !important;
   }
 }

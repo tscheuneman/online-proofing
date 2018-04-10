@@ -546,7 +546,10 @@ div.comment:hover {
   position: static !important;
 }
 
-.literally .lc-clear {
+.literally .lc-clear,
+.literally .lc-zoom-out,
+.literally .lc-zoom-in,
+.literally .lc-pick-tool[Title="Eraser"] {
   display: none !important;
 }
 
