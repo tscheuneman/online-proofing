@@ -19,4 +19,3 @@ window.LC = require('literallycanvas');
 
 window.axios = require('axios');
 
-LC.init(document.getElementById('main'), {imageURLPrefix: "/build/lc-assets/img"});
