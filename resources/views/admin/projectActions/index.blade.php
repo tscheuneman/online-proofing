@@ -58,10 +58,18 @@
                 </div>
                 <div class="card-body">
                     @foreach($project->entries as $enCnt => $entry)
-                        @if($entry->admin)
-                            <div data-id="{{$entry->id}}" class="entryNav admin">
+                        @if($enCnt++ == 0)
+                            @if($entry->admin)
+                                <div data-id="{{$entry->id}}" class="entryNav active admin">
+                            @else
+                                 <div data-id="{{$entry->id}}" class="entryNav active">
+                            @endif
                         @else
-                            <div data-id="{{$entry->id}}" class="entryNav">
+                             @if($entry->admin)
+                                <div data-id="{{$entry->id}}" class="entryNav admin">
+                             @else
+                                <div data-id="{{$entry->id}}" class="entryNav">
+                             @endif
                         @endif
                         @if($entry->user->picture == null)
                             <div class="navPic">
@@ -83,6 +91,7 @@
                     <span style="text-align:center; display:block;">
                         <i class="fa fa-picture-o" aria-hidden="true"></i>
                         Images
+                        <div class="counter">Page <span class="current"></span> of <span class="max"></span></div>
                     </span>
                 </div>
                 <div class="card-body">
@@ -92,12 +101,11 @@
                         @else
                             <div data-id="{{$entry->id}}" class="entry" id="entry_{{$enCnt++}}">
                         @endif
-                             <div class="counter">Page <span class="current"></span> of <span class="max"></span></div>
                             @foreach(json_decode($entry->files) as $key => $file)
                                 @if($key == 0)
-                                    <div data-num="{{$key}}" class="image active proj_{{$key++}}">
+                                    <div data-num="{{$key}}" class="image imageAdmin active proj_{{$key++}}" style="width:{{$file->width + 20}}; margin:0 auto;">
                                 @else
-                                    <div data-num="{{$key}}" class="image proj_{{$key++}}">
+                                    <div data-num="{{$key}}" class="image imageAdmin proj_{{$key++}}">
                                 @endif
                                         <img src="{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/' . $file->file)}}" alt="">
                                     </div>
@@ -110,5 +118,6 @@
     </div>
     <br>
     <br>
+<script src="{{ asset('js/project.js') }}"></script>
 @include('layouts/includes/scripts/viewProjScript')
 @endsection
