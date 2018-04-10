@@ -82,12 +82,6 @@
                 </td>
                 <td>
                     <a class="btn btn-dark" href="/admin/project/{{$proj->file_path}}"><i class="fa fa-arrow-right" aria-hidden="true"></i> Go to project</a>
-                    @if(isset($proj->admin_entries[0]))
-                        @if(!$proj->admin_entries[0]->admin)
-                            <a class="btn btn-dark" href="/admin/project/{{$proj->file_path}}"><i class="fa fa-arrow-right" aria-hidden="true"></i> Go to project</a>
-                        @endif
-                    @endif
-
                 </td>
             </tr>
         @endforeach
