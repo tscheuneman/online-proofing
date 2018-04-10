@@ -27,11 +27,13 @@ class CreateEntriesTable extends Migration
             $table->string('pdf_name')->nullable(true);
 
             $table->json('files')->nullable(true);
+            $table->json('user_notes')->nullable(true);
+
             $table->boolean('admin')->default(false);
 
             $table->boolean('active')->default(false);
 
-            $table->text('notes');
+            $table->text('notes')->nullable(true);
             $table->timestamps();
 
         });
