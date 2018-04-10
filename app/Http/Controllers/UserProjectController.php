@@ -58,6 +58,15 @@ class UserProjectController extends Controller
 
         $project = Project::find($request->projectID);
 
+        $latest = Project::with('admin_entries')->where('id', $request->projectID)->first();
+
+
+        if(!$latest->admin_entries[0]->admin) {
+            $returnData['status'] = 'Failure';
+            $returnData['message'] = 'We have already received your submission';
+            return json_encode($returnData);
+        }
+
         $proj_year = date('Y', strtotime($project->created_at));
         $proj_month = date('F', strtotime($project->created_at));
 
