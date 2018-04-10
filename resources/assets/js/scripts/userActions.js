@@ -5,8 +5,15 @@ function submitRevision(imgs, id) {
             projectID: id
         })
             .then(function (response) {
-                let returnData = response;
-                console.log(returnData);
+                let returnData = response.data;
+                if(returnData.status === "Success") {
+                    alert(returnData.message);
+                    $('#loader').fadeOut(500);
+                }
+                else {
+                    alert(returnData.message);
+                    $('#loader').fadeOut(500);
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -15,6 +22,10 @@ function submitRevision(imgs, id) {
 }
 
 function populateCanvas(array) {
+    if(!array) {
+        $('#loader').fadeOut(500);
+        return false;
+    }
     let img = null;
     let imageSize = null;
     let hideElm = null;
