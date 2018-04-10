@@ -508,7 +508,7 @@ div.entryNav.active {
 }
 
 div.entryNav.admin {
-  border: 2px solid #FFC627;
+  border: 4px solid #FFC627;
 }
 
 div.entryNav .navPic {
@@ -578,6 +578,9 @@ div.entry .image {
   position: relative;
   background: #fff;
   padding: 10px;
+}
+
+div.entry .image img {
   -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.22);
           box-shadow: 0 0 25px rgba(0, 0, 0, 0.22);
 }
