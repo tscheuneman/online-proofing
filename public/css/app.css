@@ -484,6 +484,7 @@ ul.userList li {
   height: 40px;
   line-height: 40px;
   list-style: none;
+  margin-bottom: 6px;
 }
 
 ul.userList .navPic {
@@ -498,12 +499,16 @@ div.entryNav {
   cursor: pointer;
 }
 
-div.entryNav.admin {
+div.entryNav.active {
   background: #8C1D40;
   -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
           box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
   color: #fff;
   font-weight: bold;
+}
+
+div.entryNav.admin {
+  border: 2px solid #FFC627;
 }
 
 div.entryNav .navPic {
@@ -556,6 +561,7 @@ div.comment:hover {
 div.entry {
   margin: 0 auto;
   position: relative;
+  display: none;
 }
 
 div.entry .convasContainer canvas {
@@ -574,6 +580,10 @@ div.entry .image {
   padding: 10px;
   -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.22);
           box-shadow: 0 0 25px rgba(0, 0, 0, 0.22);
+}
+
+div.entry .image.imageAdmin {
+  display: none;
 }
 
 div.entry .image div.textboxHolder {
@@ -597,6 +607,10 @@ div.entry .image div.textboxHolder .closeText {
 }
 
 div.entry .image.active {
+  display: block;
+}
+
+div.entry.active {
   display: block;
 }
 
