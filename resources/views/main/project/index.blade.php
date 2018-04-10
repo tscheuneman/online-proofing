@@ -109,7 +109,7 @@
                                         <textarea class="form-control" id="" cols="30" rows="10"></textarea>
                                     </div>
                                 @endif
-                                 <div class="convasContainer" id="canvas_{{$key - 1}}" style="height:{{$file->height}}px;">
+                                 <div class="convasContainer" data-id="{{$key - 1}}" id="canvas_{{$key - 1}}" style="height:{{$file->height}}px;">
 
                                  </div>
                               </div>
@@ -121,10 +121,10 @@
             </div>
         </div>
     </div>
-                <br><br><br><br>
+      <br><br><br><br>
     <footer>
         <div class="container">
-            <button id="submit">
+            <button id="submit" class="btn btn-primary">
                 Submit
             </button>
         </div>
@@ -132,10 +132,25 @@
 
 @include('layouts/includes/scripts/viewProjScript')
   <script>
+    let entryValues = [];
+    let holder = null;
+    let returnValues = {};
+    window.items = [];
+    window.bounds = [];
+    @foreach(json_decode($project->entries[0]->files) as $key => $file)
+        holder = {};
+            holder['file'] = '{{$file->file}}';
+            holder['width'] = {{$file->width}};
+            holder['height'] = {{$file->height}};
+            entryValues.push(holder);
+    @endforeach
+    returnValues['linkAddy'] = "{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/')}}";
+    returnValues['data'] = entryValues;
+
     $(document).ready(function() {
-        populateCanvas();
+        populateCanvas(returnValues);
         $('div#comment').on('click', function() {
-            let currEntry = $('div.entry.active');
+            let currEntry = $('div.entry.submissionEntry');
             let currImg = $('div.image.active', currEntry);
             $('#mask').fadeIn(500, function() {
                 $('.textboxHolder', currImg).slideToggle(500);
@@ -150,44 +165,26 @@
             });
         });
 
+        $('button#submit').on('click', function() {
+            let images = [];
+            let canvas = null;
+            let comments = null;
+            let activeElm = null;
+            let x = 0;
+            window.items.forEach(function(elm) {
+                let thisElm = {};
+                canvas = window.items[x].getImage({rect: window.bounds[x]}).toDataURL();
+                activeElm = $('div.submissionEntry .proj_'+x);
+                comments = $('textarea', activeElm).val();
+                thisElm['data'] = canvas;
+                thisElm['comments'] = comments;
+                images.push(thisElm);
+                x++;
+            });
+            submitRevision(images, '{{$project->id}}');
+        });
+
     });
 
-    function populateCanvas() {
-        @foreach($project->entries as $enCnt => $entry)
-            @if($enCnt++ == 0)
-                let img = null;
-                let imageSize = null;
-                let hideElm = null;
-                @foreach(json_decode($entry->files) as $key => $file)
-                imageSize = {width: {{$file->width}}, height: {{$file->height}}};
-                let lc_{{$key}} = LC.init(
-                    document.getElementById('canvas_{{$key++}}'),
-                    {
-                        imageSize: imageSize,
-                        imageURLPrefix: '../storage/icons',
-                        secondaryColor: 'transparent'
-                    },
-                );
-                img = new Image;
-                 img.src = '{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/' . $file->file)}}';
-                lc_{{$key - 1}}.saveShape(LC.createShape('Rectangle', {x: 0, y: 0, width: {{$file->width}} , height: {{$file->height}} , strikeWidth: 0, strikeColor: '#000', fillColor: '#fff'}));
-                 lc_{{$key - 1}}.saveShape(LC.createShape('Image', {x: 0, y: 0, image: img}));
-                @if(($key) > 0)
-                    hideElm = $('#canvas_{{$key++}}').parent();
-                    $(hideElm).fadeOut(500);
-                @endif
-                @endforeach
-                @break
-            @endif
-        @endforeach
-        $('#loader').fadeOut(500);
-    }
-    function getCurrentCanvas() {
-        let currEntry = $('div.entry.active');
-        let currImg = $('div.image.active', currEntry);
-        let val = currImg.data('num');
-        let canvas = document.getElementById('canvas_' + val);
-        window.globalContext = canvas.getContext('2d');
-    }
   </script>
 @endsection
