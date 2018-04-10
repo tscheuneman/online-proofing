@@ -13,6 +13,8 @@
             if(activeElm === thisElm) {
                 return false;
             }
+            $('.entryNav').removeClass('active');
+            $(this).addClass('active');
             goToEntryItemById(thisElm);
         });
     });
