@@ -20,7 +20,7 @@ use Mockery\Exception;
 
 class ConvertPDF implements ShouldQueue
 {
-    public $tries = 1;
+    public $tries = 3;
     public $timeout = 500;
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
