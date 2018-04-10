@@ -632,6 +632,20 @@ footer {
 User
  */
 
+.status {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 7px;
+}
+
+.status.looked {
+  background: #daeed6;
+}
+
+.status.waiting {
+  background: #eee0c9;
+}
+
 div.navPic {
   float: left;
   height: 40px;
