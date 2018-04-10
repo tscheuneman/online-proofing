@@ -27,13 +27,15 @@
                 <div class="card-header">Active Projects</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
+                    @foreach($projects as $project)
+                            <a href="{{ url('/project') . '/' .  $project->file_path }}">
+                                <div class="pendingProject">
+                                    {{$project->project_name}}
+                                    <br>
+                                    <small>{{date('Y-m-d g:ia', strtotime($project->admin_entries[0]->created_at))}}</small>
+                                </div>
+                            </a>
+                    @endforeach
                 </div>
             </div>
         </div>
