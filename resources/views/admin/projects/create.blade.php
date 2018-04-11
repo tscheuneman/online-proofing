@@ -34,7 +34,7 @@
 
         <div class="form-group">
             <label for="notify_admins">Notify Premedia</label>
-            <input type="checkbox" class="form-control left" id="notify_admins" name="notify_admins" autocomplete="nope" />
+            <input type="checkbox" class="form-control left" id="notify_admins" name="notify_admins" autocomplete="nope" checked />
         </div>
 
         <div class="form-group">
@@ -54,7 +54,7 @@
 
         <div class="form-group">
             <label for="notify_users">Notify Customers</label>
-            <input type="checkbox" class="form-control left" id="notify_users" name="notify_users" autocomplete="nope" />
+            <input type="checkbox" class="form-control left" id="notify_users" name="notify_users" autocomplete="nope" checked />
         </div>
 
         <div class="form-group">
