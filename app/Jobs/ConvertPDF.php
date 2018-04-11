@@ -52,7 +52,7 @@ class ConvertPDF implements ShouldQueue
         try {
             $realPath = public_path('/storage/' . $this->dir . '/pdf/' . $this->storageName);
 
-            if(File::makeDirectory( public_path('/storage/' . $this->dir . '/images'), 755, true)) {
+            if(File::makeDirectory( public_path('/storage/' . $this->dir . '/images'), 0775, true)) {
                 $savePath = public_path('/storage/' . $this->dir . '/images/');
                 try {
 

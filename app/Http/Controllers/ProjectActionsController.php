@@ -83,7 +83,7 @@ class ProjectActionsController extends Controller
 
 
 
-            if(File::makeDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand), 775, true)) {
+            if(File::makeDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand), 0775, true)) {
                 $dir = 'projects/' . $projectPath . '/' . $rand;
 
                 if($path = Storage::disk('public')->put($dir . '/pdf', $request->file('pdf'), 'public')) {
