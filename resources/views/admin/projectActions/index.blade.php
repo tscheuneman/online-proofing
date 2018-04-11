@@ -29,7 +29,7 @@
     </div>
     <br>
     <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-2">
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -45,7 +45,7 @@
                                         {{mb_substr($admin->admin->user->first_name,0,1) . mb_substr($admin->admin->user->last_name,0,1)}}
                                     </div>
                                 @endif
-                                {{$admin->admin->user->first_name . ' ' . $admin->admin->user->last_name}}
+                                {{$admin->admin->user->first_name}}
                             </li>
                         @endforeach
                     </ul>
@@ -58,7 +58,7 @@
                                         {{mb_substr($user->user->first_name,0,1) . mb_substr($user->user->last_name,0,1)}}
                                     </div>
                                 @endif
-                                {{$user->user->first_name . ' ' . $user->user->last_name}}
+                                {{$user->user->first_name}}
                             </li>
                         @endforeach
                     </ul>
@@ -89,13 +89,13 @@
                                 {{mb_substr($entry->user->first_name,0,1) . mb_substr($entry->user->last_name,0,1)}}
                             </div>
                         @endif
-                        {{$entry->user->first_name . ' ' . $entry->user->last_name . ' - ' . date('Y-m-d g:ia', strtotime($entry->created_at))}}
+                        {{$entry->user->first_name }} <br> {{  date('Y-m-d g:ia', strtotime($entry->created_at)) }}
                          </div>
                     @endforeach
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
 
@@ -136,9 +136,37 @@
                 </div>
             </div>
         </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-comment" aria-hidden="true"></i>
+                            Comments
+                        </div>
+                        <div class="card-body">
+                            @foreach(json_decode($project->entries[0]->user_notes) as $key => $note)
+                                @if($note != '')
+                                    <div data-num="{{$key}}" class="pageComment">
+                                        <strong>Page {{$key + 1}}</strong>
+                                        <br>
+                                        {{$note}}
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+
+                </div>
     </div>
     <br>
     <br>
 <script src="{{ asset('js/project.js') }}"></script>
 @include('layouts/includes/scripts/viewProjScript')
+   <script>
+      $(document).ready(function() {
+          $('.pageComment').on('click', function() {
+              let thisVal = $(this).data('num');
+              goToElementFromPageComment(thisVal);
+          });
+      });
+   </script>
 @endsection
