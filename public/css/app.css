@@ -415,6 +415,10 @@ div.topStats div.stat {
   float: left;
 }
 
+div.topStats div.stat:last-child {
+  margin-right: 0;
+}
+
 div.topStats div.stat.maroon {
   background: #8C1D40;
   color: #fff;
@@ -459,7 +463,6 @@ div.topStats div.stat .content .title {
   display: block;
   margin-top: 15px;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  font-weight: bold;
 }
 
 div.topStats div.stat .content .number {
@@ -468,7 +471,40 @@ div.topStats div.stat .content .number {
   display: block;
   margin-top: 0;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+div.userProjects a.projectLink {
+  color: #000;
+}
+
+div.userProjects a.projectLink .project {
+  padding: 15px;
+  float: left;
+  background: #fff;
+  margin: 25px;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+  -webkit-transition: .5s all;
+  transition: .5s all;
+}
+
+div.userProjects a.projectLink .project:hover {
+  background: #8C1D40;
+  color: #fff;
+}
+
+div.userProjects a.projectLink .project.active {
+  border: 5px solid #FFC627;
+}
+
+div.userProjects a.projectLink .project .name {
+  display: block;
   font-weight: bold;
+  font-size: 20px;
+}
+
+div.userProjects a.projectLink .project .lastAction {
+  display: block;
 }
 
 .card.topSpacing {
@@ -513,6 +549,23 @@ div.entryNav.admin {
 
 div.entryNav .navPic {
   margin-right: 5px;
+}
+
+div.pageComment {
+  margin-bottom: 10px;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  background: #f4f4f4;
+  padding: 2px;
+  width: 100%;
+  cursor: pointer;
+  -webkit-transition: .5s all;
+  transition: .5s all;
+}
+
+div.pageComment:hover {
+  background: #8C1D40;
+  color: #fff;
 }
 
 #mask {

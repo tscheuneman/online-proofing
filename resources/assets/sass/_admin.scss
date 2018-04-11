@@ -352,7 +352,9 @@ div.topStats{
     box-shadow:1px 2px 3px rgba(0, 0, 0, 0.35);
     margin-right:1%;
     float:left;
-
+    &:last-child {
+      margin-right:0;
+    }
     &.maroon {
       background:#8C1D40;
       color:#fff;
@@ -392,7 +394,6 @@ div.topStats{
         display:block;
         margin-top:15px;
         text-shadow:0 0 10px rgba(0,0,0,.5);
-        font-weight:bold;
       }
       .number {
         clear:both;
@@ -400,10 +401,45 @@ div.topStats{
         display:block;
         margin-top:0;
         text-shadow:0 0 10px rgba(0,0,0,.5);
-        font-weight:bold;
       }
     }
   }
+}
+
+div.userProjects {
+
+a.projectLink {
+  color:#000;
+
+  .project {
+    padding:15px;
+    float:left;
+    background:#fff;
+    margin:25px;
+    box-shadow:0 2px 2px rgba(0, 0, 0, 0.40);
+    transition:.5s all;
+
+    &:hover {
+      background:$brand-primary;
+      color:#fff;
+    }
+
+    &.active {
+      border:5px solid $brand-gold;
+
+    }
+
+    .name {
+      display:block;
+      font-weight:bold;
+      font-size:20px;
+    }
+    .lastAction {
+      display:block;
+    }
+  }
+}
+
 }
 
 //Project Styles
@@ -444,6 +480,21 @@ div.entryNav {
   }
   .navPic {
     margin-right:5px;
+  }
+}
+
+div.pageComment {
+  margin-bottom:10px;
+  box-shadow:0 2px 2px rgba(0, 0, 0, 0.2);
+  background: #f4f4f4;
+  padding: 2px;
+  width: 100%;
+  cursor:pointer;
+  transition:.5s all;
+
+  &:hover {
+    background:$brand-primary;
+    color:#fff;
   }
 }
 
