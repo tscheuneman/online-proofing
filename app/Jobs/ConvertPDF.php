@@ -58,11 +58,8 @@ class ConvertPDF implements ShouldQueue
 
                     $im = new Imagick();
                     $files = array();
+                    $im->setResolution(220,220);
                     $im->readimage($realPath);
-                    $im->stripImage();
-                    $im->setType(6);
-                    $im->setImageType(6);
-                    $im->setColorspace(imagick::COLORSPACE_RGB);
                     $numPages = $im->getNumberImages();
 
                     for($x = 0; $x < $numPages; $x++) {
