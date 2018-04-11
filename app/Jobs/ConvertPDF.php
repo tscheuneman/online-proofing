@@ -58,8 +58,7 @@ class ConvertPDF implements ShouldQueue
 
                     $im = new Imagick();
                     $files = array();
-                    \Log::info(realpath($realPath));
-                    $im->readimage(realpath($realPath));
+                    $im->readimage($realPath);
                     $im->stripImage();
                     $im->setType(6);
                     $im->setImageType(6);
@@ -80,8 +79,7 @@ class ConvertPDF implements ShouldQueue
                     $im->clear();
                     $im->destroy();
 
-                    $this->entry->delete();
-                    /*
+
                     $this->project->active = true;
                     $this->project->save();
 
@@ -95,7 +93,6 @@ class ConvertPDF implements ShouldQueue
                             Mail::to($user->user->email)->send(new UserNotify($user->user->id, $this->project));
                         }
                     }
-            */
                 } catch(\Exception $e) {
                     report($e);
                 }
