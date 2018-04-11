@@ -18,7 +18,18 @@ function goNextItemProjectView() {
         });
     });
 }
+function goToElementFromPageComment(id) {
+    let currEntry = $('div.entry.active');
+    let currImg = $('div.image.active', currEntry);
+    currImg.fadeOut(200, function() {
+        $(this).removeClass('active');
+        $('div.image.proj_' + id, currEntry).fadeIn(200, function() {
+            $(this).addClass('active');
+            updatePageCount();
+        });
+    });
 
+}
 function goPreviousItemProjectView() {
     let currEntry = $('div.entry.active');
     let maxElm = parseInt(currEntry.data('numelm')) - 1;
