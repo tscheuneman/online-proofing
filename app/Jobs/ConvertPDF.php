@@ -50,7 +50,7 @@ class ConvertPDF implements ShouldQueue
     public function handle()
     {
         try {
-            $realPath = storage_path('app/public/' . $this->dir . '/pdf/' . $this->storageName);
+            $realPath = public_path('/storage/' . $this->dir . '/pdf/' . $this->storageName);
 
             if(File::makeDirectory( public_path('/storage/' . $this->dir . '/images'), 0775, true)) {
                 $savePath = public_path('/storage/' . $this->dir . '/images/');
@@ -58,7 +58,7 @@ class ConvertPDF implements ShouldQueue
 
                     $im = new Imagick();
                     $files = array();
-                    \Log::info($realPath);
+                    \Log::info(realpath($realPath));
                     $im->readimage($realPath);
                     $im->stripImage();
                     $im->setType(6);
