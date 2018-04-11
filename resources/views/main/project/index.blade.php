@@ -117,14 +117,26 @@
                             @endif
 
                             @foreach(json_decode($entry->files) as $key => $file)
-                                @if($key == 0)
-                                    @if($entry->admin)
-                                        <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                @if($project->entries[0]->admin)
+                                    @if($key == 0)
+                                        @if($entry->admin)
+                                            <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                        @else
+                                            <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                        @endif
                                     @else
-                                        <div data-num="{{$key}}" class="image imageAdmin active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                         <div data-num="{{$key}}" class="image proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
                                     @endif
                                 @else
-                                     <div data-num="{{$key}}" class="image imageAdmin proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                    @if($key == 0)
+                                        @if($entry->admin)
+                                            <div data-num="{{$key}}" class="image imageAdmin active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                        @else
+                                            <div data-num="{{$key}}" class="image imageAdmin active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                        @endif
+                                    @else
+                                        <div data-num="{{$key}}" class="image imageAdmin proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                    @endif
                                 @endif
                                 @if($enCnt == 1)
                                     @if($entry->admin)
