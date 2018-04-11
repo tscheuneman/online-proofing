@@ -59,7 +59,7 @@ class ConvertPDF implements ShouldQueue
                     $im = new Imagick();
                     $files = array();
                     \Log::info(realpath($realPath));
-                    $im->readimage($realPath);
+                    $im->readimage(realpath($realPath));
                     $im->stripImage();
                     $im->setType(6);
                     $im->setImageType(6);
