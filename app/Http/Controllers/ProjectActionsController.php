@@ -16,6 +16,8 @@ use Storage;
 use File;
 use Imagick;
 
+
+
 class ProjectActionsController extends Controller
 {
     /**
@@ -81,34 +83,32 @@ class ProjectActionsController extends Controller
 
             $rand = str_random(12);
 
+                        if(File::makeDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand), 0775, true)) {
+                            $dir = 'projects/' . $projectPath . '/' . $rand;
 
+                            if($path = Storage::disk('public')->put($dir . '/pdf', $request->file('pdf'), 'public')) {
+                                $storageName = basename($path);
 
-            if(File::makeDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand), 0775, true)) {
-                $dir = 'projects/' . $projectPath . '/' . $rand;
+                                $entry = new Entry();
+                                    $entry->project_id = $project->id;
+                                    $entry->user_id = Auth::id();
+                                    $entry->path = $rand;
+                                    $entry->pdf_name = $storageName;
+                                    $entry->admin = true;
+                                    $entry->notes = $request->comments;
+                                $entry->save();
 
-                if($path = Storage::disk('public')->put($dir . '/pdf', $request->file('pdf'), 'public')) {
-                    $storageName = basename($path);
+                                ConvertPDF::dispatch($dir, $storageName, 500, $project, $entry);
 
-                    $entry = new Entry();
-                        $entry->project_id = $project->id;
-                        $entry->user_id = Auth::id();
-                        $entry->path = $rand;
-                        $entry->pdf_name = $storageName;
-                        $entry->admin = true;
-                        $entry->notes = $request->comments;
-                    $entry->save();
+                                \Session::flash('flash_created','Wow');
+                                return redirect('/admin');
+                            }
+                            else {
+                                File::deleteDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand));
+                                return redirect()->back()->withErrors(array('failed'))->withInput($request->all());
+                            }
 
-                    ConvertPDF::dispatch($dir, $storageName, 500, $project, $entry);
-
-                    \Session::flash('flash_created','Wow');
-                    return redirect('/admin');
-                }
-                else {
-                    File::deleteDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand));
-                    return redirect()->back()->withErrors(array('failed'))->withInput($request->all());
-                }
-
-            }
+                        }
 
             return redirect()->back()->withErrors(array('failed'))->withInput($request->all());
         }
