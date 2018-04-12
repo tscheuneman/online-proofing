@@ -93,7 +93,6 @@ class ProjectActionsController extends Controller
                                     $entry->project_id = $project->id;
                                     $entry->user_id = Auth::id();
                                     $entry->path = $rand;
-                                    $entry->pdf_name = $storageName;
                                     $entry->admin = true;
                                     $entry->notes = $request->comments;
                                 $entry->save();
