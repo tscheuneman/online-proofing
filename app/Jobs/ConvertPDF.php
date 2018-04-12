@@ -76,20 +76,29 @@ class ConvertPDF implements ShouldQueue
                     $im->clear();
                     $im->destroy();
 
+                    if(Storage::disk('dropbox')->put($this->dir . '/PDFProof.pdf', Storage::disk('public')->get($this->dir . '/pdf/' . $this->storageName))) {
 
-                    $this->project->active = true;
-                    $this->project->save();
+                        Storage::delete($realPath);
+                        File::deleteDirectory(public_path('/storage/' . $this->dir . '/pdf'));
 
-                    $this->entry->active = true;
-                    $this->entry->files = json_encode($files);
-                    $this->entry->save();
+                        $this->project->active = true;
+                        $this->project->save();
 
-                    if($this->project->notify_users) {
-                        $users = UserAssign::with('user')->where('project_id', $this->project->id)->get();
-                        foreach($users as $user) {
-                            Mail::to($user->user->email)->send(new UserNotify($user->user->id, $this->project));
+                        $this->entry->active = true;
+                        $this->entry->pdf_path = Storage::disk('dropbox')->getAdapter()->getTemporaryLink($this->dir . '/PDFProof.pdf');
+
+                        $this->entry->files = json_encode($files);
+                        $this->entry->save();
+
+                        if($this->project->notify_users) {
+                            $users = UserAssign::with('user')->where('project_id', $this->project->id)->get();
+                            foreach($users as $user) {
+                                Mail::to($user->user->email)->send(new UserNotify($user->user->id, $this->project));
+                            }
                         }
                     }
+
+
                 } catch(\Exception $e) {
                     report($e);
                 }
