@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Admin;
 use App\User;
 use App\Project;
+use App\Entry;
 
 class AdminIndexController extends Controller
 {
