@@ -143,15 +143,18 @@
                             Comments
                         </div>
                         <div class="card-body">
-                            @foreach(json_decode($project->entries[0]->user_notes) as $key => $note)
-                                @if($note != '')
-                                    <div data-num="{{$key}}" class="pageComment">
-                                        <strong>Page {{$key + 1}}</strong>
-                                        <br>
-                                        {{$note}}
-                                    </div>
-                                @endif
-                            @endforeach
+                            @if(!$project->entries[0]->admin)
+                                @foreach(json_decode($project->entries[0]->user_notes) as $key => $note)
+                                    @if($note != '')
+                                        <div data-num="{{$key}}" class="pageComment">
+                                            <strong>Page {{$key + 1}}</strong>
+                                            <br>
+                                            {{$note}}
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endif
+
                         </div>
                     </div>
 
