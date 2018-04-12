@@ -37,6 +37,8 @@ Route::group(['middleware' => ['admin']], function () {
     //Route::get('admin/project/{id}', 'ProjectActionsController@index');
     Route::resource('admin/project', 'ProjectActionsController');
 
+    Route::resource('admin/orders', 'OrderController');
+
 });
 
 Route::group(['middleware' => ['user']], function () {
