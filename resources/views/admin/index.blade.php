@@ -70,6 +70,31 @@
     <br><br>
     <h2>Your Projects</h2>
     <hr>
+    <div class="userProjects">
+        @foreach($userProjects as $proj)
+            <a class="projectLink" href="{{ url('/admin/project') }}/{{$proj->file_path}}">
+                @if($proj->entries[0]->admin)
+                    <div class="project">
+                @else
+                    <div class="project active">
+                @endif
+                    <span class="name">
+                        {{$proj->project_name}}
+                    </span>
+                    <br>
+                    <span class="lastAction">
+                        Last Action:
+                        <br>
+                        {{date('Y-m-d g:ia', strtotime($proj->entries[0]->created_at))}}
+                        <br>
+                        {{$proj->entries[0]->user->first_name . ' ' . $proj->entries[0]->user->last_name}}
+                    </span>
+                </div>
+            </a>
+        @endforeach
+
+        <br class="clear" />
+    </div>
     <h3>
         Awaiting Customer Response
     </h3>
