@@ -16,8 +16,8 @@ class UserAssign extends Model
         return $this->belongsTo('App\User', 'user_id', 'id')->select('id', 'first_name', 'last_name', 'email');
     }
 
-    public function project()
+    public function order()
     {
-        return $this->belongsTo('App\Project', 'project_id', 'id');
+        return $this->belongsTo('App\Order', 'order_id', 'id');
     }
 }
