@@ -24,6 +24,10 @@ div#loader .loader {
   display: block;
 }
 
+div.container.topSpacing {
+  margin-top: 50px;
+}
+
 body {
   background: #f8f9fd;
   font-family: "Lato", sans-serif;
@@ -314,6 +318,16 @@ div.usersAutocomplete ul li:last-child {
   border: none;
 }
 
+.theProject {
+  float: left;
+  padding: 10px;
+  font-weight: bold;
+  margin: 15px 15px;
+  background: #ffffff;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
 div.addedAdmins,
 div.addedUsers {
   clear: both;
@@ -505,6 +519,85 @@ div.userProjects a.projectLink .project .name {
 
 div.userProjects a.projectLink .project .lastAction {
   display: block;
+}
+
+div#closeHead {
+  float: right;
+  height: 30px;
+  width: 30px;
+  font-size: 23px;
+  font-weight: 900;
+  line-height: 30px;
+  cursor: pointer;
+}
+
+div.order {
+  padding: 15px;
+  background: #fff;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+  float: left;
+  margin-right: 25px;
+  margin-bottom: 25px;
+}
+
+div.order.belongs {
+  background: #292b3e;
+  color: #fff;
+}
+
+div.order .title {
+  font-size: 22px;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+div.order span.option {
+  float: left;
+  margin-right: 5px;
+  background: #FFC627;
+  text-transform: uppercase;
+  padding: 3px;
+  font-weight: 900;
+  font-size: 12px;
+  color: #000;
+}
+
+div.order hr {
+  clear: both;
+}
+
+div.order .project {
+  padding: 8px;
+  float: left;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+  margin-right: 8px;
+  background: #fff;
+  color: #000;
+  -webkit-transition: .5s all;
+  transition: .5s all;
+}
+
+div.order .project:hover {
+  background: #8C1D40;
+  color: #fff;
+}
+
+div.order .project .projectTitle {
+  font-size: 15px;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+div.order .project .statusText {
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
 }
 
 .card.topSpacing {
