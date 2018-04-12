@@ -2,7 +2,7 @@
     smb
 </div>
 
-<a class="btn btn-primary action" href="{{ url('/admin/projects/create') }}"><i class="fa fa-plus" aria-hidden="true"></i> add project</a>
+<a class="btn btn-primary action" href="{{ url('/admin/orders/create') }}"><i class="fa fa-plus" aria-hidden="true"></i> create order </a>
 
 <nav>
     <a class="{{ Request::is('admin') ? 'active' : '' }}" href="{{ url('/admin') }}"><i class="fa fa-home" aria-hidden="true"></i> home</a>
