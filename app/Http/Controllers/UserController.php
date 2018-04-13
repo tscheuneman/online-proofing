@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
-use Illuminate\Support\Facades\Mail;
-use App\Mail\UserCreated;
-
-use Validator;
+use App\Http\Requests\UserRequest;
+use App\Http\Requests\PasswordRequest;
 
 use Illuminate\Support\Facades\Auth;
+
+use App\Services\Users\UserLogic;
 
 class UserController extends Controller
 {
@@ -22,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::where('org', '!=', 'Admin')->get();
+        $user = UserLogic::getAll();
         return view('admin.users.index',
             [
                 'users' => $user,
@@ -46,36 +44,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $rules = array(
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'org' => 'required|string'
-        );
 
-        $validator = Validator::make($request->all(), $rules);
+        UserLogic::createUser($request, $request->org);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput($request->all());
-        }
-
-        $pwReturn = str_random(12);
-
-        $user = new User();
-            $user->first_name = $request->first_name;
-            $user->last_name = $request->last_name;
-            $user->org = $request->org;
-            $user->email = $request->email;
-            $user->name = $request->email;
-            $user->password = Hash::make($pwReturn);
-            $user->active = false;
-            $user->save();
-
-        Mail::to($request->email)->send(new UserCreated($user, $pwReturn));
-
-        \Session::flash('flash_created','Account for' . $user->first_name . ' has been created');
+        \Session::flash('flash_created','Account for has been created');
         return redirect('/admin/customers');
     }
 
@@ -125,45 +99,33 @@ class UserController extends Controller
     }
 
     public function password() {
-        $user = Auth::user();
-        if(!$user->active) {
-            if (Auth::check()) {
-                return view('main.users.password',
-                    [
-                        'user' => $user,
-                    ]
-                );
+        if (Auth::check()) {
+            $user = Auth::user();
+            if (!$user->active) {
+                if (Auth::check()) {
+                    return view('main.users.password',
+                        [
+                            'user' => $user,
+                        ]
+                    );
+                }
+                return redirect('/login');
             }
-            return redirect('/login');
+            return redirect('/admin');
         }
-        return redirect('/admin');
+        return redirect('/login');
     }
 
-    public function passwordSave(Request $request)
+    public function passwordSave(PasswordRequest $request)
     {
         $theUser = Auth::user();
         if (!$theUser->active) {
             if (Auth::check()) {
-                $rules = array(
-                    'password' => 'required|string|min:6|confirmed',
-                    'user_id' => 'required|exists:users,id',
-                );
-
-                $validator = Validator::make($request->all(), $rules);
-
-                if ($validator->fails()) {
-                    return redirect()->back()->withErrors($validator)->withInput($request->all());
-                }
 
                 if ($request->user_id == Auth::id()) {
-                    $user = User::find($request->user_id);
-                    if ($user != null) {
-                        $user->password = Hash::make($request->password);
-                        $user->active = true;
-                        $user->save();
-
+                    $user = UserLogic::findUser($request->user_id);
+                    $user->savePassword($request->password);
                         return redirect('/');
-                    }
                 }
 
                 return redirect()->back()->withErrors('Failed');
