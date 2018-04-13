@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Categories;
 use Illuminate\Http\Request;
-use Validator;
+
 use Redirect;
+
+use App\Http\Requests\CategoryRequest;
+use App\Services\Category\CategoryLogic;
 
 class CategoriesController extends Controller
 {
@@ -16,7 +19,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $cats = Categories::get();
+        $cats = CategoryLogic::getAll();
         return view('admin.categories.index',
             [
                 'cats' => $cats,
@@ -40,24 +43,10 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $rules = array(
-            'name' => 'required|unique:categories',
-        );
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput($request->all());
-        }
-
-        $cat = new Categories();
-             $cat->name = $request->name;
-             $cat->slug = str_slug($request->name, '-');
-            $cat->save();
-
-        \Session::flash('flash_created',$request->name . ' has been created');
+        CategoryLogic::create($request);
+        \Session::flash('flash_created','Category has been created');
         return redirect('/admin/categories');
     }
 
