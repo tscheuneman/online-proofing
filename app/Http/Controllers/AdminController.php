@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Admin;
-use App\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\AdminRequest;
+use App\Http\Requests\PasswordRequest;
+
+use App\Services\Admin\AdminLogic;
+use App\Services\Users\UserLogic;
+
 use Validator;
 use Redirect;
 
-use Illuminate\Support\Facades\Mail;
-use App\Mail\AdminCreated;
+
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +26,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = Admin::with('user')->get();
+        $admins = AdminLogic::getAll();
         return view('admin.admins.index',
             [
                 'admins' => $admins,
@@ -48,41 +50,12 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminRequest $request)
     {
+        $user = UserLogic::createUser($request, "Admin");
+        AdminLogic::createAdmin($user);
 
-        $rules = array(
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'email' => 'required|email|unique:users'
-        );
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput($request->all());
-        }
-
-        $pwReturn = str_random(12);
-
-
-        $user = new User();
-            $user->first_name = $request->first_name;
-            $user->last_name = $request->last_name;
-            $user->org = "Admin";
-            $user->email = $request->email;
-            $user->name = $request->email;
-            $user->password = Hash::make($pwReturn);
-            $user->active = true;
-            $user->save();
-
-        $admin = new Admin();
-            $admin->user_id = $user->id;
-            $admin->save();
-
-        Mail::to($request->email)->send(new AdminCreated($user, $pwReturn));
-
-        \Session::flash('flash_created','Account for' . $user->first_name . ' has been created');
+        \Session::flash('flash_created','Account has been created');
         return redirect('/admin/users');
     }
 
@@ -132,49 +105,42 @@ class AdminController extends Controller
     }
 
     public function password() {
-        $user = Auth::user();
-            $admin = Admin::where('user_id', '=', $user->id)->first();
-        if(!$admin->active) {
-            if (Auth::check()) {
-                return view('admin.admins.password',
-                    [
-                        'admin' => $user,
-                    ]
-                );
+        if (Auth::check()) {
+            $user = Auth::user();
+            $admin = AdminLogic::findAdmin($user->id);
+            if (!$admin->isActive()) {
+                if (Auth::check()) {
+                    return view('admin.admins.password',
+                        [
+                            'admin' => $user,
+                        ]
+                    );
+                }
+                return redirect('/login');
             }
-            return redirect('/login');
+            return redirect('/admin');
         }
-        return redirect('/admin');
+        return redirect('/login');
     }
 
-    public function passwordSave(Request $request)
+    public function passwordSave(PasswordRequest $request)
     {
         $theUser = Auth::user();
-            $admin = Admin::where('user_id', '=', $theUser->id)->first();
-        if (!$admin->active) {
+        $admin = AdminLogic::findAdmin($theUser->id);
+        if (!$admin->isActive()) {
             if (Auth::check()) {
-                $rules = array(
-                    'password' => 'required|string|min:6|confirmed',
-                    'user_id' => 'required|exists:users,id',
-                );
-
-                $validator = Validator::make($request->all(), $rules);
-
-                if ($validator->fails()) {
-                    return redirect()->back()->withErrors($validator)->withInput($request->all());
-                }
-
                 if ($request->user_id == Auth::id()) {
-                    $user = User::find($request->user_id);
-                    if ($user != null) {
-                        $user->password = Hash::make($request->password);
-                        $user->save();
+                        if($user = UserLogic::findUser($request->user_id)) {
+                            $user->savePassword($request->password);
 
-                        $adminMain = Admin::where('user_id', '=', $request->user_id)->first();
-                        $adminMain->active = true;
-                        $adminMain->save();
-                        return redirect('/admin');
-                    }
+                            if($admin = AdminLogic::findFromUser($user)) {
+                                $admin->makeActive();
+                                return redirect('/admin');
+                            }
+                            return redirect()->back()->withErrors('Failed');
+
+                        }
+                    return redirect()->back()->withErrors('Failed');
                 }
 
                 return redirect()->back()->withErrors('Failed');
