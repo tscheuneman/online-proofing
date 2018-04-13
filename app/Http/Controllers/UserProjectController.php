@@ -124,7 +124,7 @@ class UserProjectController extends Controller
         $project = Project::where('file_path', '=', $id)->first();
         if($project != null) {
             if($project->active) {
-                $thisProject = Project::where('file_path', '=', $id)->with('entries.user', 'users.user', 'admins.admin.user')->first();
+                $thisProject = Project::where('file_path', '=', $id)->with('order.projects', 'entries.user', 'order.users.user', 'order.admins.admin.user')->first();
                 return view('main.project.index',
                     [
                         'project' => $thisProject,
