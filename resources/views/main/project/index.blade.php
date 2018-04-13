@@ -34,7 +34,7 @@
                     <div class="card-body">
                         <strong>Assigned Premedia</strong>
                         <ul class="userList">
-                            @foreach($project->admins as $admin)
+                            @foreach($project->order->admins as $admin)
                                 <li>
                                     @if($admin->admin->user->picture == null)
                                         <div class="navPic">
@@ -47,7 +47,7 @@
                         </ul>
                         <strong>Assigned Customers</strong>
                         <ul class="userList">
-                            @foreach($project->users as $user)
+                            @foreach($project->order->users as $user)
                                 <li>
                                     @if($user->user->picture == null)
                                         <div class="navPic">
@@ -120,9 +120,9 @@
                                 @if($project->entries[0]->admin)
                                     @if($key == 0)
                                         @if($entry->admin)
-                                            <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                            <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 61}}px; height:{{$file->height + 31}}px; margin:0 auto;">
                                         @else
-                                            <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                            <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 61}}px; height:{{$file->height + 31}}px; margin:0 auto;">
                                         @endif
                                     @else
                                          <div data-num="{{$key}}" class="image proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">

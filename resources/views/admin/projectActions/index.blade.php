@@ -9,6 +9,8 @@
     @if(Session::has('flash_created'))
         <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_created') !!}</em></div>
     @endif
+
+
     <div class="row justify-content-center">
         <div class="col-md-12">
             @if($project->entries[0]->admin)
@@ -38,7 +40,7 @@
                 <div class="card-body">
                     <strong>Assigned Premedia</strong>
                     <ul class="userList">
-                        @foreach($project->admins as $admin)
+                        @foreach($project->order->admins as $admin)
                             <li>
                                 @if($admin->admin->user->picture == null)
                                     <div class="navPic">
@@ -51,7 +53,7 @@
                     </ul>
                     <strong>Assigned Customers</strong>
                     <ul class="userList">
-                        @foreach($project->users as $user)
+                        @foreach($project->order->users as $user)
                             <li>
                                 @if($user->user->picture == null)
                                     <div class="navPic">
