@@ -16,7 +16,6 @@
     <a class="btn btn-second" href="/admin/categories/create"><i class="fa fa-plus" aria-hidden="true"></i> Create Category</a>
     <br class="clear" />
     <br />
-
     @foreach($orders as $order)
         @foreach($order->admins as $admin)
             @if($admin->admin->user_id == Auth::id())
