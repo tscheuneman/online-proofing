@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Services\Order\OrderLogic;
+
 use App\Admin;
 use App\UserAssign;
 use App\Project;
+use App\Order;
 
 class HomeController extends Controller
 {
@@ -33,14 +36,12 @@ class HomeController extends Controller
         if($admin != null) {
             return redirect('/admin');
         }
-        $projects = Project::with(array('users.user' => function($query)
-        {
-            $query->where('id', '=', Auth::id());
-        }))->with('admin_entries')->where('completed', false)->where('active', true)->get();
+
+        $orders = OrderLogic::getFromUser($user);
 
         return view('home',
             [
-                'projects' => $projects,
+                'orders' => $orders,
             ]);
     }
 }

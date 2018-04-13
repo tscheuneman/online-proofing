@@ -4,20 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Project;
-use App\Categories;
-use App\Admin;
-use App\User;
-use App\UserAssign;
-use App\AdminAssign;
-use App\Order;
+use App\Services\Category\CategoryLogic;
+use App\Services\Admin\AdminLogic;
+use App\Services\Users\UserLogic;
 
+use App\Services\Order\OrderLogic;
+use App\Services\Project\ProjectLogic;
 
-use Validator;
+use App\Http\Requests\OrderRequest;
+
 use Redirect;
-use Storage;
-use File;
-
 
 class OrderController extends Controller
 {
@@ -38,7 +34,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $cats = Categories::get();
+        $cats = CategoryLogic::getAll();
         return view('admin.orders.create',
             [
                 'cats' => $cats,
@@ -52,24 +48,12 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        $rules = array(
-            'job_id' => 'required|string|unique:orders,job_id',
-            'category' => 'required|exists:categories,id',
-            'adminValues' => 'required|json',
-            'userValues' => 'required|json',
-            'projectValues' => 'required|json'
-        );
         $hidden = false;
         $notify_users = false;
         $notify_admins = false;
 
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput($request->all());
-        }
         if($request->hidden) {
             $hidden = true;
         }
@@ -79,6 +63,7 @@ class OrderController extends Controller
         if($request->notify_admins) {
             $notify_admins = true;
         }
+
         $admins = json_decode($request->adminValues);
         $users = json_decode($request->userValues);
         $projectNames =  json_decode($request->projectValues);
@@ -87,15 +72,16 @@ class OrderController extends Controller
         $errorArray = array();
 
         foreach($admins as $admin) {
-            $testAdmin = Admin::find($admin);
+            $testAdmin = AdminLogic::find($admin);
             if($testAdmin == null) {
                 $errorArray[] = 'Invalid Premedia Member';
                 $errors = true;
                 break;
             }
         }
+
         foreach($users as $user) {
-            $testUser = User::find($user);
+            $testUser = UserLogic::findUser($user);
             if($testUser == null) {
                 $errorArray[] = 'Invalid Customer';
                 $errors = true;
@@ -108,29 +94,14 @@ class OrderController extends Controller
         }
 
 
-
         try {
-            $order = new Order();
-            $order->job_id = $request->job_id;
-            $order->cat_id = $request->category;
-            $order->hidden = $hidden;
-            $order->notify_users = $notify_users;
-            $order->notify_admins = $notify_admins;
-            $order->save();
-
+            $thisOrder = OrderLogic::create($request, $hidden, $notify_admins, $notify_users);
             foreach($users as $user) {
-                $assign = new UserAssign();
-                $assign->user_id = $user;
-                $assign->order_id = $order->id;
-                $assign->notify = $notify_users;
-                $assign->save();
+                $thisOrder->createUser($user, $notify_users);
+
             }
             foreach($admins as $admin) {
-                $assign = new AdminAssign();
-                $assign->user_id = $admin;
-                $assign->order_id = $order->id;
-                $assign->notify = $notify_admins;
-                $assign->save();
+                $thisOrder->createAdmin($admin, $notify_admins);
             }
 
         } catch(\Exception $e) {
@@ -141,19 +112,10 @@ class OrderController extends Controller
 
         try {
             foreach($projectNames as $proj_name) {
-                $rand = str_random(12);
-                $path = date('Y') . '/' . date('F') . '/' . $rand;
-
-                if(File::makeDirectory(public_path('storage/projects/' . $path), 0775, true)) {
-                    $project = new Project();
-                    $project->project_name = $proj_name;
-                    $project->file_path = $rand;
-                    $project->ord_id = $order->id;
-                    $project->save();
-                }
+                ProjectLogic::create($thisOrder, $proj_name);
             }
 
-            \Session::flash('flash_created',$order->job_id . ' has been created');
+            \Session::flash('flash_created',$thisOrder->getID() . ' has been created');
             return redirect('/admin/projects');
         } catch(\Exception $e) {
             \Log::info($e);
