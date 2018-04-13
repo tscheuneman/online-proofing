@@ -10,6 +10,12 @@ use App\Services\Users\UserLogic;
 class AdminLogic {
     protected $admin;
 
+    public static function find($id) {
+        $admin = Admin::find($id);
+
+        return new AdminLogic($admin);
+    }
+
     public function __construct(Admin $admin)
     {
         $this->admin = $admin;
