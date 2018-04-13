@@ -220,7 +220,9 @@
             });
 
             $('#closeHead').on('click', function() {
-                saveVal();
+                $('#mask').fadeOut(500, function() {
+                    $('#projectName').val('');
+                });
             });
         });
 
