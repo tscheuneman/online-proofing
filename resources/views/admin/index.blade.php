@@ -71,28 +71,51 @@
     <h2>Your Projects</h2>
     <hr>
     <div class="userProjects">
-        @foreach($userProjects as $proj)
-            <a class="projectLink" href="{{ url('/admin/project') }}/{{$proj->file_path}}">
-                @if($proj->entries[0]->admin)
-                    <div class="project">
-                @else
-                    <div class="project active">
-                @endif
-                    <span class="name">
-                        {{$proj->project_name}}
-                    </span>
+        @foreach($userProjects as $order)
+            @if(isset($order->projects[0]->id))
+                <div class="order belongs">
+                    <p class="title">{{$order->job_id}}</p>
+                    @if($order->notify_users)
+                        <span class="option">Notify Users</span>
+                    @endif
+                    @if($order->notify_admins)
+                        <span class="option">Notify Users</span>
+                    @endif
+                    @if(!$order->hidden)
+                        <span class="option">Public</span>
+                    @endif
+                    <br class="clear" />
                     <br>
-                    <span class="lastAction">
-                        Last Action:
-                        <br>
-                        {{date('Y-m-d g:ia', strtotime($proj->entries[0]->created_at))}}
-                        <br>
-                        {{$proj->entries[0]->user->first_name . ' ' . $proj->entries[0]->user->last_name}}
-                    </span>
+                    @foreach($order->projects as $proj)
+                        <a href="{{ url('/admin/project') . '/' . $proj->file_path }}">
+                            <div class="project">
+                                <p class="projectTitle">{{$proj->project_name}}</p>
+                                <p class="statusText">
+                                    Status:
+                                    <strong>
+                                        @if(isset($proj->admin_entries[0]))
+                                            @if(!$proj->admin_entries[0]->active)
+                                                Waiting on Output
+                                            @else
+                                                @if($proj->admin_entries[0]->admin)
+                                                    Awaiting User Response
+                                                @else
+                                                    <strong> Awaiting Premedia Response </strong>
+                                                @endif
+                                            @endif
+                                        @else
+                                            @if(!$proj->active)
+                                                Awaiting Initial Upload
+                                            @endif
+                                        @endif
+                                    </strong>
+                                </p>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
-            </a>
+            @endif
         @endforeach
-
         <br class="clear" />
     </div>
     <h3>
