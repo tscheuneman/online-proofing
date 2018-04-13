@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Jobs\ConvertPDF;
 
+use App\Services\Project\ProjectLogic;
+
 use App\Project;
 use App\Entry;
 
@@ -123,24 +125,25 @@ class ProjectActionsController extends Controller
      */
     public function show($id)
     {
-        $project = Project::where('file_path', '=', $id)->first();
+        $project = ProjectLogic::find_path($id);
         if($project != null) {
-            if($project->active) {
-                $thisProject = Project::where('file_path', '=', $id)->with('entries.user', 'users.user', 'admins.admin.user')->first();
+            if($project->isActive()) {
+                $projectData = $project->dataReturn();
                 return view('admin.projectActions.index',
                     [
-                        'project' => $thisProject,
+                        'project' => $projectData,
                     ]
                 );
             } else {
                 $thisProj = Project::where('file_path', '=', $id)->with('admin_entries')->first();
                 if(isset($thisProj->admin_entries[0])) {
-                    return 'Outout Pending';
+                    return 'Output Pending';
                 }
                 else {
+                    $projectData = $project->get();
                     return view('admin.projectActions.create',
                         [
-                            'project' => $project,
+                            'project' => $projectData,
                         ]
                     );
                 }
