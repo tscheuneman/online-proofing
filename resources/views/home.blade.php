@@ -7,17 +7,7 @@
             <div class="card">
                 <div class="card-header">Pending Changes</div>
                 <div class="card-body">
-                    @foreach($projects as $project)
-                        @if($project->admin_entries[0]->admin)
-                            <a href="{{ url('/project') . '/' .  $project->file_path }}">
-                                <div class="pendingProject">
-                                    {{$project->project_name}}
-                                    <br>
-                                    <small>{{date('Y-m-d g:ia', strtotime($project->admin_entries[0]->created_at))}}</small>
-                                </div>
-                            </a>
-                        @endif
-                    @endforeach
+
                 </div>
             </div>
         </div>
@@ -27,14 +17,17 @@
                 <div class="card-header">Active Projects</div>
 
                 <div class="card-body">
-                    @foreach($projects as $project)
-                            <a href="{{ url('/project') . '/' .  $project->file_path }}">
-                                <div class="pendingProject">
-                                    {{$project->project_name}}
-                                    <br>
-                                    <small>{{date('Y-m-d g:ia', strtotime($project->admin_entries[0]->created_at))}}</small>
-                                </div>
-                            </a>
+                    @foreach(json_decode($orders) as $order)
+                        <div class="order">
+                            <p class="title">{{$order->name}}</p>
+                            @foreach($order->projects as $proj)
+                                <a href="{{ url('/project') . '/' . $proj->file_path }}">
+                                    <div class="project">
+                                        <p class="projectTitle">{{$proj->project_name}}</p>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
                     @endforeach
                 </div>
             </div>
