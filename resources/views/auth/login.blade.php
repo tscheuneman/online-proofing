@@ -23,6 +23,15 @@
                                     </span>
                                 @endif
                             </div>
+                            @if($errors->has('password'))
+                                <br />
+                                <br />
+                                <span class="invalid-feedback" style="display:block;">
+                                        <div class="col-sm-4 col-form-label text-md-right">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </div>
+                                </span>
+                            @endif
                         </div>
 
                         <div class="form-group row mb-0">
