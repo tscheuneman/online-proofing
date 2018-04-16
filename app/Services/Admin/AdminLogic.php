@@ -10,15 +10,15 @@ use App\Services\Users\UserLogic;
 class AdminLogic {
     protected $admin;
 
+    public function __construct(Admin $admin)
+    {
+        $this->admin = $admin;
+    }
+
     public static function find($id) {
         $admin = Admin::find($id);
 
         return new AdminLogic($admin);
-    }
-
-    public function __construct(Admin $admin)
-    {
-        $this->admin = $admin;
     }
 
     public static function getAll() {
@@ -27,9 +27,11 @@ class AdminLogic {
     }
 
     public static function findAdmin($id) {
-        $admin = Admin::where('user_id', '=', $id)->first();
 
-        return new AdminLogic($admin);
+        if($admin = Admin::where('user_id', '=', $id)->first()) {
+            return new AdminLogic($admin);
+        }
+        return false;
     }
 
     public function isActive() {
