@@ -254,6 +254,8 @@ sidebar nav a.active:before {
 #content div.topbar .profile .profileMenu a {
   display: block;
   color: #000;
+  margin: 5px 0;
+  font-size: 16px;
 }
 
 table.table thead {
