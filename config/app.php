@@ -162,6 +162,7 @@ return [
 
         Emadadly\LaravelUuid\LaravelUuidServiceProvider::class,
         App\Providers\DropBoxServiceProvider::class,
+        Subfission\Cas\CasServiceProvider::class,
 
 
     ],
@@ -212,6 +213,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Cas' => Subfission\Cas\Facades\Cas::class,
 
 
     ],
