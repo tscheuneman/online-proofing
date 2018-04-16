@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 use App\Mail\UserCreated;
+use App\Mail\UserCreatedCAS;
 
 class UserLogic {
     protected $user;
@@ -26,6 +27,20 @@ class UserLogic {
         return $this->user->id;
     }
 
+    public function user() {
+        return $this->user;
+    }
+
+    public static function checkUserCAS($mail) {
+        $user = User::where('email', $mail)->first();
+
+        if($user == null) {
+            return false;
+        }
+
+        return new UserLogic($user);
+    }
+
     public static function findUser($id) {
         $user = User::find($id);
 
@@ -33,6 +48,9 @@ class UserLogic {
     }
 
     public static function createUser($request, $dept) {
+        $explodedEmail = explode('@', $request->email);
+        $domain = array_pop($explodedEmail);
+
         $pwReturn = str_random(12);
 
         $user = new User();
@@ -45,7 +63,17 @@ class UserLogic {
             $user->active = false;
             $user->save();
 
-        Mail::to($request->email)->send(new UserCreated($user, $pwReturn));
+
+        if($domain == ENV('CAS_APPEND')) {
+            Mail::to($request->email)->send(new UserCreatedCAS($user));
+            $user->active = true;
+            $user->save();
+        }
+        else {
+            Mail::to($request->email)->send(new UserCreated($user, $pwReturn));
+        }
+
+
 
         return $user->id;
     }
