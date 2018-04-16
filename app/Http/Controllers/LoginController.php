@@ -49,6 +49,13 @@ class LoginController extends Controller
             }
             return $domain;
         }
+        elseif($request->email && $request->password) {
+            $credentials = $request->only('email', 'password');
+            if(Auth::attempt($credentials)) {
+                return redirect()->intended('/');
+            }
+            return redirect('login');
+        }
         else {
             return view('auth.loginTwo', [
                 'username' => $request->email
