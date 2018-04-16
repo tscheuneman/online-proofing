@@ -16,8 +16,8 @@
         "league/flysystem": "^1.0",
         "nicolaslopezj/searchable": "1.*",
         "spatie/flysystem-dropbox": "^1.0",
-        "spatie/laravel-medialibrary": "7.0.0",
-        "spatie/laravel-tags": "^2.0"
+        "spatie/laravel-tags": "^2.0",
+        "subfission/cas": "dev-master"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
