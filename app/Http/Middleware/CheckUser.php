@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 
+use App\Services\Users\UserLogic;
+
 class CheckUser
 {
     /**
@@ -18,9 +20,9 @@ class CheckUser
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            $user = User::where('id', '=', Auth::id())->first();
-            if($user !== null) {
-                if($user->active) {
+            $user = UserLogic::findUser(Auth::id());
+            if($user) {
+                if($user->returnActive()) {
                     return $next($request);
                 }
                 return redirect('/password');

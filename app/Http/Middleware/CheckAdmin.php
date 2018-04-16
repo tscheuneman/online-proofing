@@ -4,7 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use App\Admin;
+
+use App\Services\Admin\AdminLogic;
 
 class CheckAdmin
 {
@@ -18,13 +19,12 @@ class CheckAdmin
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            $findAdmin = Admin::where('user_id', '=', Auth::id())->first();
-            if($findAdmin !== null) {
-                if($findAdmin->active) {
+            $findAdmin = AdminLogic::findAdmin(Auth::id());
+            if($findAdmin) {
+                if($findAdmin->isActive()) {
                     return $next($request);
                 }
                 return redirect('/admin/password');
-
             }
             return redirect('/');
         }
