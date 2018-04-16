@@ -20,7 +20,7 @@ class LoginController extends Controller
     {
 
         $rules = array(
-            'email' => 'required|email',
+            'email' => 'required|email|exists:users',
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -54,7 +54,7 @@ class LoginController extends Controller
             if(Auth::attempt($credentials)) {
                 return redirect()->intended('/');
             }
-            return redirect('login');
+            return redirect()->back()->withErrors(array('password' => 'Invalid Password'));
         }
         else {
             return view('auth.loginTwo', [
