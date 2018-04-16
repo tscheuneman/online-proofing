@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Categories;
 use Illuminate\Http\Request;
 
 use Redirect;
