@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>App Name - @yield('title')</title>
+    <title>{{ENV('APP_NAME')}} - @yield('title')</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
