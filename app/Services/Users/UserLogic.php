@@ -2,7 +2,6 @@
 
 namespace App\Services\Users;
 
-use App\User;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -21,6 +20,10 @@ class UserLogic {
     public static function getAll() {
         $users = User::where('org', '!=', 'Admin')->get();
         return $users;
+    }
+
+    public function returnActive() {
+        return $this->user->active;
     }
 
     public function returnID() {
