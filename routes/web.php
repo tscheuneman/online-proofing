@@ -19,6 +19,10 @@ Route::post('admin/password', 'AdminController@passwordSave');
 Route::get('password', 'UserController@password');
 Route::post('password', 'UserController@passwordSave');
 
+Route::resource('login', 'LoginController');
+
+Route::post('logout', 'LoginController@logout');
+
 Route::group(['middleware' => ['admin']], function () {
     /* Admin Routes */
 
@@ -50,6 +54,6 @@ Route::group(['middleware' => ['user']], function () {
 
 
 
-Auth::routes();
+//Auth::routes();
 
 
