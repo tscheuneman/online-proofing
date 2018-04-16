@@ -27,8 +27,21 @@
             </div>
             <div class="clear"></div>
             <div class="profileMenu">
+
                 <span class="name">Thomas Scheuneman</span>
                 <a href="{{ url('/admin/profile') }}"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+
+                <a href="{{ url('logout') }}"
+                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    {{ __('Logout') }}
+                </a>
+                <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+
+
             </div>
         </div>
     </div>
