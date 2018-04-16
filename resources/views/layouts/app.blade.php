@@ -36,7 +36,7 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li><a class="nav-link" href="{{ url('login') }}">{{ __('Login') }}</a></li>
+                            <li><a class="nav-link" href="{{ url('login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> {{ __('Login') }}</a></li>
                         @else
                             <li>
                                 @if(Auth::user()->picture == null)
@@ -53,11 +53,13 @@
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="profile">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
                                         Profile
                                     </a>
                                     <a class="dropdown-item" href="{{ url('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i>
                                         {{ __('Logout') }}
                                     </a>
                                     <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
