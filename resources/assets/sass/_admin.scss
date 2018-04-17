@@ -638,6 +638,7 @@ div.comment {
 
 .literally {
   position:static !important;
+  min-height:200px !important;
 
   .lc-clear, .lc-zoom-out, .lc-zoom-in, .lc-pick-tool[Title="Eraser"] {
     display:none !important;
@@ -703,7 +704,7 @@ footer {
   bottom:0;
   left:0;
   width:100%;
-  height:40px;
+  padding: 10px 0;
   border-top:1px solid rgba(0,0,0,.15);
   background:$footer-bg;
   z-index:9999;
