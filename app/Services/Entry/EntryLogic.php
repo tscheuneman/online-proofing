@@ -24,6 +24,18 @@ class EntryLogic {
         return new EntryLogic($entry);
     }
 
+    public static function createUser($id, $user_id, $path) {
+        $entry = new Entry();
+        $entry->project_id = $id;
+        $entry->user_id = $user_id;
+        $entry->path = $path;
+        $entry->user_notes = null;
+        $entry->notes = null;
+        $entry->save();
+
+        return new EntryLogic($entry);
+    }
+
     public function get() {
         return $this->entry;
     }
