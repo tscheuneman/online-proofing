@@ -18,6 +18,7 @@ use Imagick;
 use App\Entry;
 use App\Project;
 use App\UserAssign;
+use App\Order;
 
 use Mockery\Exception;
 
@@ -90,8 +91,10 @@ class ConvertPDF implements ShouldQueue
                         $this->entry->files = json_encode($files);
                         $this->entry->save();
 
-                        if($this->project->notify_users) {
-                            $users = UserAssign::with('user')->where('project_id', $this->project->id)->get();
+                        $orderVals = $this->project->with('order')->where('id', $this->project->id)->first();
+
+                        if($orderVals->order->notify_users) {
+                            $users = UserAssign::with('user')->where('order_id', $this->project->id)->get();
                             foreach($users as $user) {
                                 Mail::to($user->user->email)->send(new UserNotify($user->user->id, $this->project));
                             }
