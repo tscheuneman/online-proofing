@@ -23,12 +23,12 @@
 
         <div class="profile">
             <div class="profileImage">
-                TS
+                {{mb_substr(Auth::user()->first_name,0,1) . mb_substr(Auth::user()->last_name,0,1)}}
             </div>
             <div class="clear"></div>
             <div class="profileMenu">
 
-                <span class="name">Thomas Scheuneman</span>
+                <span class="name">{{Auth::user()->first_name . ' ' . Auth::user()->last_name}}</span>
                 <a href="{{ url('/admin/profile') }}"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
 
                 <a href="{{ url('logout') }}"
