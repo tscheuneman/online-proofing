@@ -11,7 +11,25 @@
     @endif
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
+            <a class="btn btn-brand-primary" href="{{url('admin')}}"><i class="fa fa-home"></i> Home</a>
+            <a class="btn btn-brand-primary" href="{{url('admin/projects')}}"><i class="fa fa-pencil-square-o"></i> Projects</a>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card topSpacing">
+                <div class="card-header">
+                    <p class="title">Other Awaiting Products in Order</p>
+                   @foreach($otherProjects as $prod)
+                        <a class="btn btn-secondary" href="{{url('admin/project') . '/' . $prod->file_path}}">{{$prod->project_name}}</a>
+                   @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card topSpacing">
                 <div class="card-body">
                     <h2>
                         Create Initial Upload for <span class="name_bg">{{$project->project_name}}</span>
