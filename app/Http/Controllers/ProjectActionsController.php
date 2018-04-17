@@ -4,19 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Auth;
-use App\Jobs\ConvertPDF;
-
 use App\Services\Project\ProjectLogic;
-
-use App\Project;
-use App\Entry;
 
 use Validator;
 use Redirect;
-use Storage;
-use File;
-use Imagick;
 
 
 
@@ -53,17 +44,17 @@ class ProjectActionsController extends Controller
         $rules = array(
             'project_id' => 'required|exists:projects,id',
         );
-
         $validator = Validator::make($request->all(), $rules);
-
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput($request->all());
         }
 
-        $project = Project::find($request->project_id);
+        if(!$project = ProjectLogic::find($request->project_id)) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
 
 
-        if($project->active) {
+        if($project->isActive()) {
             return $request;
         }
         else {
@@ -71,45 +62,15 @@ class ProjectActionsController extends Controller
                 'comments' => 'required|string',
                 'pdf' => 'required|file|mimes:pdf',
             );
-
             $validator = Validator::make($request->all(), $rules);
-
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput($request->all());
             }
 
-            $proj_year = date('Y', strtotime($project->created_at));
-            $proj_month = date('F', strtotime($project->created_at));
-
-            $projectPath = $proj_year . '/' . $proj_month . '/' . $project->file_path;
-
-            $rand = str_random(12);
-
-                        if(File::makeDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand), 0775, true)) {
-                            $dir = 'projects/' . $projectPath . '/' . $rand;
-
-                            if($path = Storage::disk('public')->put($dir . '/pdf', $request->file('pdf'), 'public')) {
-                                $storageName = basename($path);
-
-                                $entry = new Entry();
-                                    $entry->project_id = $project->id;
-                                    $entry->user_id = Auth::id();
-                                    $entry->path = $rand;
-                                    $entry->admin = true;
-                                    $entry->notes = $request->comments;
-                                $entry->save();
-
-                                ConvertPDF::dispatch($dir, $storageName, 500, $project, $entry);
-
-                                \Session::flash('flash_created','Wow');
-                                return redirect('/admin');
-                            }
-                            else {
-                                File::deleteDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand));
-                                return redirect()->back()->withErrors(array('failed'))->withInput($request->all());
-                            }
-
-                        }
+            if($project->makeFolder($request)) {
+                \Session::flash('flash_created','Wow');
+                return redirect('/admin');
+            }
 
             return redirect()->back()->withErrors(array('failed'))->withInput($request->all());
         }
