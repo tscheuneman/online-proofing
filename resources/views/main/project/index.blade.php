@@ -12,7 +12,7 @@
             <i class="fa fa-commenting-o" aria-hidden="true"></i> Comment Image
         </div>
     @endif
-    <div class="container">
+    <div class="container-big">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 @if($project->entries[0]->admin)

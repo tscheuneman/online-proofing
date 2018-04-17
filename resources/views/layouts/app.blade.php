@@ -18,7 +18,7 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
+            <div class="container-big">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ ENV('APP_NAME', 'Laravel') }}
                 </a>
