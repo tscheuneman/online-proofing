@@ -21,4 +21,8 @@ class Project extends Model
     {
         return $this->belongsTo('App\Order', 'ord_id', 'id');
     }
+
+    public function entryInfo() {
+        return $this->hasMany('App\Entry', 'project_id','id')->select('id', 'project_id', 'admin', 'active', 'created_at', 'pdf_path')->latest();
+    }
 }
