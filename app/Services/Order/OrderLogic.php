@@ -15,6 +15,16 @@ class OrderLogic {
         $this->order = $order;
     }
 
+    public static function getAdminProjects($id) {
+        $userProjects = Order::whereHas('admins.admin.user', function($query) use($id) {
+            $query->where('id', $id);
+        })->with(array('projects' => function($query2) {
+            $query2->with('entries.user')->where('projects.completed', false)->where('active', true);
+        }))->get();
+
+        return $userProjects;
+    }
+
     public static function create($request, $hidden, $notify_admins, $notify_users) {
         try {
             $order = new Order();
