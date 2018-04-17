@@ -23,12 +23,13 @@ class AdminIndexController extends Controller
         $admin = Admin::where('user_id', '=', Auth::id())->with('user')->first();
         $user_count = User::where('deleted_at', '=', null)->where('org', '!=', 'Admin')->count();
         $proj_count = Project::where('active', '=', true)->where('completed', '=', false)->count();
-        $userProjects = Order::with(array('admins.admin.user' => function($query)
-        {
-            $query->where('id', '=', Auth::id());
-        }))->with(array('projects' => function($query) {
-            $query->with('entries.user')->where('projects.completed', false)->where('active', true);
+
+        $userProjects = Order::whereHas('admins.admin.user', function($query) {
+            $query->where('id', Auth::id());
+        })->with(array('projects' => function($query2) {
+            $query2->with('entries.user')->where('projects.completed', false)->where('active', true);
         }))->get();
+        
         return view('admin.index',
             [
                 'admin' => $admin,
