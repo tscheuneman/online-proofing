@@ -7,8 +7,7 @@ function submitRevision(imgs, id) {
             .then(function (response) {
                 let returnData = response.data;
                 if(returnData.status === "Success") {
-                    alert(returnData.message);
-                    $('#loader').fadeOut(500);
+                    location.reload();
                 }
                 else {
                     alert(returnData.message);
@@ -67,7 +66,7 @@ function approveRevision(id) {
                 let returnData = response.data;
                 if(returnData.status === "Success") {
                     alert(returnData.message);
-                    $('#loader').fadeOut(500);
+                    location.reload();
                 }
                 else {
                     alert(returnData.message);
