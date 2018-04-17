@@ -54,7 +54,10 @@ class LoginController extends Controller
             if(Auth::attempt($credentials)) {
                 return redirect()->intended('/');
             }
-            return redirect()->back()->withErrors(array('password' => 'Invalid Password'));
+            return view('auth.loginTwo', [
+                'username' => $request->email
+            ])->withInput($request->email)->withErrors(array('password' => 'Invalid Password'));
+            //return redirect()->back()->withErrors(array('password' => 'Invalid Password'));
         }
         else {
             return view('auth.loginTwo', [
