@@ -91,7 +91,6 @@
                             <div class="project">
                                 <p class="projectTitle">{{$proj->project_name}}</p>
                                 <p class="statusText">
-                                    Status:
                                     <strong>
                                         @if(isset($proj->admin_entries[0]))
                                             @if(!$proj->admin_entries[0]->active)
