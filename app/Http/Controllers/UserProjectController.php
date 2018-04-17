@@ -11,6 +11,8 @@ use App\Jobs\UserEntry;
 
 use Mockery\Exception;
 
+use App\Services\Project\UserProjectLogic;
+
 use Validator;
 use File;
 
@@ -54,11 +56,10 @@ class UserProjectController extends Controller
         if ($validator->fails()) {
             return "failure";
         }
-        $rand = str_random(12);
 
-        $project = Project::find($request->projectID);
+        $project = UserProjectLogic::find($request->projectID);
 
-        $latest = Project::with('admin_entries')->where('id', $request->projectID)->first();
+        $latest = $project->getLatestEntry();
 
 
         if(!$latest->admin_entries[0]->admin) {
@@ -67,46 +68,14 @@ class UserProjectController extends Controller
             return json_encode($returnData);
         }
 
-        $proj_year = date('Y', strtotime($project->created_at));
-        $proj_month = date('F', strtotime($project->created_at));
-
-        $projectPath = $proj_year . '/' . $proj_month . '/' . $project->file_path;
-
-        if(File::makeDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand), 0777, true)) {
-            try {
-                $dir = 'projects/' . $projectPath . '/' . $rand;
-
-                $files = [];
-                $comments = [];
-
-                $data = json_decode($request->dataArray);
-
-                foreach($data as $val) {
-                    $files[] = $val->data;
-                    $comments[] = $val->comments;
-                }
-
-                $entry = new Entry();
-                $entry->project_id = $project->id;
-                $entry->user_id = Auth::id();
-                $entry->path = $rand;
-                $entry->pdf_name = null;
-                $entry->user_notes = null;
-                $entry->notes = null;
-                $entry->save();
-
-                UserEntry::dispatch($comments, $files, $entry, $dir);
-
-                $returnData['status'] = 'Success';
-                $returnData['message'] = 'Uploaded';
-                return json_encode($returnData);
-
-            } catch (Exception $e) {
-                return $e;
-            }
-
+        if($project->createDirectory($request)) {
+            $returnData['status'] = 'Success';
+            $returnData['message'] = 'Uploaded';
+            return json_encode($returnData);
 
         }
+
+
 
         $returnData['status'] = 'Failure';
         $returnData['message'] = 'Failed to upload';
@@ -148,6 +117,41 @@ class UserProjectController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    public function approve(Request $request) {
+        $rules = array(
+            'projectID' => 'required|exists:projects,id'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $returnData['status'] = 'Failure';
+            $returnData['message'] = 'We have failed to approve the project, please try again';
+            return json_encode($returnData);
+        }
+
+        if($project = UserProjectLogic::find($request->projectID)) {
+
+            if(!$project->isApproved()) {
+                $project->approve();
+                $project->mail();
+
+                $returnData['status'] = 'Success';
+                $returnData['message'] = 'Hey it works bruh';
+                return json_encode($returnData);
+            }
+
+            $returnData['status'] = 'Failure';
+            $returnData['message'] = 'We have failed to approve the project, please try again';
+            return json_encode($returnData);
+
+        }
+        $returnData['status'] = 'Failure';
+        $returnData['message'] = 'We have failed to approve the project, please try again';
+        return json_encode($returnData);
+
     }
 
     /**
