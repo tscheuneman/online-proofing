@@ -54,7 +54,9 @@ class UserProjectController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return "failure";
+            $returnData['status'] = 'Failure';
+            $returnData['message'] = 'Input error';
+            return json_encode($returnData);
         }
 
         $project = UserProjectLogic::find($request->projectID);
