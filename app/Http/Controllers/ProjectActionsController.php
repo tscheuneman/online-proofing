@@ -68,6 +68,12 @@ class ProjectActionsController extends Controller
             }
 
             if($project->makeFolder($request)) {
+
+                $otherProjects = $project->getProductsInOrder();
+                if(!empty($otherProjects)) {
+                    \Session::flash('flash_created','Initial Upload was created for ' . $project->getName());
+                    return redirect('/admin/project/' . $otherProjects[0]->file_path);
+                }
                 \Session::flash('flash_created','Wow');
                 return redirect('/admin');
             }
@@ -96,15 +102,17 @@ class ProjectActionsController extends Controller
                     ]
                 );
             } else {
-                $thisProj = Project::where('file_path', '=', $id)->with('admin_entries')->first();
+                $thisProj = ProjectLogic::admin_entries($id);
                 if(isset($thisProj->admin_entries[0])) {
                     return 'Output Pending';
                 }
                 else {
+                    $otherProjects = $project->getProductsInOrder();
                     $projectData = $project->get();
                     return view('admin.projectActions.create',
                         [
                             'project' => $projectData,
+                            'otherProjects' => $otherProjects
                         ]
                     );
                 }
