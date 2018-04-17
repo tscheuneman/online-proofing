@@ -18,6 +18,9 @@
     <br />
     @foreach($orders as $order)
         @foreach($order->admins as $admin)
+            @php
+                $class = '';
+            @endphp
             @if($admin->admin->user_id == Auth::id())
                 @php
                     $class = 'belongs';
