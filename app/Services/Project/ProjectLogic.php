@@ -29,6 +29,21 @@ class ProjectLogic {
         return false;
     }
 
+    public function getProductsInOrder() {
+        $returnArray = array();
+        $otherOrders = $this->project->with('admin_entries')->where('id', '!=', $this->project->id)->get();
+        foreach($otherOrders as $ord) {
+            if(!isset($ord->admin_entries[0])) {
+                $returnArray[] = $ord;
+            }
+        }
+        return $returnArray;
+    }
+
+    public static function admin_entries($id) {
+        return Project::where('file_path', '=', $id)->with('admin_entries')->first();
+    }
+
     public static function find_path($id) {
         $project = Project::where('file_path', $id)->first();
 
@@ -49,6 +64,10 @@ class ProjectLogic {
 
     public function path() {
         return $this->project->file_path;
+    }
+
+    public function getName() {
+        return $this->project->project_name;
     }
 
     public function get() {
