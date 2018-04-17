@@ -5,13 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Emadadly\LaravelUuid\Uuids;
 
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-
-class Entry extends Model implements HasMedia
+class Entry extends Model
 {
     use Uuids;
-    use HasMediaTrait;
 
     public $incrementing = false;
 
