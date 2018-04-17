@@ -134,3 +134,26 @@ function populateCanvas(array) {
     });
     $('#loader').fadeOut(500);
 }
+
+function approveRevision(id) {
+    $('#loader').fadeIn(500, function() {
+        axios.post('/project/approve', {
+            projectID: id
+        })
+            .then(function (response) {
+                console.log(response);
+                let returnData = response.data;
+                if(returnData.status === "Success") {
+                    alert(returnData.message);
+                    $('#loader').fadeOut(500);
+                }
+                else {
+                    alert(returnData.message);
+                    $('#loader').fadeOut(500);
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
+}
