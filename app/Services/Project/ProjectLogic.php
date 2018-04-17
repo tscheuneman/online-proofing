@@ -5,6 +5,13 @@ namespace App\Services\Project;
 use App\Project;
 use App\Services\Order\OrderLogic;
 use File;
+use Storage;
+
+use Illuminate\Support\Facades\Auth;
+
+use App\Services\Entry\EntryLogic;
+use App\Jobs\ConvertPDF;
+
 
 class ProjectLogic {
     protected $project;
@@ -14,6 +21,13 @@ class ProjectLogic {
         $this->project = $project;
     }
 
+    public static function find($id) {
+        $project = Project::find($id);
+        if($project) {
+            return new ProjectLogic($project);
+        }
+        return false;
+    }
 
     public static function find_path($id) {
         $project = Project::where('file_path', $id)->first();
@@ -21,8 +35,20 @@ class ProjectLogic {
         return new ProjectLogic($project);
     }
 
+    public static function count() {
+        return Project::where('active', '=', true)->where('completed', '=', false)->count();
+    }
+
     public function isActive() {
         return $this->project->active;
+    }
+
+    public function created() {
+        return $this->project->created_at;
+    }
+
+    public function path() {
+        return $this->project->file_path;
     }
 
     public function get() {
@@ -49,6 +75,34 @@ class ProjectLogic {
         } catch(\Exception $e) {
             return false;
         }
+    }
+
+    public function makeFolder($request) {
+        $proj_year = date('Y', strtotime($this->project->created_at));
+        $proj_month = date('F', strtotime($this->project->created_at));
+        $projectPath = $proj_year . '/' . $proj_month . '/' . $this->project->file_path;
+
+        $rand = str_random(12);
+
+        $folderPath = '/storage/' . 'projects/' . $projectPath . '/' . $rand;
+
+        if(File::makeDirectory(public_path($folderPath), 0775, true)) {
+            $dir = 'projects/' . $projectPath . '/' . $rand;
+            return $this->storeFile($request, $dir, $folderPath, $rand);
+        }
+        return false;
+
+    }
+    public function storeFile($request, $dir, $folderPath, $rand) {
+        if($path = Storage::disk('public')->put($dir . '/pdf', $request->file('pdf'), 'public')) {
+            $storageName = basename($path);
+            $entry = EntryLogic::createAdmin($this->project->id, Auth::id(), $rand, $request->comments);
+            ConvertPDF::dispatch($dir, $storageName, 500, $this->get(), $entry->get());
+
+            return true;
+        }
+        File::deleteDirectory(public_path($folderPath));
+        return false;
     }
 
 }
