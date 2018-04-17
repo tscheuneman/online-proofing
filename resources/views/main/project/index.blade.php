@@ -166,31 +166,40 @@
         </div>
     </div>
       <br><br><br><br>
-    <footer>
-        <div class="container">
-            <button id="submit" class="btn btn-primary">
-                Submit
-            </button>
-        </div>
-    </footer>
+
+    @if($project->entries[0]->admin)
+        <footer>
+            <div class="container">
+                <button id="submit" class="btn btn-primary">
+                    <i class="fa fa-share-square-o" aria-hidden="true"></i>
+                    Submit Revisions
+                </button>
+                &nbsp;&nbsp;&nbsp;
+                |
+                &nbsp;&nbsp;&nbsp;
+                <button class="btn btn-secondary">
+                    <i class="fa fa-upload" aria-hidden="true"></i>
+                    Upload new Files
+                </button>
+                &nbsp;&nbsp;&nbsp;
+                |
+                &nbsp;&nbsp;&nbsp;
+                <button id="approve" class="btn btn-submission">
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                    Approve
+                </button>
+            </div>
+        </footer>
+    @endif
 
 @include('layouts/includes/scripts/viewProjScript')
   <script>
-    let entryValues = [];
-    let holder = null;
     let returnValues = {};
     window.items = [];
     window.bounds = [];
     @if($project->entries[0]->admin)
-    @foreach(json_decode($project->entries[0]->files) as $key => $file)
-        holder = {};
-            holder['file'] = '{{$file->file}}';
-            holder['width'] = {{$file->width}};
-            holder['height'] = {{$file->height}};
-            entryValues.push(holder);
-    @endforeach
     returnValues['linkAddy'] = "{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/')}}";
-    returnValues['data'] = entryValues;
+    returnValues['data'] = {!! $project->entries[0]->files !!};
     @else
         returnValues = false;
     @endif
@@ -218,7 +227,7 @@
             let comments = null;
             let activeElm = null;
             let x = 0;
-            window.items.forEach(function(elm) {
+            window.items.forEach(function() {
                 let thisElm = {};
                 canvas = window.items[x].getImage({rect: window.bounds[x]}).toDataURL();
                 activeElm = $('div.submissionEntry .proj_'+x);
@@ -229,6 +238,12 @@
                 x++;
             });
             submitRevision(images, '{{$project->id}}');
+        });
+
+        $('button#approve').on('click', function() {
+            let projectID = '{{$project->id}}';
+
+            approveRevision(projectID);
         });
 
     });
