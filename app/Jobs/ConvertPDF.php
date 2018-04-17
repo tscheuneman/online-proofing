@@ -94,7 +94,7 @@ class ConvertPDF implements ShouldQueue
                         $orderVals = $this->project->with('order')->where('id', $this->project->id)->first();
 
                         if($orderVals->order->notify_users) {
-                            $users = UserAssign::with('user')->where('order_id', $this->project->id)->get();
+                            $users = UserAssign::with('user')->where('order_id', $orderVals->order->id)->get();
                             foreach($users as $user) {
                                 Mail::to($user->user->email)->send(new UserNotify($user->user->id, $this->project));
                             }
