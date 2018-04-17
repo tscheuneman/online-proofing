@@ -24,6 +24,16 @@ div#loader .loader {
   display: block;
 }
 
+p.title {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+a.otherProdLink {
+  font-size: 16px;
+  color: #000;
+}
+
 div.container.topSpacing {
   margin-top: 50px;
 }
@@ -60,6 +70,17 @@ br.clear {
 
 .btn-main:hover {
   background: #73808c;
+  color: #ffffff;
+}
+
+.btn-brand-primary {
+  background: #8C1D40;
+  color: #ffffff;
+  outline: none;
+}
+
+.btn-brand-primary:hover {
+  background: #cd224f;
   color: #ffffff;
 }
 

@@ -20,6 +20,14 @@ div#loader {
     display:block;
   }
 }
+p.title {
+  font-weight:bold;
+  font-size:18px;
+}
+a.otherProdLink {
+  font-size:16px;
+  color:#000;
+}
 div.container {
 
   &.topSpacing {
@@ -51,6 +59,17 @@ div.clear, br.clear {
 
   &:hover {
     background:$btn-main-color-hover;
+    color:$brand-primary-color;
+  }
+}
+
+.btn-brand-primary {
+  background:$brand-primary;
+  color:$brand-primary-color;
+  outline:none;
+
+  &:hover {
+    background:$brand-primary-hover;
     color:$brand-primary-color;
   }
 }
