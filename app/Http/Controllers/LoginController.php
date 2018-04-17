@@ -42,7 +42,7 @@ class LoginController extends Controller
                     Auth::login($user->user());
                     return redirect('/');
                 }
-                return redirect()->back()->withErrors(array('Invalid User'));
+                return redirect()->back()->withErrors(array('password' => 'CAS user does not exist'));
             }
             else {
                 cas()->authenticate();
