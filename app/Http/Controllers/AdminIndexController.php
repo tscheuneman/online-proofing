@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Admin;
-use App\User;
-use App\Project;
-use App\Entry;
-use App\Order;
+use App\Services\Admin\AdminLogic;
+use App\Services\Users\UserLogic;
+use App\Services\Project\ProjectLogic;
+use App\Services\Order\OrderLogic;
 
 class AdminIndexController extends Controller
 {
@@ -20,19 +19,14 @@ class AdminIndexController extends Controller
      */
     public function index()
     {
-        $admin = Admin::where('user_id', '=', Auth::id())->with('user')->first();
-        $user_count = User::where('deleted_at', '=', null)->where('org', '!=', 'Admin')->count();
-        $proj_count = Project::where('active', '=', true)->where('completed', '=', false)->count();
+        $admin = AdminLogic::findAdmin(Auth::id());
+        $user_count = UserLogic::count();
+        $proj_count = ProjectLogic::count();
+        $userProjects = OrderLogic::getAdminProjects(Auth::id());
 
-        $userProjects = Order::whereHas('admins.admin.user', function($query) {
-            $query->where('id', Auth::id());
-        })->with(array('projects' => function($query2) {
-            $query2->with('entries.user')->where('projects.completed', false)->where('active', true);
-        }))->get();
-        
         return view('admin.index',
             [
-                'admin' => $admin,
+                'admin' => $admin->get(),
                 'user_count' => $user_count,
                 'proj_count' => $proj_count,
                 'userProjects' => $userProjects
