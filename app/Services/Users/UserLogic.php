@@ -24,6 +24,10 @@ class UserLogic {
         return $users;
     }
 
+    public static function count() {
+        return User::where('deleted_at', '=', null)->where('org', '!=', 'Admin')->count();
+    }
+
     public function returnActive() {
         return $this->user->active;
     }
