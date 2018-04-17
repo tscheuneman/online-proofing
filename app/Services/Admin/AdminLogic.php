@@ -26,6 +26,10 @@ class AdminLogic {
         return $admins;
     }
 
+    public function get() {
+        return $this->admin;
+    }
+
     public static function findAdmin($id) {
 
         if($admin = Admin::where('user_id', '=', $id)->first()) {
