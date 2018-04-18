@@ -125,6 +125,10 @@ class ProjectLogic {
         return false;
     }
 
+    public static function getDropboxLink($val) {
+        return Storage::disk('dropbox')->getAdapter()->getTemporaryLink($val);
+    }
+
 }
 
 ?>

@@ -10,7 +10,6 @@ use Validator;
 use Redirect;
 
 
-
 class ProjectActionsController extends Controller
 {
     /**
@@ -156,5 +155,26 @@ class ProjectActionsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getLink(Request $request) {
+        $rules = array(
+            'val' => 'required|string',
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+
+        if($link = ProjectLogic::getDropboxLink($request->val)) {
+            $returnData['status'] = 'Sucess';
+            $returnData['message'] = $link;
+            return json_encode($returnData);
+        }
+
+        $returnData['status'] = 'Failure';
+        $returnData['message'] = 'Failed to generate link';
+        return json_encode($returnData);
     }
 }

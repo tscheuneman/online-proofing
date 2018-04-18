@@ -38,7 +38,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('admin/profile', 'ProfileController@index');
     Route::get('admin', 'AdminIndexController@index');
 
-    //Route::get('admin/project/{id}', 'ProjectActionsController@index');
+    Route::post('admin/project/link', 'ProjectActionsController@getLink');
     Route::resource('admin/project', 'ProjectActionsController');
 
     Route::resource('admin/orders', 'OrderController');
@@ -50,6 +50,8 @@ Route::group(['middleware' => ['user']], function () {
     Route::resource('project', 'UserProjectController');
 
     Route::post('project/approve', 'UserProjectController@approve');
+
+    Route::post('user/files', 'UserProjectController@userFiles');
 });
 
 
