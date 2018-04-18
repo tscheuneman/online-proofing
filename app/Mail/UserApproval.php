@@ -10,6 +10,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use App\User;
 use App\Project;
 
+use Storage;
+
 class UserApproval extends Mailable
 {
     use Queueable, SerializesModels;
@@ -27,7 +29,7 @@ class UserApproval extends Mailable
 
         foreach($theProj->entryInfo as $entry) {
             if($entry->admin && $entry->active) {
-                $theLink = $entry->pdf_path;
+                $theLink = Storage::disk('dropbox')->getAdapter()->getTemporaryLink($entry->pdf_path);
                 break;
             }
         }

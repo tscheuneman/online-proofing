@@ -18,7 +18,6 @@ use Imagick;
 use App\Entry;
 use App\Project;
 use App\UserAssign;
-use App\Order;
 
 use Mockery\Exception;
 
@@ -101,7 +100,7 @@ class ConvertPDF implements ShouldQueue
                         $this->project->save();
 
                         $this->entry->active = true;
-                        $this->entry->pdf_path = Storage::disk('dropbox')->getAdapter()->getTemporaryLink($projectPath . '/PDFProof-'.$numCounter.'.pdf');
+                        $this->entry->pdf_path = $projectPath . '/PDFProof-'.$numCounter.'.pdf';
 
                         $this->entry->files = json_encode($files);
                         $this->entry->save();
