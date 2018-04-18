@@ -110,6 +110,7 @@ span.name_bg{
   font-weight:900;
 }
 
+
 sidebar {
   width:15%;
   height:100%;
@@ -671,6 +672,24 @@ div.entry {
     background:#fff;
     padding:10px;
 
+    &.userFile {
+      width:650px;
+      margin:0 auto;
+      background:#f4f4f4;
+      padding:25px;
+      box-shadow:0 0 15px rgba(0,0,0,.4);
+
+      p.title {
+        text-align:center;
+        margin-bottom:0;
+      }
+      p.date {
+        text-align:center;
+        margin:0;
+        padding:0;
+      }
+    }
+
     img {
       box-shadow:0 0 25px rgba(0,0,0,.22);
     }
@@ -756,5 +775,28 @@ div.pendingProject {
   transition:.5s all;
   &:hover {
     background:$brand-primary-hover;
+  }
+}
+
+//User Projects
+
+div#customerFiles {
+  background:#fff;
+  padding:15px;
+  box-shadow:0 0 15px rgba(0,0,0,.4);
+  width:550px;
+  position:fixed;
+  z-index:9999;
+  left:calc(50% - 250px);
+  display:none;
+  form {
+
+  }
+
+  #closeFiles {
+    float:right;
+    font-size:20px;
+    cursor:pointer;
+
   }
 }

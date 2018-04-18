@@ -760,6 +760,26 @@ div.entry .image {
   padding: 10px;
 }
 
+div.entry .image.userFile {
+  width: 650px;
+  margin: 0 auto;
+  background: #f4f4f4;
+  padding: 25px;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+div.entry .image.userFile p.title {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+div.entry .image.userFile p.date {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
 div.entry .image img {
   -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.22);
           box-shadow: 0 0 25px rgba(0, 0, 0, 0.22);
@@ -854,6 +874,24 @@ div.pendingProject {
 
 div.pendingProject:hover {
   background: #cd224f;
+}
+
+div#customerFiles {
+  background: #fff;
+  padding: 15px;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  width: 550px;
+  position: fixed;
+  z-index: 9999;
+  left: calc(50% - 250px);
+  display: none;
+}
+
+div#customerFiles #closeFiles {
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 /*!
