@@ -25,7 +25,7 @@
                 <div class="card-body">
                     @foreach(json_decode($orders) as $order)
                         <div class="order belongs">
-                            <p class="title">{{$order->name}}</p>
+                            <p class="title">{{$order->job_id}}</p>
                             @foreach($order->projects as $proj)
                                 <a href="{{ url('/project') . '/' . $proj->file_path }}">
                                     <div class="project">
