@@ -6,13 +6,38 @@
 
         </div>
     </div>
-    <div id="mask"></div>
+
+    <div id="mask">
+    </div>
+
+    @if($project->entries[0]->admin)
+        <div id="customerFiles">
+            <div id="closeFiles"><i class="fa fa-times"></i></div>
+            <h4>
+                Upload Files
+            </h4>
+            <hr>
+            <form enctype="multipart/form-data" action="{{url('/user/files')}}" method="post">
+                {{ csrf_field() }}
+                <input type="hidden" name="project_id" value="{{$project->id}}">
+                <input class="form-control" type="file" id="files" name="files[]" multiple required />
+                <br />
+                <textarea name="comments" class="form-control" id="" cols="30" rows="10"></textarea>
+                <br>
+                <button id="submitFileUpload" class="btn btn-secondary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Submit</button>
+            </form>
+
+        </div>
+    @endif
+
+
+
     @if($project->entries[0]->admin)
         <div class="comment" id="comment">
             <i class="fa fa-commenting-o" aria-hidden="true"></i> Comment Image
         </div>
     @endif
-    <div class="container-big">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 @if($project->entries[0]->admin)
@@ -112,55 +137,72 @@
 
                     <div class="card-body">
                         @foreach($project->entries as $enCnt => $entry)
-                            @if($enCnt == 0)
-                                <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active submissionEntry" id="entry_{{$enCnt++}}">
-                            @else
-                                <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry" id="entry_{{$enCnt++}}">
-                            @endif
-
-                            @foreach(json_decode($entry->files) as $key => $file)
-                                @if($project->entries[0]->admin)
-                                    @if($key == 0)
-                                        @if($entry->admin)
-                                            <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 61}}px; height:{{$file->height + 31}}px; margin:0 auto;">
-                                        @else
-                                            <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 61}}px; height:{{$file->height + 31}}px; margin:0 auto;">
-                                        @endif
-                                    @else
-                                         <div data-num="{{$key}}" class="image proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
-                                    @endif
+                            @if($entry->path != '0')
+                                @if($enCnt == 0)
+                                    <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active submissionEntry" id="entry_{{$enCnt++}}">
                                 @else
-                                    @if($key == 0)
-                                        @if($entry->admin)
-                                            <div data-num="{{$key}}" class="image imageAdmin active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                    <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry" id="entry_{{$enCnt++}}">
+                                @endif
+
+                                @foreach(json_decode($entry->files) as $key => $file)
+                                    @if($project->entries[0]->admin)
+                                        @if($key == 0)
+                                            @if($entry->admin)
+                                                <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 61}}px; height:{{$file->height + 31}}px; margin:0 auto;">
+                                            @else
+                                                <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 61}}px; height:{{$file->height + 31}}px; margin:0 auto;">
+                                            @endif
                                         @else
-                                            <div data-num="{{$key}}" class="image imageAdmin active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                             <div data-num="{{$key}}" class="image proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
                                         @endif
                                     @else
-                                        <div data-num="{{$key}}" class="image imageAdmin proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                        @if($key == 0)
+                                            @if($entry->admin)
+                                                <div data-num="{{$key}}" class="image imageAdmin active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                            @else
+                                                <div data-num="{{$key}}" class="image imageAdmin active proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                            @endif
+                                        @else
+                                            <div data-num="{{$key}}" class="image imageAdmin proj_{{$key++}}" style="width:{{$file->width + 20}}px; margin:0 auto;">
+                                        @endif
                                     @endif
-                                @endif
-                                @if($enCnt == 1)
-                                    @if($entry->admin)
-                                        <div class="textboxHolder">
-                                            <span class="closeText">
-                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                            </span>
-                                            <textarea class="form-control" id="" cols="30" rows="10"></textarea>
-                                        </div>
-                                        <div class="convasContainer" data-id="{{$key - 1}}" id="canvas_{{$key - 1}}" style="height:{{$file->height}}px;">
+                                    @if($enCnt == 1)
+                                        @if($entry->admin)
+                                            <div class="textboxHolder">
+                                                <span class="closeText">
+                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                </span>
+                                                <textarea class="form-control" id="" cols="30" rows="10"></textarea>
+                                            </div>
+                                            <div class="convasContainer" data-id="{{$key - 1}}" id="canvas_{{$key - 1}}" style="height:{{$file->height}}px;">
 
-                                        </div>
+                                            </div>
+                                        @else
+                                            <img src="{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/' . $file->file)}}" alt="">
+                                        @endif
                                     @else
                                         <img src="{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/' . $file->file)}}" alt="">
                                     @endif
-                                @else
-                                    <img src="{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/' . $file->file)}}" alt="">
-                                @endif
 
-                              </div>
-                            @endforeach
+                                  </div>
+                                @endforeach
+                                    </div>
+                            @else
+                                <div data-numelm="1" data-id="{{$entry->id}}" class="entry active submissionEntry" id="entry_{{$enCnt++}}">
+                                    <div data-num="0" class="image active proj_0 submitted userFile">
+                                        <p class="title">
+                                            @if(Auth::id() == $entry->user->id)
+                                                You submitted {{count(json_decode($entry->files))}} file(s)
+                                            @else
+                                                {{$entry->user->first_name . ' ' . $entry->user->last_name}} submitted {{count(json_decode($entry->files))}} file(s)
+                                            @endif
+                                        </p>
+                                        <p class="date">
+                                            on {{date('l, F, jS', strtotime($entry->created_at))}}
+                                        </p>
+                                    </div>
                                 </div>
+                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -179,7 +221,7 @@
                 &nbsp;&nbsp;&nbsp;
                 |
                 &nbsp;&nbsp;&nbsp;
-                <button class="btn btn-secondary">
+                <button id="new" class="btn btn-secondary">
                     <i class="fa fa-upload" aria-hidden="true"></i>
                     Upload new Files
                 </button>
@@ -242,10 +284,26 @@
             submitRevision(images, '{{$project->id}}');
         });
 
+        $('button#submitFileUpload').on('click', function() {
+            $('#loader').fadeIn(200);
+        });
+
+        $('#closeFiles').on('click', function() {
+            $('#customerFiles').fadeOut(250, function() {
+                $('#mask').fadeOut(250);
+            });
+        });
+
         $('button#approve').on('click', function() {
             let projectID = '{{$project->id}}';
 
             approveRevision(projectID);
+        });
+
+        $('button#new').on('click', function() {
+            $('#mask').fadeIn(250, function() {
+                $('#customerFiles').stop().fadeIn(250);
+            })
         });
 
     });

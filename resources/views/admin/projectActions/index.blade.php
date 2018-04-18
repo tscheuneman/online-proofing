@@ -111,29 +111,46 @@
                 </div>
                 <div class="card-body">
                     @foreach($project->entries as $enCnt => $entry)
-                        @if($enCnt == 0)
-                            <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active" id="entry_{{$enCnt++}}">
+                        @if($entry->path != '0')
+                            @if($enCnt == 0)
+                                <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active" id="entry_{{$enCnt++}}">
+                            @else
+                                <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry" id="entry_{{$enCnt++}}">
+                            @endif
+                                @foreach(json_decode($entry->files) as $key => $file)
+                                    @if($key == 0)
+                                        <div data-num="{{$key}}" class="image imageAdmin active proj_{{$key++}}" style="width:{{$file->width + 20}}; margin:0 auto;">
+                                    @else
+                                        <div data-num="{{$key}}" class="image imageAdmin proj_{{$key++}}" style="width:{{$file->width + 20}}; margin:0 auto;">
+                                    @endif
+                                            <img src="{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/' . $file->file)}}" alt="">
+                                       @if(!$entry->admin)
+                                       <br>
+                                       <br>
+                                      <h3>User Comments</h3>
+                                      <p>{{json_decode($entry->user_notes)[$key - 1]}}</p>
+                                       @endif
+
+                                        </div>
+
+                                @endforeach
+                            </div>
                         @else
-                            <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry" id="entry_{{$enCnt++}}">
+                            <div data-numelm="1" data-id="{{$entry->id}}" class="entry active submissionEntry" id="entry_{{$enCnt++}}">
+                                <div data-num="0" class="image active proj_0 submitted userFile">
+                                    <p class="title">
+                                        {{$entry->user->first_name . ' ' . $entry->user->last_name}} submitted {{count(json_decode($entry->files))}} file(s)
+                                    </p>
+                                    <p class="date">
+                                        on {{date('l, F, jS', strtotime($entry->created_at))}}
+                                    </p>
+                                    <br>
+                                    @foreach(json_decode($entry->files) as $key => $file)
+                                        <button data-addy="{{$file->path}}" class="getLink btn btn-primary btn_{{$key++}}">{{$file->name}}</button>
+                                    @endforeach
+                                </div>
+                            </div>
                         @endif
-                            @foreach(json_decode($entry->files) as $key => $file)
-                                @if($key == 0)
-                                    <div data-num="{{$key}}" class="image imageAdmin active proj_{{$key++}}" style="width:{{$file->width + 20}}; margin:0 auto;">
-                                @else
-                                    <div data-num="{{$key}}" class="image imageAdmin proj_{{$key++}}" style="width:{{$file->width + 20}}; margin:0 auto;">
-                                @endif
-                                        <img src="{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/' . $file->file)}}" alt="">
-                                   @if(!$entry->admin)
-                                   <br>
-                                   <br>
-                                  <h3>User Comments</h3>
-                                  <p>{{json_decode($entry->user_notes)[$key - 1]}}</p>
-                                   @endif
-
-                                    </div>
-
-                            @endforeach
-                        </div>
                     @endforeach
                 </div>
             </div>
@@ -145,7 +162,7 @@
                             Comments
                         </div>
                         <div class="card-body">
-                            @if(!$project->entries[0]->admin)
+                            @if(!$project->entries[0]->admin && $project->entries[0]->path != '0')
                                 @foreach(json_decode($project->entries[0]->user_notes) as $key => $note)
                                     @if($note != '')
                                         <div data-num="{{$key}}" class="pageComment">
@@ -172,6 +189,11 @@
               let thisVal = $(this).data('num');
               goToElementFromPageComment(thisVal);
           });
+          $('.getLink').on('click', function() {
+            let value = $(this).data('addy');
+            getLinkValue(value);
+          });
+
       });
    </script>
 @endsection
