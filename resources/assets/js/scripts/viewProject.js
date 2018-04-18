@@ -74,5 +74,23 @@ function goToEntryItemById(id) {
             }
         });
     });
+}
 
+function getLinkValue(val) {
+    axios.post('/admin/project/link', {
+        val: val
+    })
+        .then(function (response) {
+            let returnData = response.data;
+            if(returnData.status === "Success") {
+               location.assign(returnData.message);
+            }
+            else {
+                alert(returnData.message);
+                $('#loader').fadeOut(500);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
