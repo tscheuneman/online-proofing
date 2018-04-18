@@ -37,7 +37,7 @@ class HomeController extends Controller
             return redirect('/admin');
         }
 
-        $orders = OrderLogic::getFromUser($user);
+        $orders = OrderLogic::getUserProjects($user);
 
         return view('home',
             [

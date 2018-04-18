@@ -15,12 +15,30 @@ class OrderLogic {
         $this->order = $order;
     }
 
+    public static function getUserProjects($id) {
+        $userProjects = Order::with('users.user', 'projects.entries.user')->whereHas('users.user', function($query) use($id) {
+            $query->where('id', $id);
+        })->whereHas('projects', function($query2) {
+            $query2->with('entries.user')->where('projects.completed', false)->where('active', true);
+        })->get();
+
+        return $userProjects;
+    }
+
     public static function getAdminProjects($id) {
         $userProjects = Order::whereHas('admins.admin.user', function($query) use($id) {
             $query->where('id', $id);
-        })->with(array('projects' => function($query2) {
+        })->whereHas('projects', function($query2) {
             $query2->with('entries.user')->where('projects.completed', false)->where('active', true);
-        }))->get();
+        })->get();
+
+        return $userProjects;
+    }
+
+    public static function getNonClosedProjects() {
+        $userProjects = Order::whereHas('projects', function($query2) {
+            $query2->with('entries.user')->where('projects.completed', false);
+        })->get();
 
         return $userProjects;
     }
@@ -40,39 +58,6 @@ class OrderLogic {
         } catch(\Exception $e) {
             return false;
         }
-    }
-
-    public static function getFromUser($id) {
-        $orders = Order::with('users.user', 'projects')->get();
-
-        $returnArray = array();
-        $orderCnt = 0;
-
-        foreach($orders as $ord) {
-            $projectCount = 0;
-            $returnProjects = array();
-            $isUsers = false;
-            foreach($ord->projects as $proj) {
-                if($proj->active){
-                    $returnProjects[] = $proj;
-                    $projectCount++;
-                }
-            }
-            foreach($ord->users as $user) {
-                if($user->user->id == $id) {
-                    $isUsers = true;
-                    break;
-                }
-            }
-            if($projectCount > 0 && $isUsers) {
-                $returnArray[$orderCnt]['name'] = $ord->job_id;
-                $returnArray[$orderCnt]['projects'] = $returnProjects;
-
-                $orderCnt++;
-            }
-        }
-
-        return json_encode($returnArray);
     }
 
     public function createAdmin($user_id, $notify) {
