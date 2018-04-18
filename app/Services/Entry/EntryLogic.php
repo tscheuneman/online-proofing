@@ -36,6 +36,13 @@ class EntryLogic {
         return new EntryLogic($entry);
     }
 
+    public function updateEntry($files, $comments) {
+        $this->entry->active = true;
+        $this->entry->files = json_encode($files);
+        $this->entry->notes = $comments;
+        $this->entry->save();
+    }
+
     public function get() {
         return $this->entry;
     }

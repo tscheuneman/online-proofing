@@ -10,6 +10,7 @@ use Storage;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserApproval;
+use App\Mail\AdminNotify;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -34,8 +35,16 @@ class UserProjectLogic {
         return false;
     }
 
+    public function id() {
+        return $this->project->id;
+    }
+
     public function get() {
         return $this->project;
+    }
+
+    public function getName() {
+        return $this->project->project_name;
     }
 
     public function getLatestEntry() {
@@ -63,6 +72,19 @@ class UserProjectLogic {
                 $approver = UserLogic::findUser(Auth::id());
 
                 Mail::to($user->admin->user->email)->send(new UserApproval($adminUser->user(), $this->project, $approver->user()));
+            }
+        }
+    }
+
+    public function mailFileUpload() {
+        $orderVals = $this->project->with('order')->where('id', $this->project->id)->first();
+
+        if($orderVals->order->notify_admins) {
+            $users = AdminAssign::with('admin.user')->where('order_id', $orderVals->order->id)->get();
+            foreach($users as $user) {
+                $adminUser = UserLogic::findUser($user->admin->user->id);
+
+                Mail::to($user->admin->user->email)->send(new AdminNotify($adminUser->returnID(), $this->project));
             }
         }
     }
@@ -98,6 +120,23 @@ class UserProjectLogic {
 
         }
         return false;
+    }
+
+    public function saveFileToDropbox($file) {
+        $orderVals = $this->project->with('order')->where('id', $this->project->id)->first();
+        $proj_year = date('Y', strtotime($this->project->created_at));
+        $proj_month = date('F', strtotime($this->project->created_at));
+
+
+        $proj = $this->project->with('admin_entries')->where('id', $this->project->id)->first();
+
+        $projectPath = 'user_files/' . $proj_year . '/' . $proj_month . '/' . $orderVals->order->job_id . '/' . $this->project->project_name;
+
+        $path = Storage::disk('dropbox')->put($projectPath, $file);
+
+        $array['name'] = $file->getClientOriginalName();
+        $array['path'] = $path;
+        return $array;
     }
 
 

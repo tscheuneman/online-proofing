@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Entry\EntryLogic;
+use App\Services\Project\ProjectLogic;
 use Illuminate\Http\Request;
 use App\Project;
 use App\Entry;
@@ -13,6 +15,8 @@ use Mockery\Exception;
 
 use App\Services\Project\UserProjectLogic;
 use App\Services\Approval\ApprovalLogic;
+
+use Storage;
 
 use Validator;
 use File;
@@ -180,5 +184,44 @@ class UserProjectController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function userFiles(Request $request) {
+        $rules = array(
+            'project_id' => 'required|exists:projects,id',
+            'comments' => 'required|string',
+            'files' => 'required',
+            'files.*' => 'file|mimetypes:image/jpeg,image/png,image/jpg,image/gif,image/svg,application/pdf,application/illustrator,application/x-adobe-indesign|max:50000'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $returnData['status'] = 'Failure';
+            $returnData['message'] = $validator->messages();
+            return json_encode($returnData);
+        }
+
+        $savedFiles = array();
+
+        $files = $request->file('files');
+
+        if($project = UserProjectLogic::find($request->project_id)) {
+            foreach($files as $file) {
+                $path = $project->saveFileToDropbox($file);
+                $savedFiles[] = $path;
+            }
+
+            $entry = EntryLogic::createUser($project->id(), Auth::id(), '0');
+
+            $entry->updateEntry($savedFiles, $request->comments);
+
+            $project->mailFileUpload();
+
+            \Session::flash('flash_created', 'File for ' . $project->getName() . ' has been uploaded');
+            return redirect('/');
+        }
+
+        return $request;
     }
 }
