@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 use App\Project;
 use App\Entry;
+use App\AdminAssign;
 
 use File;
 
@@ -23,18 +24,19 @@ class UserEntry implements ShouldQueue
     public $timeout = 500;
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $dir, $comments, $files, $entry;
+    protected $dir, $comments, $files, $entry, $project;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($comments, $files, Entry $entry, $dir)
+    public function __construct($comments, $files, Entry $entry, $dir, Project $project)
     {
         $this->comments = $comments;
         $this->files = $files;
         $this->entry = $entry;
         $this->dir = $dir;
+        $this->project = $project;
     }
 
     /**
@@ -64,6 +66,18 @@ class UserEntry implements ShouldQueue
                     $this->entry->files = json_encode($files);
                     $this->entry->user_notes = json_encode($this->comments);
                     $this->entry->save();
+
+                    $orderVals = $this->project->with('order')->where('id', $this->project->id)->first();
+
+
+
+                    if($orderVals->order->notify_admins) {
+                        $users = AdminAssign::with('admin.user')->where('order_id', $orderVals->order->id)->get();
+                        foreach($users as $user) {
+                            Mail::to($user->admin->user->email)->send(new AdminNotify($user->admin->user->id, $this->project));
+                        }
+                    }
+
                 } catch(Exception $e) {
                     report($e);
                 }

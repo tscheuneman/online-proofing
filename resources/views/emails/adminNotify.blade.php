@@ -16,7 +16,7 @@
                                 <tr>
                                     <td>
                                         <h1>Hi {{$user->first_name}}</h1>
-                                        <p>You have been added as an appover to a project requiring proof approval!</p>
+                                        <p>The client has submitted a revision to the project below.</p>
                                         <p>Project: <strong>{{$project->project_name}}</strong></p>
                                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                             <tbody>
@@ -25,7 +25,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td> <a href="{{ENV('APP_URL')}}/project/{{$project->file_path}}" target="_blank">Link to Project</a> </td>
+                                                            <td> <a href="{{ENV('APP_URL')}}/admin/project/{{$project->file_path}}" target="_blank">Link to Project</a> </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>

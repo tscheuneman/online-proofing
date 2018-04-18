@@ -34,6 +34,10 @@ class UserProjectLogic {
         return false;
     }
 
+    public function get() {
+        return $this->project;
+    }
+
     public function getLatestEntry() {
         return Project::with('admin_entries')->where('id', $this->project->id)->first();
     }
@@ -45,6 +49,8 @@ class UserProjectLogic {
     public function approve() {
         $this->project->completed = true;
         $this->project->save();
+
+        return true;
     }
 
     public function mail() {
@@ -82,7 +88,7 @@ class UserProjectLogic {
 
                 $entry = EntryLogic::createUser($this->project->id, Auth::id(), $rand);
 
-                UserEntry::dispatch($comments, $files, $entry->get(), $dir);
+                UserEntry::dispatch($comments, $files, $entry->get(), $dir, $this->project);
 
                 return true;
             } catch (Exception $e) {
