@@ -168,7 +168,7 @@ class ProjectActionsController extends Controller
 
 
         if($link = ProjectLogic::getDropboxLink($request->val)) {
-            $returnData['status'] = 'Sucess';
+            $returnData['status'] = 'Success';
             $returnData['message'] = $link;
             return json_encode($returnData);
         }

@@ -15,7 +15,7 @@ class Project extends Model
         return $this->hasMany('App\Entry', 'project_id','id')->select('id', 'project_id', 'admin', 'active', 'created_at')->latest();
     }
     public function entries() {
-        return $this->hasMany('App\Entry', 'project_id','id')->where('active', '=', true)->latest();
+        return $this->hasMany('App\Entry', 'project_id','id')->where('active',true)->latest();
     }
     public function order()
     {
