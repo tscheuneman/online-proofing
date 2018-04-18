@@ -77,7 +77,22 @@ class ConvertPDF implements ShouldQueue
                     $im->clear();
                     $im->destroy();
 
-                    if(Storage::disk('dropbox')->put($this->dir . '/PDFProof.pdf', Storage::disk('public')->get($this->dir . '/pdf/' . $this->storageName))) {
+                    $orderVals = $this->project->with('order')->where('id', $this->project->id)->first();
+
+                    $proj = $this->project->with('admin_entries')->where('id', $this->project->id)->first();
+
+                    $numCounter = 0;
+                    foreach($proj->admin_entries as $ent) {
+                        if($ent->admin) {
+                            $numCounter++;
+                        }
+                    }
+
+                    $proj_year = date('Y', strtotime($this->project->created_at));
+                    $proj_month = date('F', strtotime($this->project->created_at));
+                    $projectPath = 'projects/' . $proj_year . '/' . $proj_month . '/' . $orderVals->order->job_id . '/' . $this->project->project_name;
+
+                    if(Storage::disk('dropbox')->put($projectPath . '/PDFProof-'.$numCounter.'.pdf', Storage::disk('public')->get($this->dir . '/pdf/' . $this->storageName))) {
 
                         Storage::delete($realPath);
                         File::deleteDirectory(public_path('/storage/' . $this->dir . '/pdf'));
@@ -86,12 +101,12 @@ class ConvertPDF implements ShouldQueue
                         $this->project->save();
 
                         $this->entry->active = true;
-                        $this->entry->pdf_path = Storage::disk('dropbox')->getAdapter()->getTemporaryLink($this->dir . '/PDFProof.pdf');
+                        $this->entry->pdf_path = Storage::disk('dropbox')->getAdapter()->getTemporaryLink($projectPath . '/PDFProof-'.$numCounter.'.pdf');
 
                         $this->entry->files = json_encode($files);
                         $this->entry->save();
 
-                        $orderVals = $this->project->with('order')->where('id', $this->project->id)->first();
+
 
                         if($orderVals->order->notify_users) {
                             $users = UserAssign::with('user')->where('order_id', $orderVals->order->id)->get();
