@@ -4,10 +4,21 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Emadadly\LaravelUuid\Uuids;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Project extends Model
 {
     use Uuids;
+
+    use SearchableTrait;
+
+    protected $searchable = [
+        'columns' => [
+            'users.first_name' => 10,
+            'users.last_name' => 10,
+            'users.email' => 8,
+        ],
+    ];
 
     public $incrementing = false;
 
