@@ -14,6 +14,9 @@ use App\AdminAssign;
 
 use File;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AdminNotify;
+
 use Intervention\Image\ImageManager;
 
 use Mockery\Exception;
