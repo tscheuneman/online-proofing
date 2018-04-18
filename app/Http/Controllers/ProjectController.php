@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Project;
-use App\Categories;
-use App\Admin;
-use App\User;
-use App\UserAssign;
-use App\AdminAssign;
-use App\Order;
-
 use Illuminate\Http\Request;
 
 use Validator;
 use Redirect;
-use Storage;
-use File;
+
+use App\Services\Order\OrderLogic;
+use App\Services\Category\CategoryLogic;
 
 class ProjectController extends Controller
 {
@@ -26,7 +19,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('projects.admin_entries', 'users.user', 'admins.admin.userSearch')->get();
+        $orders = OrderLogic::getNonClosedProjects();
         return view('admin.projects.index',
             [
                 'orders' => $orders,
@@ -41,7 +34,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $cats = Categories::get();
+        $cats = CategoryLogic::getAll();
         return view('admin.projects.create',
         [
             'cats' => $cats,
