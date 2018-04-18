@@ -26,7 +26,8 @@ class CheckAdmin
                 }
                 return redirect('/admin/password');
             }
-            return redirect('/');
+            return abort(404, 'Unauthorized action.');
+
         }
         return redirect('/login');
     }
