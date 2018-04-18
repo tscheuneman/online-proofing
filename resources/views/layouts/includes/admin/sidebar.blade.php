@@ -1,5 +1,5 @@
 <div class="logo">
-    smb
+    {{ENV('APP_TITLE', 'smb')}}
 </div>
 
 <a class="btn btn-primary action" href="{{ url('/admin/orders/create') }}"><i class="fa fa-plus" aria-hidden="true"></i> create order </a>
