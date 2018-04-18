@@ -12,6 +12,7 @@ use App\Jobs\UserEntry;
 use Mockery\Exception;
 
 use App\Services\Project\UserProjectLogic;
+use App\Services\Approval\ApprovalLogic;
 
 use Validator;
 use File;
@@ -139,6 +140,8 @@ class UserProjectController extends Controller
             if(!$project->isApproved()) {
                 $project->approve();
                 $project->mail();
+                ApprovalLogic::create(Auth::user(), $project->get());
+
 
                 $returnData['status'] = 'Success';
                 $returnData['message'] = 'Hey it works bruh';
