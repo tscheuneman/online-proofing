@@ -37,7 +37,7 @@
             </div>
         </div>
     </div>
-    <form method="POST" action="{{ url('/admin/orders') }}" enctype="multipart/form-data" id="submit">
+    <form method="POST" action="{{ url('/admin/orders') }}" enctype="multipart/form-data" id="submit" autocomplete="nope">
         {{csrf_field()}}
 
         <div class="form-group">
@@ -67,12 +67,12 @@
 
         <div class="form-group">
             <label for="notify_admins">Notify Premedia</label>
-            <input type="checkbox" class="form-control left" id="notify_admins" name="notify_admins" autocomplete="nope" checked />
+            <input type="checkbox" class="form-control left" id="notify_admins" name="notify_admins" autocomplete="off" checked />
         </div>
 
         <div class="form-group">
             <label for="admins">Assign Premedia</label>
-            <input type="text" class="form-control" id="admins" name="admins" autocomplete="nope" />
+            <input type="text" class="form-control" id="admins" name="admins" autocomplete="off" />
             <div class="loader"></div>
             <div class="adminAutocomplete">
 
@@ -86,12 +86,12 @@
 
         <div class="form-group">
             <label for="notify_users">Notify Customers</label>
-            <input type="checkbox" class="form-control left" id="notify_users" name="notify_users" autocomplete="nope" checked />
+            <input type="checkbox" class="form-control left" id="notify_users" name="notify_users" checked />
         </div>
 
         <div class="form-group">
             <label for="users">Assign Customer (Use Email)</label>
-            <input type="text" class="form-control" id="users" name="users" autocomplete="nope" />
+            <input type="text" class="form-control" id="users" name="users" autocomplete="off" />
             <div class="loaderSecond"></div>
             <div class="usersAutocomplete">
 
@@ -103,7 +103,7 @@
         <br class="clear" />
         <div class="form-group">
             <label for="hidden">Only show to assigned customer?</label>
-            <input type="checkbox" class="form-control left" id="hidden" name="hidden" autocomplete="nope" />
+            <input type="checkbox" class="form-control left" id="hidden" name="hidden" />
         </div>
 
         <hr>
