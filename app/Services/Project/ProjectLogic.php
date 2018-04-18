@@ -116,6 +116,7 @@ class ProjectLogic {
         if($path = Storage::disk('public')->put($dir . '/pdf', $request->file('pdf'), 'public')) {
             $storageName = basename($path);
             $entry = EntryLogic::createAdmin($this->project->id, Auth::id(), $rand, $request->comments);
+
             ConvertPDF::dispatch($dir, $storageName, 500, $this->get(), $entry->get());
 
             return true;

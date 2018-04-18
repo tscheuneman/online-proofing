@@ -22,7 +22,7 @@ class CreateApprovalTable extends Migration
 
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            
+
             $table->timestamps();
         });
     }
