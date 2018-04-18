@@ -54,7 +54,10 @@ class ProjectActionsController extends Controller
 
 
         if($project->isActive()) {
-            return $request;
+            if($project->readyForAdmin()) {
+                return "test";
+            }
+            return redirect()->back()->withErrors(array('Cannot accept a revision at this time'))->withInput($request->all());
         }
         else {
             $rules = array(
@@ -124,38 +127,11 @@ class ProjectActionsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     public function getLink(Request $request) {
         $rules = array(
@@ -176,5 +152,25 @@ class ProjectActionsController extends Controller
         $returnData['status'] = 'Failure';
         $returnData['message'] = 'Failed to generate link';
         return json_encode($returnData);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function createRevision($id) {
+        $project = ProjectLogic::find_path($id);
+        if($project->readyForAdmin()) {
+            $projectData = $project->get();
+            return view('admin.projectActions.add',
+                [
+                    'project' => $projectData,
+                ]
+            );
+        }
+        return 'fail';
     }
 }

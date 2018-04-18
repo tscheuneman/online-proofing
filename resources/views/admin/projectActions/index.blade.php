@@ -21,6 +21,9 @@
                 <div class="status looked">
                     Proof Ready to View!
                 </div>
+                <a class="btn btn-submission" href="{{url('admin/project/add') . '/' . $project->file_path}}"><i class="fa fa-plus"></i> Create Revision </a>
+                <br />
+                <br>
             @endif
         </div>
     </div>
@@ -162,16 +165,22 @@
                             Comments
                         </div>
                         <div class="card-body">
-                            @if(!$project->entries[0]->admin && $project->entries[0]->path != '0')
-                                @foreach(json_decode($project->entries[0]->user_notes) as $key => $note)
-                                    @if($note != '')
-                                        <div data-num="{{$key}}" class="pageComment">
-                                            <strong>Page {{$key + 1}}</strong>
-                                            <br>
-                                            {{$note}}
-                                        </div>
-                                    @endif
-                                @endforeach
+                            @if(!$project->entries[0]->admin )
+                                @if($project->entries[0]->path == '0')
+                                    <div class="comments">
+                                        {{$project->entries[0]->notes}}
+                                    </div>
+                                @else
+                                    @foreach(json_decode($project->entries[0]->user_notes) as $key => $note)
+                                        @if($note != '')
+                                            <div data-num="{{$key}}" class="pageComment">
+                                                <strong>Page {{$key + 1}}</strong>
+                                                <br>
+                                                {{$note}}
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @endif
                             @endif
 
                         </div>

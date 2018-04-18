@@ -44,6 +44,18 @@ class ProjectLogic {
         return Project::where('file_path', '=', $id)->with('admin_entries')->first();
     }
 
+    public function readyForAdmin() {
+        $vals = $this->admin_entries($this->project->file_path);
+
+        if(isset($vals->admin_entries[0])) {
+            if(!$vals->admin_entries[0]->admin) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
     public static function find_path($id) {
         $project = Project::where('file_path', $id)->first();
 

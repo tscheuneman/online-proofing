@@ -41,6 +41,8 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('admin/project/link', 'ProjectActionsController@getLink');
     Route::resource('admin/project', 'ProjectActionsController');
 
+    Route::get('admin/project/add/{id}', 'ProjectActionsController@createRevision');
+
     Route::resource('admin/orders', 'OrderController');
 
 });
