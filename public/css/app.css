@@ -793,6 +793,14 @@ div.pageComment:hover {
   display: none;
 }
 
+div.commentContainer {
+  display: none;
+}
+
+div.commentContainer.active {
+  display: block;
+}
+
 div.comment {
   position: fixed;
   right: 0;

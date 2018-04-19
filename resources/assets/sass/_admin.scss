@@ -710,6 +710,15 @@ div.pageComment {
   z-index:9999;
   display:none;
 }
+
+div.commentContainer {
+  display:none;
+
+  &.active {
+    display:block;
+  }
+}
+
 div.comment {
   position: fixed;
   right: 0;
