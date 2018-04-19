@@ -14,10 +14,14 @@ class Project extends Model
 
     protected $searchable = [
         'columns' => [
-            'users.first_name' => 10,
-            'users.last_name' => 10,
-            'users.email' => 8,
+            'projects.project_name' => 10,
+            'orders.job_id' => 8,
+            'texts.data' => 7,
         ],
+        'joins' => [
+            'orders' => ['orders.id', 'projects.ord_id'],
+            'texts' => ['texts.project_id', 'projects.id'],
+        ]
     ];
 
     public $incrementing = false;
@@ -36,4 +40,10 @@ class Project extends Model
     public function entryInfo() {
         return $this->hasMany('App\Entry', 'project_id','id')->select('id', 'project_id', 'admin', 'active', 'created_at', 'pdf_path')->latest();
     }
+
+    public function order_name() {
+        return $this->belongsTo('App\Order', 'ord_id', 'id')->select('id', 'job_id');
+    }
 }
+
+

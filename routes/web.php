@@ -34,6 +34,7 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('admin/search/admin', 'SearchController@findAdmin');
     Route::get('admin/search/users', 'SearchController@findUser');
+    Route::get('admin/search/projects', 'SearchController@findProjects');
 
     Route::get('admin/profile', 'ProfileController@index');
     Route::get('admin', 'AdminIndexController@index');
