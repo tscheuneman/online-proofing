@@ -65,12 +65,7 @@ class ProjectActionsController extends Controller
                 }
                 if($project->makeFolder($request, true)) {
 
-                    $otherProjects = $project->getProductsInOrder();
-                    if(!empty($otherProjects)) {
-                        \Session::flash('flash_created','Initial Upload was created for ' . $project->getName());
-                        return redirect('/admin/project/' . $otherProjects[0]->file_path);
-                    }
-                    \Session::flash('flash_created','Wow');
+                    \Session::flash('flash_created','Upload was created for ' . $project->getName());
                     return redirect('/admin');
                 }
 
