@@ -10,9 +10,9 @@ function goNextItemProjectView() {
         nextImg = 0;
     }
 
-    currImg.fadeOut(200, function() {
+    currImg.stop().fadeOut(200, function() {
         $(this).removeClass('active');
-        $('div.image.proj_' + nextImg, currEntry).fadeIn(200, function() {
+        $('div.image.proj_' + nextImg, currEntry).stop().fadeIn(200, function() {
             $(this).addClass('active');
             updatePageCount();
         });
@@ -21,9 +21,9 @@ function goNextItemProjectView() {
 function goToElementFromPageComment(id) {
     let currEntry = $('div.entry.active');
     let currImg = $('div.image.active', currEntry);
-    currImg.fadeOut(200, function() {
+    currImg.stop().fadeOut(200, function() {
         $(this).removeClass('active');
-        $('div.image.proj_' + id, currEntry).fadeIn(200, function() {
+        $('div.image.proj_' + id, currEntry).stop().fadeIn(200, function() {
             $(this).addClass('active');
             updatePageCount();
         });
@@ -41,9 +41,9 @@ function goPreviousItemProjectView() {
         nextImg = maxElm;
     }
 
-    currImg.fadeOut(200, function() {
+    currImg.stop().fadeOut(200, function() {
         $(this).removeClass('active');
-        $('div.image.proj_' + nextImg, currEntry).fadeIn(200, function() {
+        $('div.image.proj_' + nextImg, currEntry).stop().fadeIn(200, function() {
             $(this).addClass('active');
             updatePageCount();
         });
@@ -61,13 +61,13 @@ function updatePageCount() {
 }
 
 function goToEntryItemById(id) {
-    $('.entry.active').fadeOut(500, function() {
+    $('.entry.active').stop().fadeOut(500, function() {
         $(this).removeClass('active');
 
         $('.entry ').each(function() {
             let currentVal = $(this).data('id');
             if(currentVal === id) {
-                $(this).fadeIn(500, function() {
+                $(this).stop().fadeIn(500, function() {
                     $(this).addClass('active');
                     updatePageCount();
                 });

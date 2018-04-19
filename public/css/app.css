@@ -817,6 +817,7 @@ div.entry .image {
   position: relative;
   background: #fff;
   padding: 10px;
+  display: none;
 }
 
 div.entry .image.userFile {
