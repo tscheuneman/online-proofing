@@ -74,15 +74,14 @@ class UserProjectController extends Controller
             $returnData['message'] = 'We have already received your submission';
             return json_encode($returnData);
         }
+        if(!$project->isApproved()) {
+            if ($project->createDirectory($request)) {
+                $returnData['status'] = 'Success';
+                $returnData['message'] = 'Uploaded';
+                return json_encode($returnData);
 
-        if($project->createDirectory($request)) {
-            $returnData['status'] = 'Success';
-            $returnData['message'] = 'Uploaded';
-            return json_encode($returnData);
-
+            }
         }
-
-
 
         $returnData['status'] = 'Failure';
         $returnData['message'] = 'Failed to upload';
@@ -100,15 +99,15 @@ class UserProjectController extends Controller
         $project = Project::where('file_path', '=', $id)->first();
         if($project != null) {
             if($project->active) {
-                $thisProject = Project::where('file_path', '=', $id)->with('order.projects', 'entries.user', 'order.users.user', 'order.admins.admin.user')->first();
-                return view('main.project.index',
-                    [
-                        'project' => $thisProject,
-                        'val'=> json_encode($thisProject->entries[0], JSON_UNESCAPED_SLASHES ),
+                    $thisProject = Project::where('file_path', '=', $id)->with('order', 'entries.user', 'order.users.user', 'order.admins.admin.user')->first();
+                    return view('main.project.index',
+                        [
+                            'project' => $thisProject,
+                            'val' => json_encode($thisProject->entries[0], JSON_UNESCAPED_SLASHES),
 
-                ]
-                );
-                return redirect()->back();
+                        ]
+                    );
+                    return redirect()->back();
             }
         } else {
             return redirect()->back();
@@ -206,19 +205,24 @@ class UserProjectController extends Controller
 
         $files = $request->file('files');
 
+
         if($project = UserProjectLogic::find($request->project_id)) {
-            foreach($files as $file) {
-                $path = $project->saveFileToDropbox($file);
-                $savedFiles[] = $path;
+            if(!$project->isApproved()) {
+                foreach ($files as $file) {
+                    $path = $project->saveFileToDropbox($file);
+                    $savedFiles[] = $path;
+                }
+
+                $entry = EntryLogic::createUser($project->id(), Auth::id(), '0');
+
+                $entry->updateEntry($savedFiles, $request->comments);
+
+                $project->mailFileUpload();
+
+                \Session::flash('flash_created', 'File for ' . $project->getName() . ' has been uploaded');
+                return redirect('/');
             }
-
-            $entry = EntryLogic::createUser($project->id(), Auth::id(), '0');
-
-            $entry->updateEntry($savedFiles, $request->comments);
-
-            $project->mailFileUpload();
-
-            \Session::flash('flash_created', 'File for ' . $project->getName() . ' has been uploaded');
+            \Session::flash('flash_deleted', 'Failed to upload files.  Project is already approved');
             return redirect('/');
         }
 

@@ -51,10 +51,14 @@
                                     @if(!$proj->admin_entries[0]->active)
                                         Waiting on Output
                                     @else
-                                        @if($proj->admin_entries[0]->admin)
-                                            Awaiting User Response
+                                        @if($proj->completed)
+                                            <strong>Approved</strong>
                                         @else
-                                            <strong> Awaiting Premedia Response </strong>
+                                            @if($proj->admin_entries[0]->admin)
+                                                Awaiting User Response
+                                            @else
+                                                <strong> Awaiting Premedia Response </strong>
+                                            @endif
                                         @endif
                                     @endif
                                 @else

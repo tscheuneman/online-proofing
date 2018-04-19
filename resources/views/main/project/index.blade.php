@@ -37,13 +37,20 @@
             <i class="fa fa-commenting-o" aria-hidden="true"></i> Comment Image
         </div>
     @endif
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 @if($project->entries[0]->admin)
-                    <div class="status waiting">
-                        Waiting on approval
-                    </div>
+                    @if(!$project->completed)
+                        <div class="status waiting">
+                            Waiting on approval
+                        </div>
+                    @else
+                        <div class="status looked">
+                            <strong>Project has been approved!</strong>
+                        </div>
+                    @endif
                 @else
                     <div class="status looked">
                         Your revision is being reviewed by our premedia team!
@@ -96,6 +103,18 @@
                     <div class="card-body">
                         @foreach($project->entries as $enCnt => $entry)
                             @if($enCnt++ == 0)
+                                @if($project->completed)
+                                    <div data-id="{{$entry->id}}" class="entryNav active approval">
+                                        @if(!empty($project->approval))
+                                            @if($project->approval->user->picture == null)
+                                                Approval
+                                               <br> {{  date('Y-m-d g:ia', strtotime($project->approval->created_at)) }}
+                                            @endif
+                                        @endif
+                                    </div>
+                                @endif
+                            @endif
+                            @if($enCnt++ == 0)
                                 @if($entry->admin)
                                     <div data-id="{{$entry->id}}" class="entryNav active admin">
                                 @else
@@ -145,7 +164,7 @@
                                 @endif
 
                                 @foreach(json_decode($entry->files) as $key => $file)
-                                    @if($project->entries[0]->admin)
+                                    @if($project->entries[0]->admin && !$project->completed)
                                         @if($key == 0)
                                             @if($entry->admin)
                                                 <div data-num="{{$key}}" class="image active proj_{{$key++}}" style="width:{{$file->width + 61}}px; height:{{$file->height + 31}}px; margin:0 auto;">
@@ -167,7 +186,7 @@
                                         @endif
                                     @endif
                                     @if($enCnt == 1)
-                                        @if($entry->admin)
+                                        @if($entry->admin && !$project->completed)
                                             <div class="textboxHolder">
                                                 <span class="closeText">
                                                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -216,7 +235,7 @@
     </div>
       <br><br><br><br>
 
-    @if($project->entries[0]->admin)
+    @if($project->entries[0]->admin && !$project->completed)
         <footer>
             <div class="container">
                 <button id="submit" class="btn btn-primary">
@@ -246,7 +265,7 @@
     let returnValues = {};
     window.items = [];
     window.bounds = [];
-    @if($project->entries[0]->admin)
+    @if($project->entries[0]->admin && !$project->completed)
     returnValues['linkAddy'] = "{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $project->entries[0]->path . '/images/')}}";
     returnValues['data'] = {!! $project->entries[0]->files !!};
     @else
