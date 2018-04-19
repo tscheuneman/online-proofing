@@ -27,9 +27,12 @@ class Admin extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\User', 'user_id')->select();
     }
 
+    public function search_user() {
+      return $this->belongsTo('App\User', 'user_id')->select('id', 'first_name', 'last_name', 'picture', 'org');
+    }
     public function userSearch()
     {
         return $this->belongsTo('App\User', 'user_id')->select('id', 'first_name', 'last_name');
