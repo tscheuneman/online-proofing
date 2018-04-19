@@ -188,7 +188,12 @@
                                 @endforeach
                                     </div>
                             @else
-                                <div data-numelm="1" data-id="{{$entry->id}}" class="entry active submissionEntry" id="entry_{{$enCnt++}}">
+                                @if($enCnt == 0)
+                                     <div data-numelm="1" data-id="{{$entry->id}}" class="entry active submissionEntry" id="entry_{{$enCnt++}}">
+                                @else
+                                    <div data-numelm="1" data-id="{{$entry->id}}" class="entry" id="entry_{{$enCnt++}}">
+                                @endif
+
                                     <div data-num="0" class="image active proj_0 submitted userFile">
                                         <p class="title">
                                             @if(Auth::id() == $entry->user->id)
@@ -242,7 +247,7 @@
     window.items = [];
     window.bounds = [];
     @if($project->entries[0]->admin)
-    returnValues['linkAddy'] = "{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $entry->path . '/images/')}}";
+    returnValues['linkAddy'] = "{{URL::to('/storage/projects/' . date('Y/F', strtotime($project->created_at)) . '/' . $project->file_path . '/' . $project->entries[0]->path . '/images/')}}";
     returnValues['data'] = {!! $project->entries[0]->files !!};
     @else
         returnValues = false;
