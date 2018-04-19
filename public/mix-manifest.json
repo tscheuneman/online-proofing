@@ -2,5 +2,6 @@
     "/js/user.js": "/js/user.js",
     "/css/app.css": "/css/app.css",
     "/js/app.js": "/js/app.js",
-    "/js/project.js": "/js/project.js"
+    "/js/project.js": "/js/project.js",
+    "/js/search.js": "/js/search.js"
 }
