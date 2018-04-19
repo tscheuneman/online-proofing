@@ -227,6 +227,7 @@ sidebar nav a.active:before {
   float: left;
   width: 80%;
   height: 50px;
+  position: relative;
 }
 
 #content div.topbar .search i {
@@ -242,6 +243,63 @@ sidebar nav a.active:before {
   background: none;
   outline: none;
   margin-left: 5px;
+}
+
+#content div.topbar .search div.searchResults {
+  background: #fff;
+  position: absolute;
+  width: 100%;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 99999;
+}
+
+#content div.topbar .search div.searchResults a {
+  color: #000;
+  text-decoration: none;
+  display: block;
+  -webkit-transition: .3s all;
+  transition: .3s all;
+}
+
+#content div.topbar .search div.searchResults a .result {
+  padding: 15px;
+  height: 150px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+#content div.topbar .search div.searchResults a .result div.image {
+  height: 120px;
+  float: left;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  margin-right: 15px;
+}
+
+#content div.topbar .search div.searchResults a .result div.image img {
+  height: 100%;
+}
+
+#content div.topbar .search div.searchResults a .result p.title {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+#content div.topbar .search div.searchResults a .result span.status {
+  background: #FFC627;
+  color: #000;
+  padding: 2px;
+  border-radius: 0;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+#content div.topbar .search div.searchResults a:hover {
+  background: #8C1D40;
+  color: #ffffff;
 }
 
 #content div.topbar .profile {
@@ -343,7 +401,7 @@ div.adminAutocomplete ul li:hover,
 div.usersAutocomplete ul li:hover {
   background: -webkit-gradient(linear, left bottom, left top, from(#8C1D40), to(#cd224f));
   background: linear-gradient(to top, #8C1D40, #cd224f);
-  color: #fff;
+  color: #ffffff;
 }
 
 div.adminAutocomplete ul li:last-child,
@@ -468,22 +526,22 @@ div.topStats div.stat:last-child {
 
 div.topStats div.stat.maroon {
   background: #8C1D40;
-  color: #fff;
+  color: #ffffff;
 }
 
 div.topStats div.stat.blue {
   background: #00A3E0;
-  color: #fff;
+  color: #ffffff;
 }
 
 div.topStats div.stat.green {
   background: #78BE20;
-  color: #fff;
+  color: #ffffff;
 }
 
 div.topStats div.stat.orange {
   background: #FF7F32;
-  color: #fff;
+  color: #ffffff;
 }
 
 div.topStats div.stat .icon {
@@ -537,7 +595,7 @@ div.userProjects a.projectLink .project {
 
 div.userProjects a.projectLink .project:hover {
   background: #8C1D40;
-  color: #fff;
+  color: #ffffff;
 }
 
 div.userProjects a.projectLink .project.active {
@@ -576,7 +634,7 @@ div.order {
 
 div.order.belongs {
   background: #292b3e;
-  color: #fff;
+  color: #ffffff;
 }
 
 div.order .title {
@@ -617,7 +675,7 @@ div.order .project {
 
 div.order .project:hover {
   background: #8C1D40;
-  color: #fff;
+  color: #ffffff;
 }
 
 div.order .project .projectTitle {
@@ -666,7 +724,7 @@ div.entryNav.active {
   background: #8C1D40;
   -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
           box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-  color: #fff;
+  color: #ffffff;
   font-weight: bold;
 }
 
@@ -692,7 +750,7 @@ div.pageComment {
 
 div.pageComment:hover {
   background: #8C1D40;
-  color: #fff;
+  color: #ffffff;
 }
 
 #mask {
@@ -711,7 +769,7 @@ div.comment {
   right: 0;
   top: 250px;
   background: #8C1D40;
-  color: #fff;
+  color: #ffffff;
   padding: 10px;
   font-weight: bold;
   -webkit-transform: rotate(270deg);
@@ -805,7 +863,7 @@ div.entry .image div.textboxHolder .closeText {
   display: block;
   float: right;
   font-size: 25px;
-  color: #fff;
+  color: #ffffff;
   margin-bottom: 10px;
   cursor: pointer;
 }
@@ -863,7 +921,7 @@ div.navPic {
 
 div.pendingProject {
   background: #8C1D40;
-  color: #fff;
+  color: #ffffff;
   font-weight: bold;
   clear: both;
   float: left;
