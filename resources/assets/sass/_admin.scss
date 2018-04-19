@@ -814,6 +814,10 @@ div.entry {
       display:block;
     }
   }
+
+  &.submissionEntry .image {
+    display:block;
+  }
   &.active {
     display:block;
   }

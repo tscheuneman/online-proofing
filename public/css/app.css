@@ -910,6 +910,10 @@ div.entry .image.active {
   display: block;
 }
 
+div.entry.submissionEntry .image {
+  display: block;
+}
+
 div.entry.active {
   display: block;
 }
