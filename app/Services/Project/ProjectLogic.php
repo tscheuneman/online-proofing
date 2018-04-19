@@ -87,7 +87,7 @@ class ProjectLogic {
     }
 
     public function dataReturn() {
-        return Project::where('file_path', '=', $this->project->file_path)->with('order.projects', 'entries.user', 'order.users.user', 'order.admins.admin.user')->first();
+        return Project::where('file_path', '=', $this->project->file_path)->with('order', 'entries.user', 'order.users.user', 'order.admins.admin.user', 'approval.user')->first();
     }
 
     public static function create(OrderLogic $order, $name) {
