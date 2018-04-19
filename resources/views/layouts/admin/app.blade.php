@@ -19,7 +19,11 @@
         <div class="search">
             <i class="fa fa-search" aria-hidden="true"></i>
             <input type="text" id="search" placeholder="Search for Projects or Users..."/>
+            <div class="searchResults">
+
+            </div>
         </div>
+
 
         <div class="profile">
             <div class="profileImage">
@@ -53,11 +57,44 @@
 
 </div>
 <script>
+    let searchTimer;
+    let x = 500;
+    let showLoader = true;
+
     $(document).ready(function() {
        $('.profileImage').on('click', function(){
            $('.profileMenu').fadeToggle(500);
        });
+
+        $('input#search').on('keyup', function(e) {
+            $('.loader').show();
+            clearTimeout(searchTimer);
+            $('.adminAutocomplete').empty();
+            if(e.keyCode === 8) {
+                x = 0;
+            }
+            else {
+                x = 500;
+            }
+
+            let inputVal = $(this).val();
+            if(inputVal !== '') {
+                searchTimer = setTimeout(function(){ searchProjects(inputVal); }, x);
+            }
+
+        });
+
+        $(document).bind('click', function(e) {
+            if(!$(e.target).is('#search') && !$(e.target).is('a.linkResult')) {
+                $('.searchResults').fadeOut(500, function() {
+                    $(this).empty();
+                });
+            }
+        });
+
+
     });
 </script>
+<script src="{{ asset('js/search.js') }}"></script>
 </body>
 </html>

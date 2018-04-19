@@ -19,3 +19,7 @@ mix.scripts([
     'resources/assets/js/scripts/viewProject.js',
     'resources/assets/js/scripts/userActions.js',
 ], 'public/js/project.js');
+
+mix.scripts([
+    'resources/assets/js/scripts/adminSearch.js',
+], 'public/js/search.js');
