@@ -9,38 +9,48 @@
     @if(Session::has('flash_created'))
         <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_created') !!}</em></div>
     @endif
-
-
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            @if($project->entries[0]->admin)
-                <div class="status waiting">
-                    Waiting on user action
-                </div>
-            @else
-                <div class="status looked">
-                    Proof Ready to View!
-                </div>
-                <a class="btn btn-submission" href="{{url('admin/project/add') . '/' . $project->file_path}}"><i class="fa fa-plus"></i> Create Revision </a>
-                <br />
-                <br>
-            @endif
+    @if($project->completed)
+        <div class="row">
+            <h1>
+                {{$project->project_name}} - <span class="approved">Approved</span>
+            </h1>
         </div>
-    </div>
-    <div class="row">
-        <h1>
-            {{$project->project_name}}
-        </h1>
-    </div>
+    @else
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                @if($project->entries[0]->admin)
+                    <div class="status waiting">
+                        Waiting on user action
+                    </div>
+                @else
+                    <div class="status looked">
+                        Proof Ready to View!
+                    </div>
+                    <a class="btn btn-submission" href="{{url('admin/project/add') . '/' . $project->file_path}}"><i class="fa fa-plus"></i> Create Revision </a>
+                    <br />
+                    <br>
+                @endif
+            </div>
+        </div>
+        <div class="row">
+            <h1>
+                {{$project->project_name}}
+            </h1>
+        </div>
+    @endif
     <br>
     <div class="row justify-content-center">
-        <div class="col-md-2">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-info-circle" aria-hidden="true"></i>
                     Project Info
+                    <div id="showInfo" class="show">
+                        <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+                        Show
+                    </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body hidden project_info">
                     <strong>Assigned Premedia</strong>
                     <ul class="userList">
                         @foreach($project->order->admins as $admin)
@@ -69,38 +79,61 @@
                     </ul>
                 </div>
             </div>
-            <div class="card topSpacing">
+        </div>
+        <div class="col-md-6">
+            <div class="card">
                 <div class="card-header">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     Revisions
+                    <div id="showProd" class="show">
+                        <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+                        Show
+                    </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body hidden revisions">
                     @foreach($project->entries as $enCnt => $entry)
                         @if($enCnt++ == 0)
-                            @if($entry->admin)
-                                <div data-id="{{$entry->id}}" class="entryNav active admin">
-                            @else
-                                 <div data-id="{{$entry->id}}" class="entryNav active">
+                            @if($project->completed)
+                                @if(!empty($project->approval))
+                                <div data-id="{{$project->approval->id}}" class="entryNav wide active approval">
+                                        @if($project->approval->user->picture == null)
+                                            <div class="navPic">
+                                                {{mb_substr($project->approval->user->first_name,0,1) . mb_substr($project->approval->user->last_name,0,1)}}
+                                            </div>
+                                            {{$project->approval->user->first_name }} {{  date('Y-m-d g:ia', strtotime($project->approval->created_at)) }}
+                                        @endif
+                                    @endif
+                                </div>
                             @endif
-                        @else
-                             @if($entry->admin)
-                                <div data-id="{{$entry->id}}" class="entryNav admin">
-                             @else
-                                <div data-id="{{$entry->id}}" class="entryNav">
-                             @endif
                         @endif
-                        @if($entry->user->picture == null)
-                            <div class="navPic">
-                                {{mb_substr($entry->user->first_name,0,1) . mb_substr($entry->user->last_name,0,1)}}
-                            </div>
-                        @endif
-                        {{$entry->user->first_name }} <br> {{  date('Y-m-d g:ia', strtotime($entry->created_at)) }}
-                         </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7">
+                        @if($enCnt++ == 0)
+                            @if($entry->admin)
+                                <div data-id="{{$entry->id}}" class="entryNav wide active admin">
+                                    @else
+                                        <div data-id="{{$entry->id}}" class="entryNav wide active">
+                                            @endif
+                                            @else
+                                                @if($entry->admin)
+                                                    <div data-id="{{$entry->id}}" class="entryNav wide admin">
+                                                        @else
+                                                            <div data-id="{{$entry->id}}" class="entryNav wide">
+                                                                @endif
+                                                                @endif
+                                                                @if($entry->user->picture == null)
+                                                                    <div class="navPic">
+                                                                        {{mb_substr($entry->user->first_name,0,1) . mb_substr($entry->user->last_name,0,1)}}
+                                                                    </div>
+                                                                @endif
+                                                                {{$entry->user->first_name }} {{  date('Y-m-d g:ia', strtotime($entry->created_at)) }}
+                                                            </div>
+                                                            @endforeach
+                                                    </div>
+                                        </div>
+                                </div>
+    </div>
+                <br>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
 
@@ -114,6 +147,22 @@
                 </div>
                 <div class="card-body">
                     @foreach($project->entries as $enCnt => $entry)
+                        @if($enCnt == 0)
+                            @if($project->completed && !empty($project->approval))
+                                <div data-numelm="1" data-id="{{$project->approval->id}}" class="entry active" id="entry_{{$enCnt++}}">
+                                    <div data-num="0" class="image active proj_0 submitted userFile">
+                                        <p class="title">
+                                            Approved by {{$project->approval->user->first_name . ' ' . $project->approval->user->last_name}}
+                                        </p>
+                                        <p class="date">
+                                            on {{date('l, F, jS', strtotime($project->approval->created_at))}}
+                                        </p>
+                                        <br>
+                                        <button data-addy="{{$project->entries[0]->pdf_path}}" class="getLink btn btn-primary"><i class="fa fa-download" aria-hidden="true"></i> Download PDF</button>
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
                         @if($entry->path != '0')
                             @if($enCnt == 0)
                                 <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active" id="entry_{{$enCnt++}}">
@@ -139,7 +188,11 @@
                                 @endforeach
                             </div>
                         @else
-                            <div data-numelm="1" data-id="{{$entry->id}}" class="entry active submissionEntry" id="entry_{{$enCnt++}}">
+                            @if($enCnt == 0)
+                                <div data-numelm="1" data-id="{{$entry->id}}" class="entry active submissionEntry" id="entry_{{$enCnt++}}">
+                            @else
+                                <div data-numelm="1" data-id="{{$entry->id}}" class="entry" id="entry_{{$enCnt++}}">
+                            @endif
                                 <div data-num="0" class="image active proj_0 submitted userFile">
                                     <p class="title">
                                         {{$entry->user->first_name . ' ' . $entry->user->last_name}} submitted {{count(json_decode($entry->files))}} file(s)
@@ -158,13 +211,14 @@
                 </div>
             </div>
         </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-comment" aria-hidden="true"></i>
                             Comments
                         </div>
                         <div class="card-body">
+                            
                             @if(!$project->entries[0]->admin )
                                 @if($project->entries[0]->path == '0')
                                     <div class="comments">
@@ -202,7 +256,12 @@
             let value = $(this).data('addy');
             getLinkValue(value);
           });
-
+          $('#showProd').on('click', function() {
+              $('.revisions').slideToggle(500);
+          });
+          $('#showInfo').on('click', function() {
+              $('.project_info').slideToggle(500);
+          });
       });
    </script>
 @endsection
