@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Services\Entry\EntryLogic;
 use App\Jobs\ConvertPDF;
-
+use App\Jobs\ConvertPDFSecondary;
 
 class ProjectLogic {
     protected $project;
@@ -108,7 +108,7 @@ class ProjectLogic {
         }
     }
 
-    public function makeFolder($request) {
+    public function makeFolder($request, $secondary = false) {
         $proj_year = date('Y', strtotime($this->project->created_at));
         $proj_month = date('F', strtotime($this->project->created_at));
         $projectPath = $proj_year . '/' . $proj_month . '/' . $this->project->file_path;
@@ -119,17 +119,24 @@ class ProjectLogic {
 
         if(File::makeDirectory(public_path($folderPath), 0775, true)) {
             $dir = 'projects/' . $projectPath . '/' . $rand;
-            return $this->storeFile($request, $dir, $folderPath, $rand);
+
+            return $this->storeFile($request, $dir, $folderPath, $rand, $secondary);
         }
         return false;
 
     }
-    public function storeFile($request, $dir, $folderPath, $rand) {
+    public function storeFile($request, $dir, $folderPath, $rand, $secondary) {
         if($path = Storage::disk('public')->put($dir . '/pdf', $request->file('pdf'), 'public')) {
             $storageName = basename($path);
             $entry = EntryLogic::createAdmin($this->project->id, Auth::id(), $rand, $request->comments);
 
-            ConvertPDF::dispatch($dir, $storageName, 500, $this->get(), $entry->get());
+            if($secondary) {
+                ConvertPDFSecondary::dispatch($dir, $storageName, 500, $this->get(), $entry->get());
+            }
+            else {
+                ConvertPDF::dispatch($dir, $storageName, 500, $this->get(), $entry->get());
+            }
+
 
             return true;
         }

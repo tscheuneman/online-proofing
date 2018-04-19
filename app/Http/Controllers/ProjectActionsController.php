@@ -55,7 +55,26 @@ class ProjectActionsController extends Controller
 
         if($project->isActive()) {
             if($project->readyForAdmin()) {
-                return "test";
+                $rules = array(
+                    'comments' => 'required|string',
+                    'pdf' => 'required|file|mimes:pdf',
+                );
+                $validator = Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->withInput($request->all());
+                }
+                if($project->makeFolder($request, true)) {
+
+                    $otherProjects = $project->getProductsInOrder();
+                    if(!empty($otherProjects)) {
+                        \Session::flash('flash_created','Initial Upload was created for ' . $project->getName());
+                        return redirect('/admin/project/' . $otherProjects[0]->file_path);
+                    }
+                    \Session::flash('flash_created','Wow');
+                    return redirect('/admin');
+                }
+
+                return redirect()->back()->withErrors(array('failed'))->withInput($request->all());
             }
             return redirect()->back()->withErrors(array('Cannot accept a revision at this time'))->withInput($request->all());
         }
