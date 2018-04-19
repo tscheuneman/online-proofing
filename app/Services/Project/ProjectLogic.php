@@ -66,6 +66,31 @@ class ProjectLogic {
         return Project::where('active', '=', true)->where('completed', '=', false)->count();
     }
 
+    public static function pendingEntries() {
+        $projects = Project::where('active', '=', true)->where('completed', '=', false)->with('admin_entries')->get();
+
+        $returnVal = array();
+
+        $userPend = 0;
+        $adminPend = 0;
+
+        foreach($projects as $proj) {
+            if(isset($proj->admin_entries[0])) {
+                if($proj->admin_entries[0]->admin) {
+                    $userPend++;
+                }
+                else {
+                    $adminPend++;
+                }
+            }
+        }
+
+        $returnVal['userPending'] = $userPend;
+        $returnVal['adminPending'] = $adminPend;
+
+        return $returnVal;
+    }
+
     public function isActive() {
         return $this->project->active;
     }

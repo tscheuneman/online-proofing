@@ -47,11 +47,10 @@
                     User Pending
                 </span>
                 <span class="number">
-                    {{$user_count}}
+                    {{$pending['userPending']}}
                 </span>
             </div>
         </div>
-
         <div class="stat orange">
             <div class="icon">
                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
@@ -61,72 +60,29 @@
                     Us Pending
                 </span>
                 <span class="number">
-                    {{$user_count}}
+                    {{$pending['adminPending']}}
                 </span>
             </div>
         </div>
     </div>
 
     <br><br>
-    <h2>Your Projects</h2>
+    <h2>Your Active Projects</h2>
     <hr>
     <div class="userProjects">
         @foreach($userProjects as $order)
-            @if(isset($order->projects[0]->id))
-                <div class="order belongs">
-                    <p class="title">{{$order->job_id}}</p>
-                    @if($order->notify_users)
-                        <span class="option">Notify Users</span>
-                    @endif
-                    @if($order->notify_admins)
-                        <span class="option">Notify Users</span>
-                    @endif
-                    @if(!$order->hidden)
-                        <span class="option">Public</span>
-                    @endif
-                    <br class="clear" />
-                    <br>
-                    @foreach($order->projects as $proj)
-                        <a href="{{ url('/admin/project') . '/' . $proj->file_path }}">
-                            <div class="project">
-                                <p class="projectTitle">{{$proj->project_name}}</p>
-                                <p class="statusText">
-                                    <strong>
-                                        @if(isset($proj->admin_entries[0]))
-                                            @if(!$proj->admin_entries[0]->active)
-                                                Waiting on Output
-                                            @else
-                                                @if($proj->completed)
-                                                    <strong>Approved</strong>
-                                                @else
-                                                    @if($proj->admin_entries[0]->admin)
-                                                        Awaiting User Response
-                                                    @else
-                                                        <strong> Awaiting Premedia Response </strong>
-                                                    @endif
-                                                @endif
-                                            @endif
-                                        @else
-                                            @if(!$proj->active)
-                                                Awaiting Initial Upload
-                                            @endif
-                                        @endif
-                                    </strong>
-                                </p>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
-            @endif
+            @include('admin.index.includes.userActiveProjects')
+        @endforeach
+    <br class="clear" />
+    </div>
+    <h3>
+        Other Active Projects
+    </h3>
+    <hr>
+    <div class="userProjects other">
+        @foreach($otherProjects as $order)
+            @include('admin.index.includes.userActiveProjects')
         @endforeach
         <br class="clear" />
     </div>
-    <h3>
-        Awaiting Customer Response
-    </h3>
-    <hr>
-    <h3>
-        Pending Premedia Changes
-    </h3>
-    <hr>
 @endsection

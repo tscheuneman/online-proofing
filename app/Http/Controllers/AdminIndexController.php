@@ -22,14 +22,19 @@ class AdminIndexController extends Controller
         $admin = AdminLogic::findAdmin(Auth::id());
         $user_count = UserLogic::count();
         $proj_count = ProjectLogic::count();
+        $pendingEntries = ProjectLogic::pendingEntries();
+
         $userProjects = OrderLogic::getAdminProjects(Auth::id());
+        $otherProjects = OrderLogic::getOtherAdminProjects(Auth::id());
 
         return view('admin.index',
             [
                 'admin' => $admin->get(),
                 'user_count' => $user_count,
                 'proj_count' => $proj_count,
-                'userProjects' => $userProjects
+                'userProjects' => $userProjects,
+                'otherProjects' => $otherProjects,
+                'pending' => $pendingEntries
             ]
         );
     }
