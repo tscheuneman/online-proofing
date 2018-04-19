@@ -21,6 +21,6 @@ class SearchController extends Controller
 
     public function findProjects(Request $request)
     {
-        return Project::with('order_name.admins.admin.search_user', 'order_name.users.search_user')->search($request->get('q'))->get(['ord_id', 'project_name'])->take(10);
+        return Project::with('order_name.admins.admin.search_user', 'order_name.users.search_user', 'inital_image')->search($request->get('q'))->get(['id', 'file_path', 'ord_id', 'project_name', 'created_at', 'active', 'completed'])->take(10);
     }
 }
