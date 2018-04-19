@@ -74,6 +74,18 @@ function goToEntryItemById(id) {
             }
         });
     });
+
+    $('.commentContainer.active').stop().fadeOut(500, function() {
+        $(this).removeClass('active');
+        $('.commentContainer ').each(function () {
+            let currentVal = $(this).data('id');
+            if (currentVal === id) {
+                $(this).stop().fadeIn(500, function () {
+                    $(this).addClass('active');
+                });
+            }
+        });
+    });
 }
 
 function getLinkValue(val) {
