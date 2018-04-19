@@ -53,6 +53,13 @@ div.clear, br.clear {
   border-color:#8C1D40 !important;
   box-shadow:0 0 0 0.2rem rgba(140, 29, 64, 0.50) !important;
 }
+span.approved {
+  padding:3px;
+  text-transform: uppercase;
+  background:$brand-gold;
+  font-weight: 900;
+  font-size: 28px;
+}
 //Buttons
 .btn.left {
   float:left;
@@ -504,6 +511,7 @@ div.topStats{
   }
 }
 
+
 div.userProjects {
 
 a.projectLink {
@@ -636,18 +644,38 @@ ul.userList {
   }
 }
 
+.card-body.hidden {
+  display:none;
+}
+
+.card-header div.show {
+  font-size:15px;
+  display:inline-block;
+  font-weight:bold;
+  margin-left:15px;
+  cursor:pointer;
+}
+
 div.entryNav {
   display: inline-block;
   padding: 10px 15px;
-  margin:10px 0;
+  margin:10px;
   line-height:40px;
   cursor:pointer;
+
+  &.wide {
+    display:block;
+    padding: 5px;
+  }
 
   &.active {
     background: #8C1D40;
     box-shadow:0 2px 2px rgba(0, 0, 0, 0.2);
     color:$brand-primary-color;
     font-weight: bold;
+  }
+  &.approval {
+    background: #78BE20;
   }
   &.admin {
     border:4px solid $brand-gold;
