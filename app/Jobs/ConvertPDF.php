@@ -19,6 +19,10 @@ use App\Entry;
 use App\Project;
 use App\UserAssign;
 
+use App\Services\Text\TextLogic;
+
+use thiagoalessio\TesseractOCR\TesseractOCR;
+
 use Mockery\Exception;
 
 class ConvertPDF implements ShouldQueue
@@ -62,13 +66,20 @@ class ConvertPDF implements ShouldQueue
                     $im->readimage($realPath);
                     $numPages = $im->getNumberImages();
 
+                    $pdfText = array();
+
                     for($x = 0; $x < $numPages; $x++) {
                         $num_padded = sprintf("%02d", $x);
                         $im->setIteratorIndex($x);
+                        $im->writeImage($savePath . 'main_' . $num_padded . '.png');
                         $im->thumbnailImage(650, 0);
                         $d = $im->getImageGeometry();
                         $im->setImageFormat('png');
                         $im->writeImage($savePath . 'image_' . $num_padded . '.png');
+                        $ocrData = (new TesseractOCR($savePath . 'main_' . $num_padded . '.png'))->run();
+                        $pdfText['page'.$num_padded] = $ocrData;
+                        File::delete($savePath . 'main_' . $num_padded . '.png');
+
                         $files[$x]['width'] = 650;
                         $files[$x]['height'] = $d['height'];
                         $files[$x]['file'] = 'image_' . $num_padded . '.png';
@@ -104,6 +115,8 @@ class ConvertPDF implements ShouldQueue
 
                         $this->entry->files = json_encode($files);
                         $this->entry->save();
+
+                        TextLogic::create($this->project, json_encode($pdfText));
 
 
 
