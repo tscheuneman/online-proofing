@@ -28,9 +28,23 @@ class OrderLogic {
     public static function getAdminProjects($id) {
         $userProjects = Order::whereHas('admins.admin.user', function($query) use($id) {
             $query->where('id', $id);
-        })->whereHas('projects', function($query2) {
-            $query2->with('entries.user')->where('projects.completed', false)->where('active', true);
-        })->get();
+        })->whereHas('admin_projects', function($query2) {
+            $query2->with('entries.user');
+        })->with(array('projects' => function($q) {
+            $q->where('completed', false);
+        }))->get();
+
+        return $userProjects;
+    }
+
+    public static function getOtherAdminProjects($id) {
+        $userProjects = Order::whereHas('admins.admin.user', function($query) use($id) {
+            $query->where('id', '!=', $id);
+        })->whereHas('admin_projects', function($query2) {
+            $query2->with('entries.user');
+        })->with(array('projects' => function($q) {
+            $q->where('completed', false);
+        }))->get();
 
         return $userProjects;
     }

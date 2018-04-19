@@ -15,6 +15,9 @@ class Order extends Model
     {
         return $this->hasMany('App\Project', 'ord_id','id');
     }
+    public function admin_projects() {
+        return $this->hasMany('App\Project', 'ord_id','id');
+    }
     public function admins()
     {
         return $this->hasMany('App\AdminAssign', 'order_id','id')->select('id', 'user_id', 'order_id');
