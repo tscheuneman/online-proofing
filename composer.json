@@ -17,7 +17,8 @@
         "nicolaslopezj/searchable": "1.*",
         "spatie/flysystem-dropbox": "^1.0",
         "spatie/laravel-tags": "^2.0",
-        "subfission/cas": "^2.0"
+        "subfission/cas": "dev-master",
+        "thiagoalessio/tesseract_ocr": "^2.2"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
