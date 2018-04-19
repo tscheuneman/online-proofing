@@ -55,6 +55,10 @@ class Project extends Model
     public function order_name() {
         return $this->belongsTo('App\Order', 'ord_id', 'id')->select('id', 'job_id');
     }
+
+    public function approval() {
+        return $this->hasOne('App\Approval');
+    }
 }
 
 
