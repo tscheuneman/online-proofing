@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Services\Users\UserLogic;
 
+use App\Jobs\ProfileImage;
+
+use Validator;
+
 class UserController extends Controller
 {
     /**
@@ -85,6 +89,47 @@ class UserController extends Controller
     public function update(Request $request, Admin $admin)
     {
         //
+    }
+
+    /**
+     * Upload an image
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function image(Request $request) {
+        $rules = array(
+            'user_id' => 'required|exists:users,id',
+            'files' => 'required|image|max:5000',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            \Session::flash('flash_deleted','Failed to save');
+            return redirect()->back();
+        }
+
+        try {
+            $path = $request->file('files')->store(
+                'pictures/', 'public'
+            );
+        }
+        catch(Exception $e) {
+            \Session::flash('flash_deleted','Error uploading file');
+            return redirect()->back();
+        }
+
+        $user = UserLogic::findUser($request->user_id);
+            if($user->saveFile($path)) {
+
+                ProfileImage::dispatch($path, 500, 60);
+                \Session::flash('flash_created','Save profile image');
+                return redirect()->back();
+            }
+        \Session::flash('flash_deleted','Error uploading file');
+        return redirect()->back();
     }
 
     /**

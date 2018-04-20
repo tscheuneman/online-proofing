@@ -12,6 +12,10 @@
                         <div class="navPic">
                             {{mb_substr($admin->admin->user->first_name,0,1) . mb_substr($admin->admin->user->last_name,0,1)}}
                         </div>
+                    @else
+                        <div class="navPic pic" style="background:url({{url('/') . '/storage/' . $admin->admin->user->picture}}) center center no-repeat;">
+
+                        </div>
                     @endif
                     {{$admin->admin->user->first_name . ' ' . $admin->admin->user->last_name}}
                 </li>
@@ -24,6 +28,10 @@
                     @if($user->user->picture == null)
                         <div class="navPic">
                             {{mb_substr($user->user->first_name,0,1) . mb_substr($user->user->last_name,0,1)}}
+                        </div>
+                    @else
+                        <div class="navPic pic" style="background:url({{url('/') . '/storage/' . $user->user->picture}}) center center no-repeat;">
+
                         </div>
                     @endif
                     {{$user->user->first_name . ' ' . $user->user->last_name}}

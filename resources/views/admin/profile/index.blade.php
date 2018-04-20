@@ -9,23 +9,130 @@
     @if(Session::has('flash_created'))
         <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_created') !!}</em></div>
     @endif
-    <div class="picture">
-    @if($admin->picture == null)
-        {{mb_substr($admin->first_name,0,1) . mb_substr($admin->last_name,0,1)}}
-    @else
-    @endif
+    <div id="customerFiles">
+        <div id="closeFiles"><i class="fa fa-times"></i></div>
+        <h4>
+            Upload Image
+        </h4>
+        <hr>
+        <form enctype="multipart/form-data" action="{{url('/user/image')}}" method="post">
+            {{ csrf_field() }}
+            <input type="hidden" name="user_id" value="{{$admin->id}}">
+            <input class="form-control" type="file" id="files" name="files" required />
+            <br />
+            <button id="submitFileUpload" class="btn btn-secondary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Submit</button>
+        </form>
     </div>
-    <div class="titleElement">
-        <div class="title">
-            {{$admin->first_name . ' ' . $admin->last_name}}
+
+    <h1>User Details</h1>
+    <hr>
+    <div id="profile">
+        <div class="profileImage">
+            @if($admin->picture == null)
+                <div class="picture">
+                    {{mb_substr($admin->first_name,0,1) . mb_substr($admin->last_name,0,1)}}
+                </div>
+                <div class="addImage">+ Add</div>
+            @else
+                <div class="picture pic" style="background:url({{url('/') . '/storage/' . $admin->picture}}) center center no-repeat;">
+
+                </div>
+                <div class="addImage">+ Change</div>
+            @endif
+        </div>
+        <div class="profileInfo">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a onClick="show('1', this)" class="nav-link active show1" href="#">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a onClick="show('2', this)" class="nav-link show2" href="#">Activity</a>
+                </li>
+            </ul>
+
+            <table id="show1" class="table showElm active">
+                <thead>
+                    <tr>
+                        <td colspan="2">
+                            Contact Info
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            First Name
+                        </td>
+                        <td>
+                            {{$admin->first_name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Last Name
+                        </td>
+                        <td>
+                            {{$admin->last_name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Email
+                        </td>
+                        <td>
+                            {{$admin->email}}
+                        </td>
+                    </tr>
+                </tbody>
+                <thead>
+                <tr>
+                    <td colspan="2">
+                        Additional Info
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Organization
+                        </td>
+                        <td>
+                            {{$admin->org}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="showElm" id="show2">
+                Hi
+            </div>
         </div>
     </div>
-    <br class="clear" />
 
-    <div class="profileContent">
-        Test
-    </div>
+    <script>
+        $(document).ready(function() {
+            $('.picture').height($('.picture').width()).css('line-height' , $('.picture').height() + 'px');
 
-    <br class="clear"><br><br><br>
-    {{$admin}}
+            $('.addImage').on('click', function() {
+               showImage();
+            });
+        });
+
+        function showImage() {
+            $('#customerFiles').fadeToggle(500);
+        }
+        function show(id, elm) {
+            if($(elm).hasClass('active')) {
+                return false;
+            }
+            $('.nav-item a').removeClass('active');
+            $('.nav-item a.show'+id).addClass('active');
+            $('.showElm.active').fadeOut(250, function() {
+                $(this).removeClass('active');
+                $('#show'+id).fadeIn(250, function() {
+                    $(this).addClass('active');
+                });
+            });
+        }
+    </script>
 @endsection

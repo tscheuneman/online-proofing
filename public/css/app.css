@@ -329,6 +329,12 @@ sidebar nav a.active:before {
   font-size: 20px;
 }
 
+#content div.topbar .profile .profileImage.pic {
+  background-size: cover !important;
+  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.5);
+          box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.5);
+}
+
 #content div.topbar .profile .profileMenu {
   font-size: 15px;
   float: right;
@@ -486,31 +492,58 @@ div.addedUsers .theUser {
   width: auto;
 }
 
-div.picture {
-  width: 150px;
-  height: 150px;
-  background: #ccc;
+div#profile div.profileImage {
+  width: 25%;
+  padding: 15px;
+  background: #fff;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  float: left;
+}
+
+div#profile div.profileImage .picture {
+  width: 65%;
+  background: #f4f4f4;
+  min-height: 100px;
+  margin: 0 auto;
   border-radius: 50%;
+  line-height: 100%;
   text-align: center;
-  line-height: 150px;
-  text-transform: uppercase;
-  font-size: 40px;
-  float: left;
+  font-size: 50px;
 }
 
-div.titleElement {
-  float: left;
-  margin-left: 15px;
+div#profile div.profileImage .picture.pic {
+  background-size: cover !important;
+  -webkit-box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+          box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
-div.titleElement div.title {
-  font-size: 35px;
-  margin-bottom: 10px;
-  line-height: 150px;
-}
-
-div.profileContent {
+div#profile div.profileImage div.addImage {
+  text-align: center;
   margin-top: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+div#profile div.profileInfo {
+  width: 65%;
+  float: right;
+}
+
+div#profile div.profileInfo .nav-link {
+  color: #000;
+}
+
+div#profile div.profileInfo .nav-link.active {
+  font-weight: bold;
+}
+
+div#profile div.profileInfo .showElm {
+  display: none;
+}
+
+div#profile div.profileInfo .showElm.active {
+  display: table;
 }
 
 div.topStats {
@@ -959,6 +992,12 @@ div.navPic {
   line-height: 40px;
   text-align: center;
   font-weight: bold;
+}
+
+div.navPic.pic {
+  background-size: cover !important;
+  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.5);
+          box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.5);
 }
 
 div.pendingProject {

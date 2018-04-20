@@ -18,6 +18,10 @@
                                     {{mb_substr($project->approval->user->first_name,0,1) . mb_substr($project->approval->user->last_name,0,1)}}
                                 </div>
                                 {{$project->approval->user->first_name }} {{  date('Y-m-d g:ia', strtotime($project->approval->created_at)) }}
+                            @else
+                                <div class="navPic pic" style="background:url({{url('/') . '/storage/' . $project->approval->user->picture}}) center center no-repeat;">
+
+                                </div>
                             @endif
                         </div>
                     @endif
@@ -39,6 +43,10 @@
                 @if($entry->user->picture == null)
                     <div class="navPic">
                         {{mb_substr($entry->user->first_name,0,1) . mb_substr($entry->user->last_name,0,1)}}
+                    </div>
+                @else
+                    <div class="navPic pic" style="background:url({{url('/') . '/storage/' . $entry->user->picture}}) center center no-repeat;">
+
                     </div>
                 @endif
                 {{$entry->user->first_name }} {{  date('Y-m-d g:ia', strtotime($entry->created_at)) }}

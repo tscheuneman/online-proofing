@@ -9,10 +9,8 @@
                 @if($project->completed)
                     <div data-id="{{$entry->id}}" class="entryNav active approval">
                         @if(!empty($project->approval))
-                            @if($project->approval->user->picture == null)
                                 Approval
                                 <br> {{  date('Y-m-d g:ia', strtotime($project->approval->created_at)) }}
-                            @endif
                         @endif
                     </div>
                 @endif
@@ -33,6 +31,10 @@
             @if($entry->user->picture == null)
                 <div class="navPic">
                     {{mb_substr($entry->user->first_name,0,1) . mb_substr($entry->user->last_name,0,1)}}
+                </div>
+            @else
+                <div class="navPic pic" style="background:url({{url('/') . '/storage/' . $entry->user->picture}}) center center no-repeat;">
+
                 </div>
             @endif
                {{$entry->user->first_name . ' ' . $entry->user->last_name}}

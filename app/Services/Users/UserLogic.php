@@ -11,6 +11,8 @@ use App\User;
 use App\Mail\UserCreated;
 use App\Mail\UserCreatedCAS;
 
+use File;
+
 class UserLogic {
     protected $user;
 
@@ -40,6 +42,20 @@ class UserLogic {
         return $this->user;
     }
 
+    public function saveFile($path) {
+        try {
+            if($this->user->picture != null) {
+                File::delete(public_path(). '/storage/' . $this->user->picture);
+            }
+            $this->user->picture = $path;
+            $this->user->save();
+            return true;
+        } catch(\Exception $e) {
+
+        }
+        return false;
+    }
+
     public static function checkUserCAS($mail) {
         $user = User::where('email', $mail)->first();
 
@@ -51,7 +67,7 @@ class UserLogic {
     }
 
     public static function findUser($id) {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
         return new UserLogic($user);
     }

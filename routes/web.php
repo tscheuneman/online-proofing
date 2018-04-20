@@ -64,6 +64,7 @@ Route::group(['middleware' => ['user']], function () {
     Route::post('project/approve', 'UserProjectController@approve');
 
     Route::post('user/files', 'UserProjectController@userFiles');
+    Route::post('user/image', 'UserController@image');
 });
 
 

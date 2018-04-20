@@ -26,9 +26,16 @@
 
 
         <div class="profile">
-            <div class="profileImage">
-                {{mb_substr(Auth::user()->first_name,0,1) . mb_substr(Auth::user()->last_name,0,1)}}
-            </div>
+            @if(Auth::user()->picture == null)
+                <div class="profileImage">
+                    {{mb_substr(Auth::user()->first_name,0,1) . mb_substr(Auth::user()->last_name,0,1)}}
+                </div>
+            @else
+                <div class="profileImage pic" style="background:url({{url('/') . '/storage/' . Auth::user()->picture}}) center center no-repeat;">
+
+                </div>
+            @endif
+
             <div class="clear"></div>
             <div class="profileMenu">
 
