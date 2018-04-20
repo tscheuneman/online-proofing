@@ -41,7 +41,8 @@
           });
           $('.getLink').on('click', function() {
             let value = $(this).data('addy');
-            getLinkValue(value);
+            let proj = $(this).data('proj');
+            getLinkValue(value, proj);
           });
           $('#showProd').on('click', function() {
               $('.revisions').slideToggle(500);

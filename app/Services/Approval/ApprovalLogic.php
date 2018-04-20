@@ -15,10 +15,23 @@ class ApprovalLogic {
         $this->approval = $approval;
     }
 
+    /**
+     * Get all approvals
+     *
+     * @param
+     * @return \App\Approval
+     */
     public static function getAll() {
         $cat = Approval::get();
         return $cat;
     }
+
+    /**
+     * Create an approval
+     *
+     * @param  \App\User $user, \App\Project $project
+     * @return
+     */
 
     public static function create(User $user, Project $project) {
         $approval = new Approval;
