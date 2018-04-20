@@ -2,6 +2,7 @@
 
 namespace App\Services\Project;
 
+use App\Order;
 use App\Project;
 use App\Services\Order\OrderLogic;
 use File;
@@ -31,8 +32,11 @@ class ProjectLogic {
 
     public function getProductsInOrder() {
         $returnArray = array();
-        $otherOrders = $this->project->with('admin_entries')->where('id', '!=', $this->project->id)->get();
-        foreach($otherOrders as $ord) {
+
+        $order = OrderLogic::find($this->project->ord_id);
+           $projects = $order->getOtherProducts($this->project->id);
+
+        foreach($projects->projects as $ord) {
             if(!isset($ord->admin_entries[0])) {
                 $returnArray[] = $ord;
             }
