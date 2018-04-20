@@ -310,6 +310,8 @@ sidebar {
         margin-right:75px;
         box-shadow:0 2px 2px rgba(0, 0, 0, 0.2);
         display:none;
+        position: relative;
+        z-index: 99;
 
         span.name {
           padding-bottom:5px;
