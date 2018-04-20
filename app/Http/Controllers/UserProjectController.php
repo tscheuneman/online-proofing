@@ -113,7 +113,6 @@ class UserProjectController extends Controller
                         return view('main.project.index',
                             [
                                 'project' => $thisProject,
-                                'val' => json_encode($thisProject->entries[0], JSON_UNESCAPED_SLASHES),
 
                             ]);
                     }
@@ -123,7 +122,6 @@ class UserProjectController extends Controller
                     return view('main.project.guest',
                         [
                             'project' => $thisProject,
-                            'val' => json_encode($thisProject->entries[0], JSON_UNESCAPED_SLASHES),
 
                         ]);
                 }
