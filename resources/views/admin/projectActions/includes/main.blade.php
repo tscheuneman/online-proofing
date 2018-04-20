@@ -30,7 +30,7 @@
                                 on {{date('l, F, jS', strtotime($project->approval->created_at))}}
                             </p>
                             <br>
-                            <button data-addy="{{$project->entries[0]->pdf_path}}" class="getLink btn btn-primary"><i class="fa fa-download" aria-hidden="true"></i> Download PDF</button>
+                            <button data-proj="{{$project->file_path}}" data-addy="{{$project->entries[0]->pdf_path}}" class="getLink btn btn-primary"><i class="fa fa-download" aria-hidden="true"></i> Download PDF</button>
                         </div>
                     </div>
                 @endif
@@ -74,7 +74,7 @@
                             </p>
                             <br>
                             @foreach(json_decode($entry->files) as $key => $file)
-                                <button data-addy="{{$file->path}}" class="getLink btn btn-primary btn_{{$key++}}">{{$file->name}}</button>
+                                <button data-proj="{{$project->file_path}}" data-addy="{{$file->path}}" class="getLink btn btn-primary btn_{{$key++}}">{{$file->name}}</button>
                             @endforeach
                         </div>
                 </div>
