@@ -111,6 +111,10 @@ class ProjectLogic {
         return $this->project->project_name;
     }
 
+    public function isApproved() {
+        return $this->project->completed;
+    }
+
     public function get() {
         return $this->project;
     }
