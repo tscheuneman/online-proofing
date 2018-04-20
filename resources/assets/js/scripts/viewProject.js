@@ -88,9 +88,10 @@ function goToEntryItemById(id) {
     });
 }
 
-function getLinkValue(val) {
+function getLinkValue(val, proj) {
     axios.post('/admin/project/link', {
-        val: val
+        val: val,
+        project_id: proj
     })
         .then(function (response) {
             let returnData = response.data;
