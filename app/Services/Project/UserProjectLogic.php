@@ -22,11 +22,23 @@ use App\Services\Users\UserLogic;
 class UserProjectLogic {
     protected $project;
 
+    /**
+     * UserProjectLogic Constructor
+     *
+     * @param \App\Project $project
+     * @return void
+     */
     public function __construct(Project $project)
     {
         $this->project = $project;
     }
 
+    /**
+     * Find project from id
+     *
+     * @param string id
+     * @return mixed
+     */
     public static function find($id) {
         $project = Project::find($id);
         if($project) {
@@ -35,32 +47,68 @@ class UserProjectLogic {
         return false;
     }
 
+    /**
+     * Get project id
+     *
+     * @return string
+     */
     public function id() {
         return $this->project->id;
     }
 
+    /**
+     * Get project
+     *
+     * @return \App\Project
+     */
     public function get() {
         return $this->project;
     }
 
+    /**
+     * Get project name
+     *
+     * @return string
+     */
     public function getName() {
         return $this->project->project_name;
     }
 
+    /**
+     * Get latest entry of project
+     *
+     * @return \App\Project
+     */
     public function getLatestEntry() {
         return Project::with('admin_entries')->where('id', $this->project->id)->first();
     }
 
+    /**
+     * See if project is approved
+     *
+     * @return boolean
+     */
     public function isApproved() {
         return $this->project->completed;
     }
 
+    /**
+     * Approve Project
+     *
+     * @return boolean
+     */
     public function approve() {
         $this->project->completed = true;
         $this->project->save();
 
         return true;
     }
+
+    /**
+     * Send approval email
+     *
+     * @return void
+     */
 
     public function mail() {
         $orderVals = $this->project->with('order')->where('id', $this->project->id)->first();
@@ -76,6 +124,11 @@ class UserProjectLogic {
         }
     }
 
+    /**
+     * Send user revision email
+     *
+     * @return void
+     */
     public function mailFileUpload() {
         $orderVals = $this->project->with('order')->where('id', $this->project->id)->first();
 
@@ -89,6 +142,11 @@ class UserProjectLogic {
         }
     }
 
+    /**
+     * Create user entry directory.  Gather image data, send to be processed
+     *
+     * @return boolean
+     */
     public function createDirectory($request) {
         $rand = str_random(12);
         $proj_year = date('Y', strtotime($this->project->created_at));
@@ -122,6 +180,13 @@ class UserProjectLogic {
         return false;
     }
 
+
+    /**
+     * Save user uploaded files to dropbox
+     *
+     * @param resource $file
+     * @return array
+     */
     public function saveFileToDropbox($file) {
         $orderVals = $this->project->with('order')->where('id', $this->project->id)->first();
         $proj_year = date('Y', strtotime($this->project->created_at));

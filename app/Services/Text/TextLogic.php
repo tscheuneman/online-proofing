@@ -12,11 +12,24 @@ use App\Project;
 class TextLogic {
     protected $text;
 
+    /**
+     * TextLogic Constructor
+     *
+     * @param \App\Text $text
+     * @return void
+     */
     public function __construct(Text $text)
     {
         $this->text = $text;
     }
 
+    /**
+     * Create text entry
+     *
+     * @param \App\Project $project
+     * $param string $data
+     * @return mixed
+     */
     public static function create(Project $project, $data) {
 
         $search = Text::where('project_id', $project->id)->first();
@@ -30,8 +43,6 @@ class TextLogic {
 
             return new TextLogic($text);
         }
-
-
         return false;
 
     }

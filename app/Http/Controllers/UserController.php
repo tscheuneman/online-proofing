@@ -143,6 +143,11 @@ class UserController extends Controller
         //
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return mixed
+     */
     public function password() {
         if (Auth::check()) {
             $user = Auth::user();
@@ -161,6 +166,12 @@ class UserController extends Controller
         return redirect('/login');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \App\Http\Requests\PasswordRequest $request
+     * @return \Illuminate\Http\Response
+     */
     public function passwordSave(PasswordRequest $request)
     {
         $theUser = Auth::user();

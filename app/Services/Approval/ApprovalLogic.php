@@ -10,6 +10,12 @@ use App\Project;
 class ApprovalLogic {
     protected $approval;
 
+    /**
+     * ApprovalLogic constructor
+     *
+     * @param  \App\Approval $approval
+     * @return void
+     */
     public function __construct(Approval $approval)
     {
         $this->approval = $approval;
@@ -18,7 +24,6 @@ class ApprovalLogic {
     /**
      * Get all approvals
      *
-     * @param
      * @return \App\Approval
      */
     public static function getAll() {
@@ -29,8 +34,9 @@ class ApprovalLogic {
     /**
      * Create an approval
      *
-     * @param  \App\User $user, \App\Project $project
-     * @return
+     * @param  \App\User $user
+     * @param  \App\Project $project
+     * @return void
      */
 
     public static function create(User $user, Project $project) {

@@ -7,11 +7,26 @@ use App\Entry;
 class EntryLogic {
     protected $entry;
 
+    /**
+     * EntryLogic constructor
+     *
+     * @param  \App\Entry $entry
+     * @return void
+     */
     public function __construct(Entry $entry)
     {
         $this->entry = $entry;
     }
 
+    /**
+     * Create an Admin Entry
+     *
+     * @param  string $id
+     * @param string $user_id
+     * @param string $path
+     * @param string $comments
+     * @return \App\Services\Entry\EntryLogic
+     */
     public static function createAdmin($id, $user_id, $path, $comments) {
         $entry = new Entry();
         $entry->project_id = $id;
@@ -24,6 +39,14 @@ class EntryLogic {
         return new EntryLogic($entry);
     }
 
+    /**
+     * Create a User Entry
+     *
+     * @param  string $id
+     * @param string $user_id
+     * @param string $path
+     * @return \App\Services\Entry\EntryLogic
+     */
     public static function createUser($id, $user_id, $path) {
         $entry = new Entry();
         $entry->project_id = $id;
@@ -36,6 +59,13 @@ class EntryLogic {
         return new EntryLogic($entry);
     }
 
+    /**
+     * Update an entry
+     *
+     * @param array $files
+     * @param string $comments
+     * @return void
+     */
     public function updateEntry($files, $comments) {
         $this->entry->active = true;
         $this->entry->files = json_encode($files);
@@ -43,6 +73,11 @@ class EntryLogic {
         $this->entry->save();
     }
 
+    /**
+     * Get the current entry
+     *
+     * @return \App\Entry
+     */
     public function get() {
         return $this->entry;
     }

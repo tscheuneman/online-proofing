@@ -17,10 +17,24 @@ use App\Jobs\ConvertPDFSecondary;
 class ProjectLogic {
     protected $project;
 
+    /**
+     * ProjectLogic Controller
+     *
+     * @param \App\Project $project
+     * @return void
+     */
+
     public function __construct(Project $project)
     {
         $this->project = $project;
     }
+
+    /**
+     * Find a project with a given id
+     *
+     * @param string $id
+     * @return mixed
+     */
 
     public static function find($id) {
         $project = Project::find($id);
@@ -30,6 +44,11 @@ class ProjectLogic {
         return false;
     }
 
+    /**
+     * Get all projects in an order
+     *
+     * @return array
+     */
     public function getProductsInOrder() {
         $returnArray = array();
 
@@ -44,9 +63,21 @@ class ProjectLogic {
         return $returnArray;
     }
 
+    /**
+     * Get Project with entries with a given file_path
+     *
+     * @param string $id
+     * @return \App\Project
+     */
     public static function admin_entries($id) {
         return Project::where('file_path', '=', $id)->with('admin_entries')->first();
     }
+
+    /**
+     * Check if user made last entry
+     *
+     * @return boolean
+     */
 
     public function readyForAdmin() {
         $vals = $this->admin_entries($this->project->file_path);
@@ -59,17 +90,32 @@ class ProjectLogic {
         }
         return false;
     }
-
+    /**
+     * Get project from path
+     *
+     * @param string $id
+     * @return \App\Services\Project\ProjectLogic
+     */
     public static function find_path($id) {
         $project = Project::where('file_path', $id)->first();
 
         return new ProjectLogic($project);
     }
 
+    /**
+     * Get number of active projects
+     *
+     * @return int
+     */
     public static function count() {
         return Project::where('active', '=', true)->where('completed', '=', false)->count();
     }
 
+    /**
+     * Get entries waiting for user and admin actions
+     *
+     * @return array
+     */
     public static function pendingEntries() {
         $projects = Project::where('active', '=', true)->where('completed', '=', false)->with('admin_entries')->get();
 
@@ -95,34 +141,76 @@ class ProjectLogic {
         return $returnVal;
     }
 
+    /**
+     * Check if project is active
+     *
+     * @return boolean
+     */
     public function isActive() {
         return $this->project->active;
     }
 
+    /**
+     * Get created date
+     *
+     * @return string
+     */
     public function created() {
         return $this->project->created_at;
     }
 
+    /**
+     * Get project file path
+     *
+     * @return string
+     */
     public function path() {
         return $this->project->file_path;
     }
 
+    /**
+     * Get project name
+     *
+     * @return string
+     */
     public function getName() {
         return $this->project->project_name;
     }
 
+    /**
+     * Check if project has been approved
+     *
+     * @return boolean
+     */
     public function isApproved() {
         return $this->project->completed;
     }
 
+    /**
+     * Get the project
+     *
+     * @return \App\Project
+     */
     public function get() {
         return $this->project;
     }
 
+    /**
+     *  Get all the info for a project given its filepath
+     *
+     * @return \App\Project
+     */
     public function dataReturn() {
         return Project::where('file_path', '=', $this->project->file_path)->with('order', 'entries.user', 'order.users.user', 'order.admins.admin.user', 'approval.user')->first();
     }
 
+    /**
+     * Create a project
+     *
+     * @param \App\Services\Order\OrderLogic $order
+     * @param string $name
+     * @return boolean
+     */
     public static function create(OrderLogic $order, $name) {
         try {
             $rand = str_random(12);
@@ -134,13 +222,22 @@ class ProjectLogic {
                 $project->file_path = $rand;
                 $project->ord_id = $order->getID();
                 $project->save();
+                return true;
             }
+            return false;
 
         } catch(\Exception $e) {
             return false;
         }
     }
 
+    /**
+     * Create folder for an entry
+     *
+     * @param \Illuminate\Http\Request $request
+     * @pararm boolean $secondary
+     * @return mixed
+     */
     public function makeFolder($request, $secondary = false) {
         $proj_year = date('Y', strtotime($this->project->created_at));
         $proj_month = date('F', strtotime($this->project->created_at));
@@ -158,6 +255,16 @@ class ProjectLogic {
         return false;
 
     }
+
+    /**
+     * Store a file, create entry, and then run convert job
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param string $dir
+     * @param string $rand
+     * @param boolean $secondary
+     * @return boolean
+     */
     public function storeFile($request, $dir, $folderPath, $rand, $secondary) {
         if($path = Storage::disk('public')->put($dir . '/pdf', $request->file('pdf'), 'public')) {
             $storageName = basename($path);
@@ -177,6 +284,12 @@ class ProjectLogic {
         return false;
     }
 
+    /**
+     * Get the dropbox link given the path
+     *
+     * $param string $val
+     * @return string
+     */
     public static function getDropboxLink($val) {
         return Storage::disk('dropbox')->getAdapter()->getTemporaryLink($val);
     }
