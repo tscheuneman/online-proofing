@@ -15,4 +15,9 @@ class Entry extends Model
     {
         return $this->belongsTo('App\User', 'user_id', 'id')->select('id', 'first_name', 'last_name', 'picture');
     }
+
+    public function project()
+    {
+        return $this->belongsTo('App\Project', 'project_id', 'id')->select('id', 'project_name');
+    }
 }
