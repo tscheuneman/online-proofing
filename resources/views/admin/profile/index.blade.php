@@ -104,7 +104,31 @@
             </table>
 
             <div class="showElm" id="show2">
-                Hi
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Activity
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($activity as $ac)
+                        <tr>
+                            <td>
+                                {{date('F jS g:i a', strtotime($ac->created_at))}}
+                            </td>
+                            <td>
+                                {{$ac->action}} for <strong>{{$ac->project->order_name->job_id . ' | ' . $ac->project->project_name}}</strong>
+                            </td>
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
