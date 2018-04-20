@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Services\Project\ProjectLogic;
+use App\Services\Activity\ActivityLogic;
+
+use Auth;
 
 use Validator;
 use Redirect;
@@ -64,7 +67,7 @@ class ProjectActionsController extends Controller
                     return redirect()->back()->withErrors($validator)->withInput($request->all());
                 }
                 if($project->makeFolder($request, true)) {
-
+                    ActivityLogic::create($project->get(), Auth::user(), 'Created Revision');
                     \Session::flash('flash_created','Upload was created for ' . $project->getName());
                     return redirect('/admin');
                 }
@@ -86,6 +89,7 @@ class ProjectActionsController extends Controller
             if($project->makeFolder($request)) {
 
                 $otherProjects = $project->getProductsInOrder();
+                ActivityLogic::create($project->get(), Auth::user(), 'Created Initial Upload');
                 if(!empty($otherProjects)) {
                     \Session::flash('flash_created','Initial Upload was created for ' . $project->getName());
                     return redirect('/admin/project/' . $otherProjects[0]->file_path);
@@ -151,6 +155,7 @@ class ProjectActionsController extends Controller
     public function getLink(Request $request) {
         $rules = array(
             'val' => 'required|string',
+            'project_id' => 'required|exists:projects,file_path'
         );
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -159,6 +164,15 @@ class ProjectActionsController extends Controller
 
 
         if($link = ProjectLogic::getDropboxLink($request->val)) {
+
+            $project = ProjectLogic::find_path($request->project_id);
+            if($project->isApproved()) {
+                ActivityLogic::create($project->get(), Auth::user(), 'Downloaded Final Proof');
+            }
+            else {
+                ActivityLogic::create($project->get(), Auth::user(), 'Downloaded User File');
+            }
+
             $returnData['status'] = 'Success';
             $returnData['message'] = $link;
             return json_encode($returnData);
