@@ -124,6 +124,7 @@ class ProjectActionsController extends Controller
                 }
                 else {
                     $otherProjects = $project->getProductsInOrder();
+
                     $projectData = $project->get();
                     return view('admin.projectActions.create',
                         [

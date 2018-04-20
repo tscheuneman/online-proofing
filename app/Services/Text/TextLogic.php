@@ -31,6 +31,7 @@ class TextLogic {
             return new TextLogic($text);
         }
 
+
         return false;
 
     }

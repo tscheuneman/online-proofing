@@ -125,7 +125,7 @@ class UserProjectController extends Controller
 
                         ]);
                 }
-                return abort(404, 'cannot find');
+                return abort(404, 'No Permissions');
 
             }
         } else {
