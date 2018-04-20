@@ -99,15 +99,36 @@ class UserProjectController extends Controller
         $project = Project::where('file_path', '=', $id)->first();
         if($project != null) {
             if($project->active) {
-                    $thisProject = Project::where('file_path', '=', $id)->with('order', 'entries.user', 'order.users.user', 'order.admins.admin.user')->first();
-                    return view('main.project.index',
+                $thisProject = Project::where('file_path', '=', $id)->with('order', 'entries.user', 'order.users.user', 'order.admins.admin.user')->first();
+
+                if(Auth::check()) {
+                    $isUser = false;
+                    foreach($thisProject->order->users as $user) {
+                        if($user->user->id == Auth::id()) {
+                            $isUser = true;
+                            break;
+                        }
+                    }
+                    if($isUser) {
+                        return view('main.project.index',
+                            [
+                                'project' => $thisProject,
+                                'val' => json_encode($thisProject->entries[0], JSON_UNESCAPED_SLASHES),
+
+                            ]);
+                    }
+
+                }
+                if(!$thisProject->order->hidden) {
+                    return view('main.project.guest',
                         [
                             'project' => $thisProject,
                             'val' => json_encode($thisProject->entries[0], JSON_UNESCAPED_SLASHES),
 
-                        ]
-                    );
-                    return redirect()->back();
+                        ]);
+                }
+                return abort(404, 'cannot find');
+
             }
         } else {
             return redirect()->back();

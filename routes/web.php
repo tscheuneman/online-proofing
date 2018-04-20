@@ -13,19 +13,23 @@
 
 
 
-Route::get('admin/password', 'AdminController@password');
-Route::post('admin/password', 'AdminController@passwordSave');
 
-Route::get('password', 'UserController@password');
-Route::post('password', 'UserController@passwordSave');
+
+
 
 Route::resource('login', 'LoginController');
 
 Route::post('logout', 'LoginController@logout');
 
+
+Route::get('project/{id}', 'UserProjectController@show');
+
+
 Route::group(['middleware' => ['admin']], function () {
     /* Admin Routes */
 
+    Route::get('admin/password', 'AdminController@password');
+    Route::post('admin/password', 'AdminController@passwordSave');
 
     Route::resource('admin/customers', 'UserController');
     Route::resource('admin/users', 'AdminController');
@@ -49,8 +53,13 @@ Route::group(['middleware' => ['admin']], function () {
 });
 
 Route::group(['middleware' => ['user']], function () {
+
+    Route::get('password', 'UserController@password');
+    Route::post('password', 'UserController@passwordSave');
     Route::get('/', 'HomeController@index');
-    Route::resource('project', 'UserProjectController');
+
+    Route::post('project', 'UserProjectController@store');
+
 
     Route::post('project/approve', 'UserProjectController@approve');
 
