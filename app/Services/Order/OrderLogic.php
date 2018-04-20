@@ -30,9 +30,7 @@ class OrderLogic {
             $query->where('id', $id);
         })->whereHas('admin_projects', function($query2) {
             $query2->with('entries.user');
-        })->with(array('projects' => function($q) {
-            $q->where('completed', false);
-        }))->get();
+        })->get();
 
         return $userProjects;
     }
@@ -92,6 +90,20 @@ class OrderLogic {
 
     public function getID() {
         return $this->order->id;
+    }
+
+    public static function find($id) {
+        $order = Order::find($id);
+
+        return new OrderLogic($order);
+    }
+
+    public function getOtherProducts($id) {
+        $order = $this->order->where('id', $this->order->id)->with(array('projects' => function($q) use($id) {
+            $q->with('admin_entries')->where('id', '!=', $id);
+        }))->first();
+
+        return $order;
     }
 }
 
