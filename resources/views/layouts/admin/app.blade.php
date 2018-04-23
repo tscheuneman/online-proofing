@@ -69,8 +69,8 @@
     let showLoader = true;
 
     $(document).ready(function() {
-       $('.profileImage').on('click', function(){
-           $('.profileMenu').fadeToggle(500);
+       $('.topbar .profileImage').on('click', function(){
+           $('.topbar .profileMenu').fadeToggle(500);
        });
 
         $('input#search').on('keyup', function(e) {
