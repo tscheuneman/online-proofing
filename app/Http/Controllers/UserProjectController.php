@@ -15,6 +15,8 @@ use Mockery\Exception;
 
 use App\Services\Project\UserProjectLogic;
 use App\Services\Approval\ApprovalLogic;
+use App\Services\Activity\ActivityLogic;
+
 
 use Storage;
 
@@ -65,7 +67,7 @@ class UserProjectController extends Controller
         }
 
         $project = UserProjectLogic::find($request->projectID);
-
+        ActivityLogic::create($project->get(), Auth::user(), 'Submitted a Revision');
         $latest = $project->getLatestEntry();
 
 
@@ -110,6 +112,7 @@ class UserProjectController extends Controller
                         }
                     }
                     if($isUser) {
+                        ActivityLogic::create($thisProject, Auth::user(), 'Customer Viewed Project');
                         return view('main.project.index',
                             [
                                 'project' => $thisProject,
@@ -162,7 +165,7 @@ class UserProjectController extends Controller
             if(!$project->isApproved()) {
                 $project->approve();
                 $project->mail();
-                ApprovalLogic::create(Auth::user(), $project->get());
+                ApprovalLogic::create(Auth::user(), $project->get(), "Approved Project");
 
 
                 $returnData['status'] = 'Success';
@@ -231,8 +234,9 @@ class UserProjectController extends Controller
                     $path = $project->saveFileToDropbox($file);
                     $savedFiles[] = $path;
                 }
+                ActivityLogic::create($project->get(), Auth::user(), 'Uploaded Files');
 
-                $entry = EntryLogic::createUser($project->id(), Auth::id(), '0');
+                $entry = EntryLogic::createUser($project->id(), Auth::id(), null);
 
                 $entry->updateEntry($savedFiles, $request->comments);
 
