@@ -41,13 +41,20 @@
     <div class="container">
         @include('main.project.includes.status')
         <div class="row justify-content-center">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 @include('main.project.includes.info')
+            </div>
+            <div class="col-md-6">
                 @include('main.project.includes.revisions')
             </div>
-
-            <div class="col-md-9">
+        </div>
+        <br><br>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
                 @include('main.project.includes.main')
+            </div>
+            <div class="col-md-4">
+                @include('admin.projectActions.includes.comments')
             </div>
     </div>
     <br><br><br><br>
@@ -121,6 +128,13 @@
             $('#mask').fadeIn(250, function() {
                 $('#customerFiles').stop().fadeIn(250);
             })
+        });
+
+        $('#showProd').on('click', function() {
+            $('.revisions').slideToggle(500);
+        });
+        $('#showInfo').on('click', function() {
+            $('.project_info').slideToggle(500);
         });
 
     });

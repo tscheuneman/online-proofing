@@ -2,8 +2,12 @@
     <div class="card-header">
         <i class="fa fa-info-circle" aria-hidden="true"></i>
         Project Info
+        <div id="showInfo" class="show">
+            <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+            Show
+        </div>
     </div>
-    <div class="card-body">
+    <div class="card-body hidden project_info">
         <strong>Assigned Premedia</strong>
         <ul class="userList">
             @foreach($project->order->admins as $admin)
