@@ -22,4 +22,14 @@ class ProfileController extends Controller
             ]
         );
     }
+
+    public function userIndex() {
+        $admin = User::find(Auth::id());
+
+        return view('main.profile.index',
+            [
+                'admin' => $admin,
+            ]
+        );
+    }
 }

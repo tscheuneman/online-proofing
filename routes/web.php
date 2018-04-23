@@ -34,8 +34,6 @@ Route::post('password', 'UserController@passwordSave');
 Route::group(['middleware' => ['admin']], function () {
     /* Admin Routes */
 
-
-
     Route::resource('admin/customers', 'UserController');
     Route::resource('admin/users', 'AdminController');
     Route::resource('admin/projects', 'ProjectController');
@@ -64,6 +62,7 @@ Route::group(['middleware' => ['user']], function () {
 
     Route::post('project', 'UserProjectController@store');
 
+    Route::get('profile', 'ProfileController@userIndex');
 
     Route::post('project/approve', 'UserProjectController@approve');
 
