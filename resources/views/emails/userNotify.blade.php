@@ -6,7 +6,7 @@
             <div class="content">
 
                 <!-- START CENTERED WHITE CONTAINER -->
-                <span class="preheader">You have been added to a project</span>
+                <span class="preheader">You have been added to a project!</span>
                 <table class="main">
 
                     <!-- START MAIN CONTENT AREA -->
@@ -16,7 +16,7 @@
                                 <tr>
                                     <td>
                                         <h1>Hi {{$user->first_name}}</h1>
-                                        <p>You have been added as an appover to a project requiring proof approval!</p>
+                                        <p>You have been added as an approver to a project requiring proof approval!</p>
                                         <p>Project: <strong>{{$project->project_name}}</strong></p>
                                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                             <tbody>

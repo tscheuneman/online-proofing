@@ -6,7 +6,7 @@
             <div class="content">
 
                 <!-- START CENTERED WHITE CONTAINER -->
-                <span class="preheader">Thank you for registering</span>
+                <span class="preheader">You have been registered!</span>
                 <table class="main">
 
                     <!-- START MAIN CONTENT AREA -->

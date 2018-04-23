@@ -6,7 +6,7 @@
             <div class="content">
 
                 <!-- START CENTERED WHITE CONTAINER -->
-                <span class="preheader">A project has been revised!</span>
+                <span class="preheader">A new proof is ready to view!</span>
                 <table class="main">
 
                     <!-- START MAIN CONTENT AREA -->

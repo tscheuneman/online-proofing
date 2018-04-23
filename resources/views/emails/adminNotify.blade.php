@@ -6,7 +6,7 @@
             <div class="content">
 
                 <!-- START CENTERED WHITE CONTAINER -->
-                <span class="preheader">You have been added to a project</span>
+                <span class="preheader">A revision to a project has been submitted</span>
                 <table class="main">
 
                     <!-- START MAIN CONTENT AREA -->
