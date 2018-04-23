@@ -24,36 +24,39 @@
             </div>
         </div>
 
-
         <div class="profile">
             @if(Auth::user()->picture == null)
-                <div class="profileImage">
+                <div class="navPic">
                     {{mb_substr(Auth::user()->first_name,0,1) . mb_substr(Auth::user()->last_name,0,1)}}
                 </div>
             @else
-                <div class="profileImage pic" style="background:url({{url('/') . '/storage/' . Auth::user()->picture}}) center center no-repeat;">
+                <div class="navPic pic" style="background:url({{url('/') . '/storage/' . Auth::user()->picture}}) center center no-repeat;">
 
                 </div>
             @endif
+        <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <span class="name">{{Auth::user()->first_name . ' ' . Auth::user()->last_name}}</span> <span class="caret"></span>
+                    </a>
 
-            <div class="clear"></div>
-            <div class="profileMenu">
-
-                <span class="name">{{Auth::user()->first_name . ' ' . Auth::user()->last_name}}</span>
-                <a href="{{ url('/admin/profile') }}"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
-
-                <a href="{{ url('logout') }}"
-                   onclick="event.preventDefault();
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{url('/admin/profile')}}">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            Profile
+                        </a>
+                        <a class="dropdown-item" href="{{ url('logout') }}"
+                           onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                    <i class="fa fa-sign-out" aria-hidden="true"></i>
-                    {{ __('Logout') }}
-                </a>
-                <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-
-
-            </div>
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            {{ __('Logout') }}
+                        </a>
+                        <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
+        </ul>
         </div>
     </div>
     <div class="clear"> </div>
