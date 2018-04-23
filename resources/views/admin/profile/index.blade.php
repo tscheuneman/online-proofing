@@ -31,13 +31,14 @@
             @if($admin->picture == null)
                 <div class="picture">
                     {{mb_substr($admin->first_name,0,1) . mb_substr($admin->last_name,0,1)}}
+                    <div class="addImage">+ Add</div>
                 </div>
-                <div class="addImage">+ Add</div>
+
             @else
                 <div class="picture pic" style="background:url({{url('/') . '/storage/' . $admin->picture}}) center center no-repeat;">
-
+                    <div class="addImage">+ Change</div>
                 </div>
-                <div class="addImage">+ Change</div>
+
             @endif
         </div>
         <div class="profileInfo">
@@ -143,6 +144,13 @@
 
             $('#closeFiles').on('click', function() {
                 showProfileImage();
+            });
+
+
+            $('.profileImage .picture').hover(function() {
+                $('.addImage', this).stop().fadeIn(200);
+            }, function() {
+                $('.addImage', this).stop().fadeOut(200);
             });
         });
 
