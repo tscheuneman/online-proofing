@@ -47,6 +47,9 @@
                     <li class="nav-item">
                         <a onClick="show('1', this)" class="nav-link active show1" href="#">Profile</a>
                     </li>
+                    <li class="nav-item">
+                        <a onClick="show('2', this)" class="nav-link show2" href="#">Completed Projects</a>
+                    </li>
                 </ul>
 
                 <table id="show1" class="table showElm active">
@@ -100,6 +103,10 @@
                         </td>
                     </tr>
                     </tbody>
+                </table>
+
+                <table id="show2" class="table showElm">
+
                 </table>
 
             </div>
