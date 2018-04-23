@@ -138,12 +138,16 @@
             $('.picture').height($('.picture').width()).css('line-height' , $('.picture').height() + 'px');
 
             $('.addImage').on('click', function() {
-               showImage();
+               showProfileImage();
+            });
+
+            $('#closeFiles').on('click', function() {
+                showProfileImage();
             });
         });
 
-        function showImage() {
-            $('#customerFiles').fadeToggle(500);
+        function showProfileImage() {
+            $('#customerFiles').stop().fadeToggle(500);
         }
         function show(id, elm) {
             if($(elm).hasClass('active')) {
