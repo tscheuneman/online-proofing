@@ -19,7 +19,7 @@
     </div>
     <div class="card-body">
         @foreach($project->entries as $enCnt => $entry)
-            @if($entry->path != '0')
+            @if($entry->path != null)
                 @if($enCnt == 0)
                     @if($project->completed)
                         <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active" id="entry_{{$enCnt++}}">

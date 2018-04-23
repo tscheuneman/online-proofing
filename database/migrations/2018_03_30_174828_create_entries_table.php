@@ -23,7 +23,7 @@ class CreateEntriesTable extends Migration
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->string('path')->unique();
+            $table->string('path')->nullable(true);
 
             $table->text('pdf_path')->nullable(true);
 

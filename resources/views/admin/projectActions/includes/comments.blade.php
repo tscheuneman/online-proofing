@@ -22,7 +22,7 @@
                 <div data-id="{{$entry->id}}" class="commentContainer cmt_{{$cmtCnt}}">
             @endif
             @if(!$entry->admin)
-                @if($entry->path == '0')
+                @if($entry->path == null)
                     <div class="comments">
                      {{$entry->notes}}
                     </div>

@@ -35,7 +35,7 @@
                     </div>
                 @endif
             @endif
-            @if($entry->path != '0')
+            @if($entry->path != null)
                 @if($enCnt == 0)
                     <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active" id="entry_{{$enCnt++}}">
                 @else
