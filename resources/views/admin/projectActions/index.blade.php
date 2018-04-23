@@ -31,6 +31,13 @@
     </div>
     <br>
     <br>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            @include('admin.projectActions.includes.logs')
+        </div>
+    </div>
+    <br>
+    <br>
 <script src="{{ asset('js/project.js') }}"></script>
 @include('layouts/includes/scripts/viewProjScript')
    <script>
@@ -49,6 +56,9 @@
           });
           $('#showInfo').on('click', function() {
               $('.project_info').slideToggle(500);
+          });
+          $('#showLogs').on('click', function() {
+              $('.project_logs').slideToggle(500);
           });
       });
    </script>
