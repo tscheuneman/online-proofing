@@ -45,6 +45,9 @@
                                         {{mb_substr(Auth::user()->first_name,0,1) . mb_substr(Auth::user()->last_name,0,1)}}
                                     </div>
                                 @else
+                                    <div class="navPic pic" style="background:url({{url('/') . '/storage/' . Auth::user()->picture}}) center center no-repeat;">
+
+                                    </div>
                                 @endif
                             </li>
                             <li class="nav-item dropdown">
