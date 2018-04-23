@@ -116,9 +116,13 @@ class ProjectActionsController extends Controller
         if($project != null) {
             if($project->isActive()) {
                 $projectData = $project->dataReturn();
+
+                $logs = ActivityLogic::getFromProject($project);
+
                 return view('admin.projectActions.index',
                     [
                         'project' => $projectData,
+                        'logs' => $logs
                     ]
                 );
             } else {

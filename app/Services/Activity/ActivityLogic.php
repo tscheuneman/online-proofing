@@ -4,6 +4,7 @@ namespace App\Services\Activity;
 
 use App\Activity;
 use App\Project;
+use App\Services\Project\ProjectLogic;
 use App\User;
 
 class ActivityLogic {
@@ -46,6 +47,10 @@ class ActivityLogic {
      */
     public static function getAllFromUser($user) {
         return Activity::with('project.order_name')->where('user_id', $user)->take(10)->latest()->get(['project_id', 'user_id', 'action', 'created_at']);
+    }
+
+    public static function getFromProject(ProjectLogic $project) {
+        return Activity::where('project_id', $project->id())->with('user')->latest()->get(['project_id', 'user_id', 'action', 'created_at']);
     }
 
 
