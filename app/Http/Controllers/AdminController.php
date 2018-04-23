@@ -109,14 +109,11 @@ class AdminController extends Controller
             $user = Auth::user();
             $admin = AdminLogic::findAdmin($user->id);
             if (!$admin->isActive()) {
-                if (Auth::check()) {
                     return view('admin.admins.password',
                         [
                             'admin' => $user,
                         ]
                     );
-                }
-                return redirect('/login');
             }
             return redirect('/admin');
         }
