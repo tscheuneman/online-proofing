@@ -138,15 +138,15 @@
             $('.picture').height($('.picture').width()).css('line-height' , $('.picture').height() + 'px');
 
             $('.addImage').on('click', function() {
-               showProfileImage();
+               show();
             });
 
             $('#closeFiles').on('click', function() {
-                showProfileImage();
+                showImage();
             });
         });
 
-        function showProfileImage() {
+        function showImage() {
             $('#customerFiles').stop().fadeToggle(500);
         }
         function show(id, elm) {

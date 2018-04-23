@@ -29,6 +29,7 @@ class CheckAdmin
             return abort(404, 'Unauthorized action.');
 
         }
+
         return redirect('/login');
     }
 }
