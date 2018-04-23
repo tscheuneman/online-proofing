@@ -15,7 +15,7 @@
                     </div>
                 @endif
             @endif
-            @if($enCnt++ == 0)
+            @if($enCnt == 1)
                 @if($entry->admin)
                     <div data-id="{{$entry->id}}" class="entryNav active admin">
                 @else
