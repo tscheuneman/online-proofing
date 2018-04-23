@@ -16,7 +16,7 @@
              <span class="option">Notify Users</span>
          @endif
          @if($order->notify_admins)
-             <span class="option">Notify Users</span>
+             <span class="option">Notify Admins</span>
          @endif
          @if(!$order->hidden)
              <span class="option">Public</span>
