@@ -28,14 +28,17 @@ class OrderLogic {
      * @return \App\Order[] $userProjects
      */
     public static function getUserProjects($id) {
-        $userProjects = Order::with('users.user', 'projects.entries.user')->whereHas('users.user', function($query) use($id) {
-            $query->where('id', $id);
-        })->whereHas('projects', function($query2) {
+        $userProjects = Order::whereHas('users.user', function($query) use($id) {
+            $query->where('id', '=', $id);
+        })->whereHas('admin_projects', function($query2) {
             $query2->with('entries.user')->where('projects.completed', false)->where('active', true);
-        })->get();
+        })->with(array('projects' => function($q) {
+            $q->with('admin_entries')->where('projects.completed', false)->where('active', true);
+        }))->get();
 
         return $userProjects;
     }
+
 
     /**
      * Get all projects assigned to a given Admin
