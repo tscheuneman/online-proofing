@@ -169,6 +169,15 @@ class ProjectLogic {
     }
 
     /**
+     * Get project ID
+     *
+     * @return string
+     */
+    public function id() {
+        return $this->project->id;
+    }
+
+    /**
      * Get project name
      *
      * @return string
