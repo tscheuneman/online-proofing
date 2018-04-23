@@ -135,7 +135,6 @@ sidebar {
     font-weight:bold;
   }
   a.action {
-    width:auto;
     margin:0 auto;
     display:block;
     background:$brand-primary;
@@ -202,7 +201,7 @@ sidebar {
     margin:0 auto;
   }
 
-  div.topbar{
+  div.topbar {
     margin:15px 0;
     margin-left:3%;
 
@@ -429,8 +428,6 @@ div#profile {
   div.profileImage {
     width:25%;
     padding:15px;
-    background:#fff;
-    box-shadow:0 0 15px rgba(0,0,0,.2);
     float:left;
 
     .picture {
@@ -933,4 +930,15 @@ div#customerFiles {
     cursor:pointer;
 
   }
+}
+
+img#logo {
+  height:45px;
+  margin-right:15px;
+}
+
+a.pendingLink {
+  color:#333;
+  font-weight:bold;
+  transition:.5s all;
 }

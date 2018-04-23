@@ -19,6 +19,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
+                <img id="logo" src="{{url('/assets/logo.png')}}" alt="" />
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ ENV('APP_NAME', 'Laravel') }}
                 </a>
