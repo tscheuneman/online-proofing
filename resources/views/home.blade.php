@@ -7,10 +7,22 @@
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-hourglass-end" aria-hidden="true"></i>
-                    Pending Changes
+                    Attention Required
                 </div>
                 <div class="card-body">
-
+                    <ul>
+                            @foreach(json_decode($orders) as $order)
+                                @foreach($order->projects as $proj)
+                                    @if(isset($proj->admin_entries[0]))
+                                        @if($proj->admin_entries[0]->admin)
+                                            <li>
+                                                <a class="pendingLink" href="{{url('/project') . '/' . $proj->file_path}}">{{$order->job_id}} - {{$proj->project_name}}</a>
+                                            </li>
+                                        @endif
+                                    @endif
+                                @endforeach
+                            @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
@@ -30,6 +42,25 @@
                                 <a href="{{ url('/project') . '/' . $proj->file_path }}">
                                     <div class="project">
                                         <p class="projectTitle">{{$proj->project_name}}</p>
+                                        <p class="statusText">
+                                            <strong>
+                                                @if(isset($proj->admin_entries[0]))
+                                                    @if(!$proj->admin_entries[0]->active)
+                                                        Waiting on Output
+                                                    @else
+                                                        @if($proj->completed)
+                                                            <strong>Approved</strong>
+                                                        @else
+                                                            @if($proj->admin_entries[0]->admin)
+                                                                Awaiting Your Response
+                                                            @else
+                                                                <strong> Awaiting Premedia Response </strong>
+                                                            @endif
+                                                        @endif
+                                                    @endif
+                                                @endif
+                                            </strong>
+                                        </p>
                                     </div>
                                 </a>
                             @endforeach
