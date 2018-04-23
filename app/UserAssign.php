@@ -13,7 +13,7 @@ class UserAssign extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id')->select('id', 'first_name', 'last_name', 'email');
+        return $this->belongsTo('App\User', 'user_id', 'id')->select('id', 'first_name', 'last_name', 'email', 'picture');
     }
 
     public function search_user() {
