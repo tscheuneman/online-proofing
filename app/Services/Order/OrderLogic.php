@@ -49,9 +49,9 @@ class OrderLogic {
         $userProjects = Order::whereHas('users.user', function($query) use($id) {
             $query->where('id', '=', $id);
         })->whereHas('admin_projects', function($query2) {
-            $query2->with('entries.user')->where('projects.completed', false)->where('active', true);
+            $query2->with('entries.user')->where('projects.completed', true)->where('active', true);
         })->with(array('projects' => function($q) {
-            $q->with('admin_entries')->where('projects.completed', true)->where('active', true);
+            $q->where('completed', true);
         }))->get();
 
         return $userProjects;
