@@ -24,52 +24,47 @@ div#loader .loader {
   display: block;
 }
 
-p.title {
-  font-weight: bold;
-  font-size: 18px;
+.loader,
+.loaderSecond {
+  border: 7px solid #000;
+  border-top: 7px solid #FFC627;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  -webkit-animation: spin 1s linear infinite;
+          animation: spin 1s linear infinite;
+  margin-top: 20px;
+  display: none;
 }
 
-a.otherProdLink {
-  font-size: 16px;
-  color: #000;
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
 
-h2.titleHeading {
-  font-weight: 100;
-  font-size: 50px;
-  text-align: center;
-}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
 
-div.container.topSpacing {
-  margin-top: 50px;
-}
-
-body {
-  background: #f8f9fd;
-  font-family: "Lato", sans-serif;
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
 
 div.container-big {
   width: 85%;
   max-width: 2000px;
   margin: 0 auto;
-}
-
-.navbar-brand {
-  float: left;
-}
-
-#navbarDropdown {
-  color: #000;
-}
-
-#navbarDropdown .name {
-  margin-left: 15px;
-  color: #000;
-}
-
-#navbarDropdown .caret {
-  color: #000;
 }
 
 div.clear,
@@ -89,58 +84,6 @@ span.approved {
   background: #FFC627;
   font-weight: 900;
   font-size: 28px;
-}
-
-.btn.left {
-  float: left;
-}
-
-.btn.right {
-  float: right;
-}
-
-.btn-main {
-  background: #5C6670;
-  color: #ffffff;
-  outline: none;
-}
-
-.btn-main:hover {
-  background: #73808c;
-  color: #ffffff;
-}
-
-.btn-brand-primary {
-  background: #8C1D40;
-  color: #ffffff;
-  outline: none;
-}
-
-.btn-brand-primary:hover {
-  background: #cd224f;
-  color: #ffffff;
-}
-
-.btn-second {
-  background: #292b3e;
-  color: #ffffff;
-  outline: none;
-}
-
-.btn-second:hover {
-  background: #3d405d;
-  color: #ffffff;
-}
-
-.btn-submission {
-  background: #78BE20;
-  color: #ffffff;
-  outline: none;
-}
-
-.btn-submission:hover {
-  background: #92dd34;
-  color: #ffffff;
 }
 
 span.name_bg {
@@ -471,43 +414,6 @@ div.addedUsers .theUser {
           box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
-.loader,
-.loaderSecond {
-  border: 7px solid #000;
-  border-top: 7px solid #FFC627;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  -webkit-animation: spin 1s linear infinite;
-          animation: spin 1s linear infinite;
-  margin-top: 20px;
-  display: none;
-}
-
-@-webkit-keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-
 .form-control.left {
   width: auto;
 }
@@ -516,6 +422,14 @@ div#profile div.profileImage {
   width: 25%;
   padding: 15px;
   float: left;
+}
+
+@media screen and (max-width: 624px) {
+  div#profile div.profileImage {
+    float: none;
+    width: 80%;
+    margin: 0 auto;
+  }
 }
 
 div#profile div.profileImage .picture {
@@ -554,6 +468,14 @@ div#profile div.profileImage div.addImage {
 div#profile div.profileInfo {
   width: 65%;
   float: right;
+}
+
+@media screen and (max-width: 624px) {
+  div#profile div.profileInfo {
+    float: none;
+    width: 80%;
+    margin: 0 auto;
+  }
 }
 
 div#profile div.profileInfo .nav-link {
@@ -643,40 +565,6 @@ div.topStats div.stat .content .number {
   display: block;
   margin-top: 0;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-div.userProjects a.projectLink {
-  color: #000;
-}
-
-div.userProjects a.projectLink .project {
-  padding: 15px;
-  float: left;
-  background: #fff;
-  margin: 25px;
-  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
-          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
-  -webkit-transition: .5s all;
-  transition: .5s all;
-}
-
-div.userProjects a.projectLink .project:hover {
-  background: #8C1D40;
-  color: #ffffff;
-}
-
-div.userProjects a.projectLink .project.active {
-  border: 5px solid #FFC627;
-}
-
-div.userProjects a.projectLink .project .name {
-  display: block;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-div.userProjects a.projectLink .project .lastAction {
-  display: block;
 }
 
 div#closeHead {
@@ -861,9 +749,9 @@ div.commentContainer.active {
 }
 
 div.comment {
-  position: fixed;
-  right: 0;
-  top: 250px;
+  position: absolute;
+  left: -143px;
+  top: 100px;
   background: #8C1D40;
   color: #ffffff;
   padding: 10px;
@@ -875,6 +763,7 @@ div.comment {
   -webkit-transition: .5s all;
   transition: .5s all;
   cursor: pointer;
+  z-index: 99;
 }
 
 div.comment:hover {
@@ -959,9 +848,9 @@ div.entry .image div.textboxHolder {
 div.entry .image div.textboxHolder .closeText {
   display: block;
   float: right;
-  font-size: 25px;
+  font-size: 16px;
   color: #ffffff;
-  margin-bottom: 10px;
+  margin-top: 10px;
   cursor: pointer;
 }
 
@@ -992,6 +881,13 @@ footer {
 User
  */
 
+@media screen and (max-width: 624px) {
+  ul.navbar-nav {
+    margin-top: 12px;
+    font-size: 18px;
+  }
+}
+
 .status {
   margin-bottom: 20px;
   padding: 10px;
@@ -1020,6 +916,12 @@ div.navPic {
   font-weight: bold;
 }
 
+@media screen and (max-width: 624px) {
+  div.navPic {
+    margin-right: 6px;
+  }
+}
+
 div.navPic.pic {
   background-size: cover !important;
   -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.5);
@@ -1042,6 +944,40 @@ div.pendingProject:hover {
   background: #cd224f;
 }
 
+div.userProjects a.projectLink {
+  color: #000;
+}
+
+div.userProjects a.projectLink .project {
+  padding: 15px;
+  float: left;
+  background: #fff;
+  margin: 25px;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+  -webkit-transition: .5s all;
+  transition: .5s all;
+}
+
+div.userProjects a.projectLink .project:hover {
+  background: #8C1D40;
+  color: #ffffff;
+}
+
+div.userProjects a.projectLink .project.active {
+  border: 5px solid #FFC627;
+}
+
+div.userProjects a.projectLink .project .name {
+  display: block;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+div.userProjects a.projectLink .project .lastAction {
+  display: block;
+}
+
 div#customerFiles {
   background: #fff;
   padding: 15px;
@@ -1052,6 +988,13 @@ div#customerFiles {
   z-index: 9999;
   left: calc(50% - 250px);
   display: none;
+}
+
+@media screen and (max-width: 624px) {
+  div#customerFiles {
+    width: 90%;
+    left: calc(50% - 45%);
+  }
 }
 
 div#customerFiles #closeFiles {
@@ -1070,6 +1013,132 @@ a.pendingLink {
   font-weight: bold;
   -webkit-transition: .5s all;
   transition: .5s all;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    width: 90% !important;
+    max-width: 90% !important;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .card {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .col-md-4,
+  .col-md-8 {
+    -webkit-box-flex: 0 !important;
+        -ms-flex: 0 0 100% !important;
+            flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+.navbar-brand {
+  float: left;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 624px) {
+  .navbar-brand {
+    font-weight: 900;
+  }
+}
+
+#navbarDropdown {
+  color: #000;
+  float: left;
+}
+
+#navbarDropdown .name {
+  margin-left: 15px;
+  color: #000;
+}
+
+#navbarDropdown .caret {
+  color: #000;
+}
+
+.btn.left {
+  float: left;
+}
+
+.btn.right {
+  float: right;
+}
+
+.btn-main {
+  background: #5C6670;
+  color: #ffffff;
+  outline: none;
+}
+
+.btn-main:hover {
+  background: #73808c;
+  color: #ffffff;
+}
+
+.btn-brand-primary {
+  background: #8C1D40;
+  color: #ffffff;
+  outline: none;
+}
+
+.btn-brand-primary:hover {
+  background: #cd224f;
+  color: #ffffff;
+}
+
+.btn-second {
+  background: #292b3e;
+  color: #ffffff;
+  outline: none;
+}
+
+.btn-second:hover {
+  background: #3d405d;
+  color: #ffffff;
+}
+
+.btn-submission {
+  background: #78BE20;
+  color: #ffffff;
+  outline: none;
+}
+
+.btn-submission:hover {
+  background: #92dd34;
+  color: #ffffff;
+}
+
+p.title {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+a.otherProdLink {
+  font-size: 16px;
+  color: #000;
+}
+
+h2.titleHeading {
+  font-weight: 100;
+  font-size: 50px;
+  text-align: center;
+}
+
+div.container.topSpacing {
+  margin-top: 50px;
+}
+
+body {
+  background: #f8f9fd;
+  font-family: "Lato", sans-serif;
 }
 
 /*!

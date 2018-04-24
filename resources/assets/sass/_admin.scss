@@ -1,3 +1,4 @@
+//Loader / Masking Functions
 div#loader {
   background:rgba(0,0,0,.8);
   position:fixed;
@@ -20,48 +21,30 @@ div#loader {
     display:block;
   }
 }
-p.title {
-  font-weight:bold;
-  font-size:18px;
-}
-a.otherProdLink {
-  font-size:16px;
-  color:#000;
-}
-h2.titleHeading {
-  font-weight: 100;
-  font-size: 50px;
-  text-align: center;
-}
-div.container {
 
-  &.topSpacing {
-    margin-top:50px;
-  }
+.loader, .loaderSecond {
+  border: 7px solid #000;
+  border-top: 7px solid $brand-gold;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin-top:20px;
+  display:none;
 }
-body {
-  background:$body-bg;
-  font-family:$font-family-sans-serif;
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
+
+
 div.container-big {
   width:85%;
   max-width:2000px;
   margin:0 auto;
 }
-.navbar-brand {
-  float:left;
-}
-#navbarDropdown {
-  color:#000;
-  .name {
-    margin-left:15px;
-    color:#000;
-  }
-  .caret {
-    color:#000;
-  }
 
-}
 div.clear, br.clear {
   clear:both;
 }
@@ -76,56 +59,7 @@ span.approved {
   font-weight: 900;
   font-size: 28px;
 }
-//Buttons
-.btn.left {
-  float:left;
-}
-.btn.right {
-  float:right;
-}
-.btn-main {
-  background:$btn-main-color;
-  color:$brand-primary-color;
-  outline:none;
 
-  &:hover {
-    background:$btn-main-color-hover;
-    color:$brand-primary-color;
-  }
-}
-
-.btn-brand-primary {
-  background:$brand-primary;
-  color:$brand-primary-color;
-  outline:none;
-
-  &:hover {
-    background:$brand-primary-hover;
-    color:$brand-primary-color;
-  }
-}
-
-.btn-second {
-  background:$btn-secondary-color;
-  color:$brand-primary-color;
-  outline:none;
-
-  &:hover {
-    background:$btn-secondary-color-hover;
-    color:$brand-primary-color;
-  }
-}
-
-.btn-submission {
-  background:$btn-submission-color;
-  color:$brand-primary-color;
-  outline:none;
-
-  &:hover {
-    background:$btn-submission-color-hover;
-    color:$brand-primary-color;
-  }
-}
 span.name_bg{
   background:#FFC627;
   color:#000;
@@ -418,23 +352,6 @@ div.addedAdmins, div.addedUsers{
   }
 }
 
-
-.loader, .loaderSecond {
-  border: 7px solid #000;
-  border-top: 7px solid $brand-gold;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 1s linear infinite;
-  margin-top:20px;
-  display:none;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 .form-control.left {
   width:auto;
 }
@@ -445,6 +362,12 @@ div#profile {
     width:25%;
     padding:15px;
     float:left;
+
+    @media screen and (max-width: $break-small) {
+      float:none;
+      width:80%;
+      margin:0 auto;
+    }
 
     .picture {
       width:65%;
@@ -481,6 +404,12 @@ div#profile {
   div.profileInfo {
     width:65%;
     float:right;
+
+    @media screen and (max-width: $break-small) {
+      float:none;
+      width:80%;
+      margin:0 auto;
+    }
 
     .nav-link {
       color:#000;
@@ -565,42 +494,8 @@ div.topStats{
   }
 }
 
+//User Projects
 
-div.userProjects {
-
-a.projectLink {
-  color:#000;
-
-  .project {
-    padding:15px;
-    float:left;
-    background:#fff;
-    margin:25px;
-    box-shadow:0 2px 2px rgba(0, 0, 0, 0.40);
-    transition:.5s all;
-
-    &:hover {
-      background:$brand-primary;
-      color:$brand-primary-color;
-    }
-
-    &.active {
-      border:5px solid $brand-gold;
-
-    }
-
-    .name {
-      display:block;
-      font-weight:bold;
-      font-size:20px;
-    }
-    .lastAction {
-      display:block;
-    }
-  }
-}
-
-}
 
 //ORDER STYLES
 div#closeHead {
@@ -774,9 +669,9 @@ div.commentContainer {
 }
 
 div.comment {
-  position: fixed;
-  right: 0;
-  top: 250px;
+  position: absolute;
+  left: -143px;
+  top: 100px;
   background: $brand-primary;
   color: $brand-primary-color;
   padding: 10px;
@@ -785,6 +680,7 @@ div.comment {
   transform-origin: 70% 0;
   transition:.5s all;
   cursor:pointer;
+  z-index: 99;
   &:hover {
     background:$brand-primary-hover;
   }
@@ -858,9 +754,9 @@ div.entry {
       .closeText {
         display:block;
         float:right;
-        font-size:25px;
+        font-size:16px;
         color:$brand-primary-color;
-        margin-bottom:10px;
+        margin-top:10px;
         cursor:pointer;
       }
     }
@@ -891,6 +787,12 @@ footer {
 /*
 User
  */
+ul.navbar-nav {
+  @media screen and (max-width: $break-small) {
+    margin-top:12px;
+    font-size:18px;
+  }
+}
 .status {
   margin-bottom: 20px;
   padding: 10px;
@@ -914,6 +816,9 @@ div.navPic {
   line-height:40px;
   text-align:center;
   font-weight:bold;
+  @media screen and (max-width: $break-small) {
+    margin-right:6px;
+  }
 
   &.pic {
     background-size:cover !important;
@@ -935,6 +840,39 @@ div.pendingProject {
 }
 
 //User Projects
+div.userProjects {
+  a.projectLink {
+    color:#000;
+
+    .project {
+      padding:15px;
+      float:left;
+      background:#fff;
+      margin:25px;
+      box-shadow:0 2px 2px rgba(0, 0, 0, 0.40);
+      transition:.5s all;
+
+      &:hover {
+        background:$brand-primary;
+        color:$brand-primary-color;
+      }
+
+      &.active {
+        border:5px solid $brand-gold;
+
+      }
+
+      .name {
+        display:block;
+        font-weight:bold;
+        font-size:20px;
+      }
+      .lastAction {
+        display:block;
+      }
+    }
+  }
+}
 
 div#customerFiles {
   background:#fff;
@@ -945,6 +883,13 @@ div#customerFiles {
   z-index:9999;
   left:calc(50% - 250px);
   display:none;
+
+  @media screen and (max-width: $break-small) {
+    width:90%;
+    left:calc(50% - 45%);
+  }
+
+
   form {
 
   }

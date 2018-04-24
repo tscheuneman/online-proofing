@@ -1,0 +1,112 @@
+//Bootstrap Overrides
+.container {
+  @media screen and (max-width: $neededBreak) {
+    width:90% !important;
+    max-width:90% !important;
+    margin:0 auto;
+  }
+}
+.card {
+  @media screen and (max-width: $neededBreak) {
+    margin-bottom:20px;
+  }
+}
+.col-md-4, .col-md-8 {
+  @media screen and (max-width: $neededBreak) {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+}
+.navbar-brand {
+    float:left;
+    font-weight:bold;
+      @media screen and (max-width: $break-small) {
+          font-weight:900;
+      }
+}
+#navbarDropdown {
+    color:#000;
+    float:left;
+.name {
+    margin-left:15px;
+    color:#000;
+}
+.caret {
+    color:#000;
+}
+}
+
+//Buttons
+  .btn.left {
+      float:left;
+  }
+.btn.right {
+    float:right;
+}
+.btn-main {
+    background:$btn-main-color;
+    color:$brand-primary-color;
+    outline:none;
+
+&:hover {
+     background:$btn-main-color-hover;
+     color:$brand-primary-color;
+ }
+}
+
+.btn-brand-primary {
+    background:$brand-primary;
+    color:$brand-primary-color;
+    outline:none;
+
+&:hover {
+     background:$brand-primary-hover;
+     color:$brand-primary-color;
+ }
+}
+
+.btn-second {
+    background:$btn-secondary-color;
+    color:$brand-primary-color;
+    outline:none;
+
+&:hover {
+     background:$btn-secondary-color-hover;
+     color:$brand-primary-color;
+ }
+}
+
+.btn-submission {
+    background:$btn-submission-color;
+    color:$brand-primary-color;
+    outline:none;
+
+&:hover {
+     background:$btn-submission-color-hover;
+     color:$brand-primary-color;
+ }
+}
+
+//Other
+p.title {
+  font-weight:bold;
+  font-size:18px;
+}
+a.otherProdLink {
+    font-size:16px;
+    color:#000;
+}
+h2.titleHeading {
+    font-weight: 100;
+    font-size: 50px;
+    text-align: center;
+}
+div.container {
+&.topSpacing {
+     margin-top:50px;
+ }
+}
+body {
+    background:$body-bg;
+    font-family:$font-family-sans-serif;
+}
