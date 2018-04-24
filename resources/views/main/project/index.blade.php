@@ -30,14 +30,6 @@
         </div>
     @endif
 
-
-
-    @if($project->entries[0]->admin)
-        <div class="comment" id="comment">
-            <i class="fa fa-commenting-o" aria-hidden="true"></i> Comment Image
-        </div>
-    @endif
-
     <div class="container">
         @include('main.project.includes.status')
         <div class="row justify-content-center">
@@ -76,16 +68,16 @@
         $('div#comment').on('click', function() {
             let currEntry = $('div.entry.submissionEntry');
             let currImg = $('div.image.active', currEntry);
-            $('#mask').fadeIn(500, function() {
-                $('.textboxHolder', currImg).slideToggle(500);
+            $('#mask').fadeIn(320, function() {
+                $('.textboxHolder', currImg).slideToggle(320);
             });
 
         });
 
         $('span.closeText').on('click', function() {
             let thisElm = $(this).parent();
-            $(thisElm).slideToggle(500, function() {
-                $('#mask').fadeOut(500);
+            $(thisElm).slideToggle(320, function() {
+                $('#mask').fadeOut(320);
             });
         });
 

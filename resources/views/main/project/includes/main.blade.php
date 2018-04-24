@@ -17,6 +17,11 @@
             </div>
         </span>
     </div>
+    @if($project->entries[0]->admin)
+        <div class="comment" id="comment">
+            <i class="fa fa-commenting-o" aria-hidden="true"></i> Comment Image
+        </div>
+    @endif
     <div class="card-body">
         @foreach($project->entries as $enCnt => $entry)
             @if($entry->path != null)
@@ -54,10 +59,10 @@
                     @if($enCnt == 1)
                         @if($entry->admin && !$project->completed)
                             <div class="textboxHolder">
-                                <span class="closeText">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                </span>
                                 <textarea class="form-control" id="" cols="30" rows="10"></textarea>
+                                <span class="btn btn-primary closeText">
+                                    <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+                                </span>
                             </div>
                             <div class="convasContainer" data-id="{{$key - 1}}" id="canvas_{{$key - 1}}" style="height:{{$file->height}}px;">
 
