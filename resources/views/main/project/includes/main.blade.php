@@ -29,7 +29,11 @@
                     @if($project->completed)
                         <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active" id="entry_{{$enCnt++}}">
                     @else
-                        <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active submissionEntry" id="entry_{{$enCnt++}}">
+                        @if($project->entries[0]->admin)
+                            <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active submissionEntry" id="entry_{{$enCnt++}}">
+                        @else
+                            <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry active" id="entry_{{$enCnt++}}">
+                        @endif
                     @endif
                 @else
                     <div data-numelm="{{count(json_decode($entry->files))}}" data-id="{{$entry->id}}" class="entry" id="entry_{{$enCnt++}}">
