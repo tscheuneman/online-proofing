@@ -34,6 +34,12 @@ a.otherProdLink {
   color: #000;
 }
 
+h2.titleHeading {
+  font-weight: 100;
+  font-size: 50px;
+  text-align: center;
+}
+
 div.container.topSpacing {
   margin-top: 50px;
 }
