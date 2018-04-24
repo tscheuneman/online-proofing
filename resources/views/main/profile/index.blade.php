@@ -106,7 +106,24 @@
                 </table>
 
                 <table id="show2" class="table showElm">
-
+                    @foreach($oldOrders as $ord)
+                        <thead>
+                        <tr>
+                            <td colspan="2">
+                                <strong>{{$ord->job_id}}</strong>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($ord->projects as $proj)
+                                <tr>
+                                    <td>
+                                        <a class="otherProdLink" href="{{url('/project/') . '/' . $proj->file_path}}">{{$proj->project_name}}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    @endforeach
                 </table>
 
             </div>
