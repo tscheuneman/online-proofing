@@ -39,6 +39,24 @@ class OrderLogic {
         return $userProjects;
     }
 
+    /**
+     * Get all completed orders for a given user
+     *
+     * @param string $id
+     * @return \App\Order[] $userProjects
+     */
+    public static function findOldUserOrders($id) {
+        $userProjects = Order::whereHas('users.user', function($query) use($id) {
+            $query->where('id', '=', $id);
+        })->whereHas('admin_projects', function($query2) {
+            $query2->with('entries.user')->where('projects.completed', false)->where('active', true);
+        })->with(array('projects' => function($q) {
+            $q->with('admin_entries')->where('projects.completed', true)->where('active', true);
+        }))->get();
+
+        return $userProjects;
+    }
+
 
     /**
      * Get all projects assigned to a given Admin
