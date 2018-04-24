@@ -39,7 +39,7 @@
                         @guest
                             <li><a class="nav-link" href="{{ url('login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> {{ __('Login') }}</a></li>
                         @else
-                            <li>
+                            <li class="nav-item dropdown">
                                 @if(Auth::user()->picture == null)
                                     <div class="navPic">
                                         {{mb_substr(Auth::user()->first_name,0,1) . mb_substr(Auth::user()->last_name,0,1)}}
@@ -49,8 +49,6 @@
 
                                     </div>
                                 @endif
-                            </li>
-                            <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <span class="caret"></span>
                                 </a>
