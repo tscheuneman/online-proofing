@@ -48,15 +48,17 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="dropdown-menu" id="notification_info" aria-labelledby="dLabel">
-                                    <div>
-                                        <p class="title">Awating Action</p>
-                                        <div class="dropdown-divider"></div>
-                                            @foreach(json_decode($number) as $proj)
-                                                <a class="dropdown-item" href="{{url('/project') . '/' . $proj->file_path}}">{{$proj->order->job_id}} | {{$proj->project_name}}</a>
-                                            @endforeach
+                                @if(count($number) > 0)
+                                    <div class="dropdown-menu" id="notification_info" aria-labelledby="dLabel">
+                                        <div>
+                                            <p class="title">Awating Action</p>
+                                            <div class="dropdown-divider"></div>
+                                                @foreach(json_decode($number) as $proj)
+                                                    <a class="dropdown-item" href="{{url('/project') . '/' . $proj->file_path}}">{{$proj->order->job_id}} | {{$proj->project_name}}</a>
+                                                @endforeach
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </li>
                             <li class="nav-item">
                                 @if(Auth::user()->picture == null)
