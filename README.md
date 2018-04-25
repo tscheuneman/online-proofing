@@ -6,7 +6,7 @@
 * [Introduction](#introduction)
 	* [Requirements](#requirements)
 	* [Services](#services)
-
+* [Installation](#installation)
 	
 ## Introduction
 This is an online proofing system.
@@ -24,3 +24,17 @@ This is an online proofing system.
 ### Services Needed
 * Dropbox
 * SMTP Email
+
+
+
+## Installation
+These are the rough installation instructions as of now.  Eventually I want to wrote some sort of auto insaller.
+
+1. Ensure you have all the requirements and dependencies installed
+1. Clone project from git
+1. Navigate to project root folder
+1. Copy `.env.example` into an `.env` file.  Adjust values as needed.  Ensure you properly fill out database and smtp connection info
+1. Run `composer install` to install all packages
+1. Run `php artisan migrate` to create databases
+1. Run `php artisan db:seed` to bring in initial admin.
+1. Run `php artisan queue:listen` to start job listener.  If deploying use some sort of worker
