@@ -62,7 +62,7 @@ Route::group(['middleware' => ['user']], function () {
 
     Route::post('project', 'UserProjectController@store');
 
-    Route::get('profile', 'ProfileController@userIndex');
+    Route::get('profile', 'HomeController@userIndex');
 
     Route::post('project/approve', 'UserProjectController@approve');
 
