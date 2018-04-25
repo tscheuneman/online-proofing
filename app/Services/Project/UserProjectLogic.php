@@ -48,6 +48,29 @@ class UserProjectLogic {
     }
 
     /**
+     * Get entries waiting for user and admin actions
+     *
+     * @return array
+     */
+    public static function getUserActionRequired($id) {
+        $projects = Project::whereHas('order.users.user', function($query) use($id) {
+            $query->where('id', '=', $id);
+        })->where('active', '=', true)->where('completed', '=', false)->with('admin_entries', 'order')->get();
+
+
+        $returnArray = [];
+        foreach($projects as $proj) {
+            if(isset($proj->admin_entries[0])) {
+                if($proj->admin_entries[0]->admin) {
+                    $returnArray[] = $proj;
+                }
+            }
+        }
+
+        return json_encode($returnArray);
+    }
+
+    /**
      * Get project id
      *
      * @return string
