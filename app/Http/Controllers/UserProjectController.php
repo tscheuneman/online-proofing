@@ -163,10 +163,9 @@ class UserProjectController extends Controller
         if($project = UserProjectLogic::find($request->projectID)) {
 
             if(!$project->isApproved()) {
+                ActivityLogic::create($project->get(), Auth::user(), "Approved Project");
                 $project->approve();
                 $project->mail();
-                ApprovalLogic::create(Auth::user(), $project->get(), "Approved Project");
-
 
                 $returnData['status'] = 'Success';
                 $returnData['message'] = 'Hey it works bruh';
