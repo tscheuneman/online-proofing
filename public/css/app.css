@@ -1014,11 +1014,36 @@ div.notification {
   cursor: pointer;
 }
 
+div.notification #notification_number {
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  background: #8C1D40;
+  color: #ffffff;
+  top: 0;
+  left: -7px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 22px;
+  display: block;
+}
+
+#notification_info .title {
+  text-align: center;
+  margin: 0;
+}
+
 a.pendingLink {
   color: #333;
   font-weight: bold;
   -webkit-transition: .5s all;
   transition: .5s all;
+}
+
+.nav-item {
+  position: relative;
 }
 
 @media screen and (max-width: 1200px) {

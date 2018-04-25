@@ -910,6 +910,29 @@ div.notification {
   font-size: 25px;
   margin-right: 20px;
   cursor:pointer;
+
+  #notification_number {
+    position: absolute;
+    height: 22px;
+    width: 22px;
+    background: $brand-primary;
+    color:$brand-primary-color;
+    top: 0;
+    left: -7px;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight:bold;
+    text-align: center;
+    line-height:22px;
+    display:block;
+  }
+}
+#notification_info {
+
+  .title {
+    text-align: center;
+    margin: 0;
+  }
 }
 a.pendingLink {
   color:#333;

@@ -1,4 +1,7 @@
 //Bootstrap Overrides
+.nav-item {
+  position:relative;
+}
 .container {
   @media screen and (max-width: $neededBreak) {
     width:90% !important;
