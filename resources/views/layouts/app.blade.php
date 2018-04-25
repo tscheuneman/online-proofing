@@ -40,6 +40,25 @@
                             <li><a class="nav-link" href="{{ url('login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> {{ __('Login') }}</a></li>
                         @else
                             <li class="nav-item dropdown">
+                                <div id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="notification">
+                                    <i class="fa fa-bell" aria-hidden="true"></i>
+                                    @if(count($number) > 0)
+                                        <div id="notification_number">
+                                            {{count($number)}}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="dropdown-menu" id="notification_info" aria-labelledby="dLabel">
+                                    <div>
+                                        <p class="title">Awating Action</p>
+                                        <div class="dropdown-divider"></div>
+                                            @foreach(json_decode($number) as $proj)
+                                                <a class="dropdown-item" href="{{url('/project') . '/' . $proj->file_path}}">{{$proj->order->job_id}} | {{$proj->project_name}}</a>
+                                            @endforeach
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
                                 @if(Auth::user()->picture == null)
                                     <div class="navPic">
                                         {{mb_substr(Auth::user()->first_name,0,1) . mb_substr(Auth::user()->last_name,0,1)}}
