@@ -11,25 +11,28 @@ window.searchProjects = function(inputVal){
 }
 function populateSearch(data) {
     $('.searchResults').empty();
-    data.forEach(function(elm) {
-        let image = getImage(elm);
-        console.log(elm);
-        let returnData = '<a class="linkResult" href="/admin/project/'+elm.file_path+'">' +
-            '<div class="result">' +
-            '<div class="image">' +
-            image +
-            '</div>'+
-            '<p class="title">'+elm.order_name.job_id+' | <strong>' +elm.project_name+'</strong></p>' +
-            '<span class="status">'+getStatus(elm)+'</span>'+
-            '<br>'+
-            '<strong>Customer(s): </strong>'+ getCustomers(elm.order_name.users) +
-            '<br>'+
-            '<strong>Project Manager(s): </strong>'+ getAdmins(elm.order_name.admins);
-        '</div></a>';
+    if(data.length > 0) {
+        data.forEach(function(elm) {
+            let image = getImage(elm);
+            console.log(elm);
+            let returnData = '<a class="linkResult" href="/admin/project/'+elm.file_path+'">' +
+                '<div class="result">' +
+                '<div class="image">' +
+                image +
+                '</div>'+
+                '<p class="title">'+elm.order_name.job_id+' | <strong>' +elm.project_name+'</strong></p>' +
+                '<span class="status">'+getStatus(elm)+'</span>'+
+                '<br>'+
+                '<strong>Customer(s): </strong>'+ getCustomers(elm.order_name.users) +
+                '<br>'+
+                '<strong>Project Manager(s): </strong>'+ getAdmins(elm.order_name.admins);
+            '</div></a>';
 
-        $('.searchResults').append(returnData);
-    });
-    $('.searchResults').fadeIn(500);
+            $('.searchResults').append(returnData);
+        });
+        $('.searchResults').fadeIn(500);
+    }
+    return false;
 }
 function getStatus(elm) {
     if(elm.active) {
