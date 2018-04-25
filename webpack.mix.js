@@ -24,4 +24,4 @@ mix.scripts([
     'resources/assets/js/scripts/adminSearch.js',
 ], 'public/js/search.js');
 
-mix.disableSuccessNotifications();
+mix.disableNotifications();
