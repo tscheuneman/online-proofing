@@ -51,7 +51,8 @@
                                 @if(count($number) > 0)
                                     <div class="dropdown-menu" id="notification_info" aria-labelledby="dLabel">
                                         <div>
-                                            <p class="title">Awating Action</p>
+                                            <p class="title"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                                 Awating Action</p>
                                             <div class="dropdown-divider"></div>
                                                 @foreach(json_decode($number) as $proj)
                                                     <a class="dropdown-item" href="{{url('/project') . '/' . $proj->file_path}}">{{$proj->order->job_id}} | {{$proj->project_name}}</a>
