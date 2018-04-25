@@ -18,9 +18,11 @@
         </span>
     </div>
     @if($project->entries[0]->admin)
-        <div class="comment" id="comment">
-            <i class="fa fa-commenting-o" aria-hidden="true"></i> Comment Image
-        </div>
+        @if(!$project->completed)
+            <div class="comment" id="comment">
+                <i class="fa fa-commenting-o" aria-hidden="true"></i> Comment Image
+            </div>
+        @endif
     @endif
     <div class="card-body">
         @foreach($project->entries as $enCnt => $entry)
