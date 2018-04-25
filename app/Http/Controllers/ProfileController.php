@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\Activity\ActivityLogic;
-use App\Services\Order\OrderLogic;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 
