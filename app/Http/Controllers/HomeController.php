@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 
 use App\Services\Order\OrderLogic;
-
+use App\Services\Users\UserLogic;
 use App\Admin;
 
 class HomeController extends UserSideParentController
@@ -33,12 +33,13 @@ class HomeController extends UserSideParentController
     }
 
     public function userIndex() {
-        $admin = User::find(Auth::id());
+        $admin = UserLogic::findUser(Auth::id());
         $oldOrders = OrderLogic::findOldUserOrders(Auth::id());
         return view('main.profile.index',
             [
-                'admin' => $admin,
-                'oldOrders' => $oldOrders
+                'admin' => $admin->user(),
+                'oldOrders' => $oldOrders,
+                'number' => $this->val
             ]
         );
     }
