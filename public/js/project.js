@@ -116,12 +116,7 @@ function createMessageThread(proj_id, thread) {
         .then(function (response) {
             let returnData = response.data;
             if(returnData.status === "Success") {
-                $('#message_container').fadeOut(150, function() {
-                    $(this).empty();
-                    $('#message_loader').fadeIn(150, function() {
-                        repopulateThreads(proj_id);
-                    });
-                });
+                loadInThreads(proj_id);
             }
             else {
                 alert(returnData.message);
@@ -130,6 +125,19 @@ function createMessageThread(proj_id, thread) {
         .catch(function (error) {
             console.log(error);
         });
+}
+
+function loadInThreads(proj_id) {
+    $('#createThreadLabel').show();
+    $('#createThreadMessage').hide();
+    $('#messageBackButton').hide();
+
+    $('#message_container').fadeOut(150, function() {
+        $(this).empty();
+        $('#message_loader').fadeIn(150, function() {
+            repopulateThreads(proj_id);
+        });
+    });
 }
 
 function repopulateThreads(proj_id) {
@@ -171,6 +179,7 @@ function goToMessageThread(id, thread_name) {
                     $(this).empty();
                     $('#createThreadLabel').hide();
                     $('#createThreadMessage').show().data('thread', id);
+                    $('#messageBackButton').show();
                     $('#message_loader').fadeIn(150, function() {
                         populateMessages(threadData, thread_name);
                     });

@@ -728,7 +728,8 @@ div#messages .messageContentContainer.belongs .userInfo {
   text-align: right;
 }
 
-#createThreadMessage {
+#createThreadMessage,
+#messageBackButton {
   display: none;
 }
 

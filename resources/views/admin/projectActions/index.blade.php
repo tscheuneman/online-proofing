@@ -17,6 +17,7 @@
             <div class="closeMessage"><i class="fa fa-times" aria-hidden="true"></i></div>
             <h1>Message Center</h1>
             <hr>
+            <button id="messageBackButton" data-proj="{{$project->file_path}}" class="btn btn-secondary"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</button>
             <button id="createThreadLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-submission"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create Thread</button>
             <button id="createThreadMessage" onClick="showCreateMessage(this)" data-thread="" class="btn btn-submission"><i class="fa fa-plus-circle" aria-hidden="true"></i> New Message</button>
             <input type="hidden" id="this_user" value="{{Auth::id()}}">
@@ -106,6 +107,11 @@
 
           });
 
+          $('#messageBackButton').on('click', function() {
+              let data = $(this).data('proj');
+              loadInThreads(data);
+          });
+
           $('.messageHolder').on('click', '#addMessage', function() {
               let messageVal = $('#mainMsg').val();
               let proj_id = $('#threadID').val();
@@ -113,7 +119,7 @@
               createMessage(messageVal, proj_id);
           });
 
-          $('.messageThread').on('click', function() {
+          $('#message_container').on('click', '.messageThread', function() {
               let thread_data = $(this).data('id');
               let thread_name= $(this).data('name');
               goToMessageThread(thread_data, thread_name);
