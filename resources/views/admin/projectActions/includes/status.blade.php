@@ -1,4 +1,5 @@
 @if($project->completed)
+    <button class="btn btn-primary circleButton"><i class="fa fa-comments" aria-hidden="true"></i></button>
     <div class="row">
         <h1>
             {{$project->project_name}} - <span class="approved">Approved</span>

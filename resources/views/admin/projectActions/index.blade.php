@@ -12,6 +12,27 @@
 
     @include('admin.projectActions.includes.status')
     <br>
+    <div id="messages">
+        <h1>Message Center</h1>
+        <hr>
+        <button id="createThreadLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-submission"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create Thread</button>
+        <button id="createThreadMessage" onClick="showCreateMessage(this)" data-thread="" class="btn btn-submission"><i class="fa fa-plus-circle" aria-hidden="true"></i> New Message</button>
+        <div class="messageHolder">
+
+        </div>
+        <div class="dropdown-menu" aria-labelledby="createThreadLabel">
+            <div class="px-3 py-3">
+                <div class="form-group">
+                    <label for="threadName">Thread Name</label>
+                    <input type="text" class="form-control" id="threadName" placeholder="Things">
+                </div>
+                <div class="dropdown-divider"></div>
+                <button data-proj="{{$project->file_path}}" id="addThread"  type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+        <hr>
+        @include('admin.projectActions.includes.messages')
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
             @include('admin.projectActions.includes.info')
@@ -59,6 +80,25 @@
           });
           $('#showLogs').on('click', function() {
               $('.project_logs').slideToggle(500);
+          });
+
+          $('#addThread').on('click', function() {
+              let project_data = $(this).data('proj');
+              let thread = $('#threadName').val();
+              if(thread !== '') {
+                  $('#threadName').val('');
+                  createMessageThread(project_data, thread);
+              }
+              else {
+                  alert('Please enter a thread name');
+              }
+
+          });
+
+          $('.messageThread').on('click', function() {
+              let thread_data = $(this).data('id');
+              let thread_name= $(this).data('name');
+              goToMessageThread(thread_data, thread_name);
           });
       });
    </script>
