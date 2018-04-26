@@ -107,6 +107,165 @@ function getLinkValue(val, proj) {
             console.log(error);
         });
 }
+
+function createMessageThread(proj_id, thread) {
+    axios.post('/admin/message/thread', {
+        thread_name: thread,
+        project_id: proj_id
+    })
+        .then(function (response) {
+            let returnData = response.data;
+            if(returnData.status === "Success") {
+                $('#message_container').fadeOut(150, function() {
+                    $(this).empty();
+                    $('#message_loader').fadeIn(150, function() {
+                        repopulateThreads(proj_id);
+                    });
+                });
+            }
+            else {
+                alert(returnData.message);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function repopulateThreads(proj_id) {
+    axios.get('/admin/message/thread/' + proj_id, {
+    })
+        .then(function (response) {
+            let returnData = response.data;
+            if(returnData.status === "Success") {
+                let threadData = returnData.message;
+                threadData.forEach(function(elm) {
+                    let returnElm = '<div class="messageThread" data-name="'+elm.subject+'" data-id="'+elm.id+'">' +
+                        elm.subject + '(' + elm.msg_cnt_count + ')' +
+                        '</div>';
+                    $('#message_container').append(returnElm);
+                });
+                $('#message_loader').fadeOut(150, function() {
+                    $('#message_container').fadeIn(150, function() {
+
+                    });
+                });
+            }
+            else {
+                alert(returnData.message);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function goToMessageThread(id, thread_name) {
+    axios.get('/admin/message/' + id, {
+    })
+        .then(function (response) {
+            let returnData = response.data;
+            if(returnData.status === "Success") {
+                let threadData = returnData.message;
+                $('#message_container').fadeOut(150, function() {
+                    $(this).empty();
+                    $('#createThreadLabel').hide();
+                    $('#createThreadMessage').show().data('thread', id);
+                    $('#message_loader').fadeIn(150, function() {
+                        populateMessages(threadData, thread_name);
+                    });
+                });
+            }
+            else {
+                alert(returnData.message);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function populateMessages(threadData, thread_name) {
+    let mL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    let user = $('#this_user').val();
+    if(threadData.length === 0) {
+        let returnElm = '<p class="none">' +
+            'No Messages in ' + thread_name
+            '</p>';
+
+        $('#message_container').append(returnElm);
+    }
+    else {
+        threadData.forEach(function(elm) {
+            let userClass = "";
+            if(elm.user.id === user) {
+                userClass = "belongs";
+            }
+            let createdAt = new Date(elm.created_at);
+            let hours = createdAt.getHours();
+            let post_fix = 'am';
+                if(hours > 12) {
+                    hours = hours - 12;
+                    post_fix = 'pm';
+                }
+            let returnElm = '<div class="messageContentContainer '+userClass+'">' +
+                '<div class="userInfo">'+elm.user.first_name+ ' ' + elm.user.last_name + ' | ' +
+                mL[createdAt.getMonth()] + ' ' + createdAt.getDate() + ' ' + hours + ':' + createdAt.getMinutes() + ' ' + post_fix+
+                '</div>' +
+                '<div class="indivMessage">' +
+                elm.message +
+                '</div></div>';
+
+            $('#message_container').append(returnElm);
+        });
+    }
+
+    $('#message_loader').fadeOut(150, function() {
+        $('#message_container').fadeIn(150, function() {
+
+        });
+    });
+
+}
+
+function showCreateMessage(elm) {
+    $('.messageHolder').empty();
+    let thread = $(elm).data('thread');
+    let val = '<div class="dropdown-menu block" aria-labelledby="createThreadMessage">' +
+        '<div class="px-3 py-3">' +
+        '<div class="form-group">' +
+        '<label for="threadName">Message</label>'+
+        '<textarea class="form-control" id="mainMsg" cols="30" rows="10"></textarea>'+
+        '<input type="hidden" id="threadID" value="'+thread+'">'+
+        '</div>'+
+        '<button id="addMessage"  type="submit" class="btn btn-primary">Create</button>'+
+        '</div></div>';
+    $('.messageHolder').append(val);
+}
+function createMessage(message, thread) {
+    $('.messageHolder').empty();
+    axios.post('/admin/message', {
+        thread: thread,
+        message: message
+    })
+        .then(function (response) {
+            let returnData = response.data;
+            if(returnData.status === "Success") {
+                $('#message_container').fadeOut(150, function() {
+                    $(this).empty();
+                    $('#message_loader').fadeIn(150, function() {
+                        goToMessageThread(thread, '');
+                    });
+                });
+            }
+            else {
+                alert(returnData.message);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
 function submitRevision(imgs, id) {
     $('#loader').fadeIn(500, function() {
         axios.post('/project', {

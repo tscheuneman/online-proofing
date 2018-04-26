@@ -87,3 +87,22 @@ function getImage(elm) {
 
     return '<img src="/storage/projects/'+createdAt.getFullYear()+'/'+mL[createdAt.getMonth()]+'/'+elm.file_path+'/'+elm.inital_image[0].path+'/images/'+fileInfo[0].file+'" />';
 }
+function messageToggle() {
+    let messageElm = $('#messages');
+    if(!messageElm.hasClass('active')) {
+        messageElm.animate({
+            width: "30%",
+        }, 500, function() {
+            $('.messageOverallContainer').fadeIn(250);
+            messageElm.addClass('active');
+        });
+    }
+    else {
+        $('.messageOverallContainer').fadeOut(250, function() {
+            messageElm.animate({
+                width: "0px",
+            }, 500);
+            messageElm.removeClass('active');
+        });
+    }
+}
