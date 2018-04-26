@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Message;
 use Illuminate\Http\Request;
 
 use App\Services\Project\ProjectLogic;
 use App\Services\Activity\ActivityLogic;
+use App\Services\Message\MessageLogic;
 
 use Auth;
 
@@ -119,10 +121,13 @@ class ProjectActionsController extends Controller
 
                 $logs = ActivityLogic::getFromProject($project);
 
+                $messages = MessageLogic::getThreads($project->get());
+
                 return view('admin.projectActions.index',
                     [
                         'project' => $projectData,
-                        'logs' => $logs
+                        'logs' => $logs,
+                        'messages' => $messages
                     ]
                 );
             } else {
@@ -134,6 +139,7 @@ class ProjectActionsController extends Controller
                     $otherProjects = $project->getProductsInOrder();
 
                     $projectData = $project->get();
+
                     return view('admin.projectActions.create',
                         [
                             'project' => $projectData,
