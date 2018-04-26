@@ -222,7 +222,7 @@ function populateMessages(threadData, thread_name) {
                 mL[createdAt.getMonth()] + ' ' + createdAt.getDate() + ' ' + hours + ':' + createdAt.getMinutes() + ' ' + post_fix+
                 '</div>' +
                 '<div class="indivMessage">' +
-                elm.message +
+                elm.message.replace(/\n/g, "<br />") +
                 '</div></div>';
 
             $('#message_container').append(returnElm);
