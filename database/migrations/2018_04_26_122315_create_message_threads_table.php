@@ -20,9 +20,6 @@ class CreateMessageThreadsTable extends Migration
             $table->uuid('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->delete('cascade');
 
-            $table->uuid('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->delete('cascade');
-
             $table->string('subject');
 
             $table->timestamps();
