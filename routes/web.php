@@ -53,6 +53,8 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::resource('admin/orders', 'OrderController');
 
+    Route::post('admin/message/thread', 'MessageController@storeThread');
+
 });
 
 Route::group(['middleware' => ['user']], function () {
