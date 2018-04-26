@@ -575,6 +575,18 @@ div.order{
 
 //Project Styles
 
+div#messages {
+  height:100%;
+  position:fixed;
+  width:30%;
+  right:0;
+  top:0;
+  background:#fff;
+  box-shadow:0 0 25px rgba(0,0,0,.4);
+  z-index:9999;
+  padding:25px;
+}
+
 .card.topSpacing {
   margin-top:25px;
 }
