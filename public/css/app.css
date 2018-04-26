@@ -664,6 +664,13 @@ div#messages {
   overflow-y: scroll;
 }
 
+div#messages .message_controls {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 25px;
+  background: #fff;
+}
+
 div#messages .messageOverallContainer {
   padding: 25px;
   display: none;

@@ -589,6 +589,12 @@ div#messages {
   z-index:9999;
   overflow-y: scroll;
 
+  .message_controls {
+    position: sticky;
+    top: 25px;
+    background: #fff;
+  }
+
   .messageOverallContainer {
     padding:25px;
     display:none;

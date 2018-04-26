@@ -14,27 +14,29 @@
     <br>
     <div id="messages">
         <div class="messageOverallContainer">
-            <div class="closeMessage"><i class="fa fa-times" aria-hidden="true"></i></div>
-            <h1>Message Center</h1>
-            <hr>
-            <button id="messageBackButton" data-proj="{{$project->file_path}}" class="btn btn-secondary"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</button>
-            <button id="createThreadLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-submission"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create Thread</button>
-            <button id="createThreadMessage" onClick="showCreateMessage(this)" data-thread="" class="btn btn-submission"><i class="fa fa-plus-circle" aria-hidden="true"></i> New Message</button>
-            <input type="hidden" id="this_user" value="{{Auth::id()}}">
-            <div class="messageHolder">
+            <div class="message_controls">
+                <div class="closeMessage"><i class="fa fa-times" aria-hidden="true"></i></div>
+                <h1>Message Center</h1>
+                <hr>
+                <button id="messageBackButton" data-proj="{{$project->file_path}}" class="btn btn-secondary"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</button>
+                <button id="createThreadLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-submission"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create Thread</button>
+                <button id="createThreadMessage" onClick="showCreateMessage(this)" data-thread="" class="btn btn-submission"><i class="fa fa-plus-circle" aria-hidden="true"></i> New Message</button>
+                <input type="hidden" id="this_user" value="{{Auth::id()}}">
+                <div class="messageHolder">
 
-            </div>
-            <div class="dropdown-menu" aria-labelledby="createThreadLabel">
-                <div class="px-3 py-3">
-                    <div class="form-group">
-                        <label for="threadName">Thread Name</label>
-                        <input type="text" class="form-control" id="threadName" placeholder="Things">
-                    </div>
-                    <div class="dropdown-divider"></div>
-                    <button data-proj="{{$project->file_path}}" id="addThread"  type="submit" class="btn btn-primary">Create</button>
                 </div>
+                <div class="dropdown-menu" aria-labelledby="createThreadLabel">
+                    <div class="px-3 py-3">
+                        <div class="form-group">
+                            <label for="threadName">Thread Name</label>
+                            <input type="text" class="form-control" id="threadName" placeholder="Things">
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <button data-proj="{{$project->file_path}}" id="addThread"  type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </div>
+                <hr>
             </div>
-            <hr>
             @include('admin.projectActions.includes.messages')
         </div>
 
