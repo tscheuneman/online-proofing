@@ -1,11 +1,12 @@
 @if($project->completed)
-    <button class="btn btn-primary circleButton"><i class="fa fa-comments" aria-hidden="true"></i></button>
+    <button id="showMessages" class="btn btn-primary circleButton"><i class="fa fa-comments" aria-hidden="true"></i></button>
     <div class="row">
         <h1>
             {{$project->project_name}} - <span class="approved">Approved</span>
         </h1>
     </div>
 @else
+    <button id="showMessages" class="btn btn-primary circleButton"><i class="fa fa-comments" aria-hidden="true"></i></button>
     <div class="row justify-content-center">
         <div class="col-md-12">
             @if($project->entries[0]->admin)
