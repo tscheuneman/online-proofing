@@ -37,7 +37,29 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = array(
+            'message' => 'required|string',
+            'thread' => 'required|exists:message_threads,id'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            $returnData['status'] = 'Failure';
+            $returnData['message'] = 'Failed to create message';
+            return json_encode($returnData);
+        }
+
+
+        if($thread = MessageLogic::findThread($request->thread)) {
+            if(MessageLogic::createMessage($thread, $request->message)) {
+                $returnData['status'] = 'Success';
+                $returnData['message'] = 'Created Thread';
+                return json_encode($returnData);
+            }
+        }
+
+        $returnData['status'] = 'Failure';
+        $returnData['message'] = 'Failed to create message message';
+        return json_encode($returnData);
     }
 
     public function storeThread(Request $request)
