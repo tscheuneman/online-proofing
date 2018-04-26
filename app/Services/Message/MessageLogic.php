@@ -4,6 +4,7 @@ namespace App\Services\Message;
 
 use App\Project;
 use App\MessageThread;
+use App\Message;
 
 class MessageLogic {
     protected $message;
@@ -20,15 +21,15 @@ class MessageLogic {
     }
 
     /**
-     * Create text entry
+     * Create all message threads in a project
      *
      * @param \App\Project $project
-     * $param string $data
-     * @return mixed
+     * @return \App\MessageThread[]
      */
+
     public static function getThreads(Project $project) {
 
-        $search = MessageThread::where('project_id', $project->id)->get();
+        $search = MessageThread::withCount('msg_cnt')->where('project_id', $project->id)->get();
 
         return $search;
     }
@@ -45,6 +46,18 @@ class MessageLogic {
         } catch(\Exception $e) {
             return false;
         }
+    }
+
+    public static function findThread($id) {
+        $message = MessageThread::find($id);
+        if($message !== null) {
+            return $message;
+        }
+        return false;
+    }
+
+    public static function getData(MessageThread $thread) {
+        return Message::where('thread_id', $thread->id)->get();
     }
 
 
