@@ -23,7 +23,7 @@ use Storage;
 use Validator;
 use File;
 
-class UserProjectController extends Controller
+class UserProjectController extends UserSideParentController
 {
     /**
      * Display a listing of the resource.

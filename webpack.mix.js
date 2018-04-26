@@ -23,3 +23,5 @@ mix.scripts([
 mix.scripts([
     'resources/assets/js/scripts/adminSearch.js',
 ], 'public/js/search.js');
+
+mix.disableNotifications();

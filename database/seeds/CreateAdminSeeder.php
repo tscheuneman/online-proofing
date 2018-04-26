@@ -18,11 +18,11 @@ class CreateAdminSeeder extends Seeder
         $pwReturn = str_random(12);
 
         $user = new User();
-            $user->first_name = "Thomas";
-            $user->last_name = "Scheuneman";
+            $user->first_name = "FirstName";
+            $user->last_name = "LastName";
             $user->org = "Admin";
-            $user->email = "thomas@tswebvisions.com";
-            $user->name = "thomas@tswebvisions.com";
+            $user->email = ENV('DEFAULT_ADMIN');
+            $user->name = ENV('DEFAULT_ADMIN');
             $user->password = Hash::make($pwReturn);
             $user->active = true;
             $user->save();

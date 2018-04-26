@@ -1,4 +1,7 @@
 //Bootstrap Overrides
+.nav-item {
+  position:relative;
+}
 .container {
   @media screen and (max-width: $neededBreak) {
     width:90% !important;
@@ -10,7 +13,42 @@
   @media screen and (max-width: $neededBreak) {
     margin-bottom:20px;
   }
+  &.userShow {
+    .card-header {
+      color:$brand-primary-color;
+      font-weight: 900;
+      font-size: 17px;
+    }
+    .card-body {
+      padding:.7rem;
+    }
+  }
+  .userShowCard {
+    text-decoration:none;
+    color:#000;
+    .card {
+      padding: .5rem;
+      border-left: 7px solid;
+      border-right-color: rgba(0,0,0,.125) !important;
+      border-top-color: rgba(0,0,0,.125) !important;
+      border-bottom-color: rgba(0,0,0,.125) !important;
+      transition:.2s all ease-in-out;
+
+      &:hover {
+        border-left: 11px solid;
+      }
+
+      h5.card-title {
+        font-weight:bold;
+      }
+    }
+  }
 }
+
+.bg-brand {
+  background-color:$brand-primary !important;
+}
+
 .col-md-4, .col-md-8 {
   @media screen and (max-width: $neededBreak) {
     flex: 0 0 100% !important;
