@@ -74,8 +74,40 @@ class MessageController extends Controller
      */
     public function show($id)
     {
-        //
+        if($thread = MessageLogic::findThread($id)) {
+            $messages = MessageLogic::getData($thread);
+
+            $returnData['status'] = 'Success';
+            $returnData['message'] = $messages;
+
+            return json_encode($returnData);
+        }
+        $returnData['status'] = 'Failure';
+        $returnData['message'] = 'Failed to display thread';
+        return json_encode($returnData);
     }
+
+    /**
+     * Show threads for given project
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showThread($id)
+    {
+        if($project = ProjectLogic::find_path($id)) {
+            $messages = MessageLogic::getThreads($project->get());
+
+            $returnData['status'] = 'Success';
+            $returnData['message'] = $messages;
+
+            return json_encode($returnData);
+        }
+        $returnData['status'] = 'Failure';
+        $returnData['message'] = 'Failed to display thread';
+        return json_encode($returnData);
+    }
+
 
     /**
      * Show the form for editing the specified resource.
