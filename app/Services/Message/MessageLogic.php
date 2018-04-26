@@ -6,6 +6,8 @@ use App\Project;
 use App\MessageThread;
 use App\Message;
 
+use Illuminate\Support\Facades\Auth;
+
 class MessageLogic {
     protected $message;
 
@@ -48,6 +50,22 @@ class MessageLogic {
         }
     }
 
+
+    public static function createMessage(MessageThread $thread, $message) {
+        try {
+            $theMessage = new Message();
+            $theMessage->thread_id = $thread->id;
+            $theMessage->user_id = Auth::id();
+            $theMessage->message = $message;
+            $theMessage->save();
+
+            return true;
+
+        } catch(\Exception $e) {
+            return false;
+        }
+    }
+
     public static function findThread($id) {
         $message = MessageThread::find($id);
         if($message !== null) {
@@ -57,7 +75,7 @@ class MessageLogic {
     }
 
     public static function getData(MessageThread $thread) {
-        return Message::where('thread_id', $thread->id)->get();
+        return Message::with('user')->where('thread_id', $thread->id)->latest()->get();
     }
 
 
