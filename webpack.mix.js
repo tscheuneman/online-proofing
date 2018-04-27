@@ -11,9 +11,10 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.react('resources/assets/js/app.js', 'public/js')
+mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
-    .js('resources/assets/js/user.js', 'public/js');
+   .js('resources/assets/js/userProject.js', 'public/js')
+   .sass('resources/assets/sass/project.scss', 'public/css');
 
 mix.scripts([
     'resources/assets/js/scripts/viewProject.js',
@@ -23,5 +24,6 @@ mix.scripts([
 mix.scripts([
     'resources/assets/js/scripts/adminSearch.js',
 ], 'public/js/search.js');
+
 
 mix.disableNotifications();

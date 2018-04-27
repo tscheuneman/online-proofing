@@ -40,7 +40,15 @@ function populateCanvas(array) {
             {
                 imageSize: imageSize,
                 imageURLPrefix: '../storage/icons',
-                secondaryColor: 'transparent'
+                secondaryColor: 'transparent',
+                tools: [
+                    LC.tools.Rectangle,
+                    LC.tools.Polygon,
+                ],
+                strokeWidths: [
+                    2,
+                    5
+                ]
             },
         );
         img = new Image;
