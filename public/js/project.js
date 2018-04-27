@@ -207,18 +207,21 @@ function populateMessages(threadData, thread_name) {
     else {
         threadData.forEach(function(elm) {
             let userClass = "";
+            let userName = elm.user.first_name+ ' ' + elm.user.last_name;
             if(elm.user.id === user) {
                 userClass = "belongs";
+                userName = '<strong>You</strong>'
             }
             let createdAt = new Date(elm.created_at);
             let hours = createdAt.getHours();
             let post_fix = 'am';
+
                 if(hours > 12) {
                     hours = hours - 12;
                     post_fix = 'pm';
                 }
             let returnElm = '<div class="messageContentContainer '+userClass+'">' +
-                '<div class="userInfo">'+elm.user.first_name+ ' ' + elm.user.last_name + ' | ' +
+                '<div class="userInfo">'+ userName + ' | ' +
                 mL[createdAt.getMonth()] + ' ' + createdAt.getDate() + ' ' + hours + ':' + createdAt.getMinutes() + ' ' + post_fix+
                 '</div>' +
                 '<div class="indivMessage">' +
@@ -317,7 +320,15 @@ function populateCanvas(array) {
             {
                 imageSize: imageSize,
                 imageURLPrefix: '../storage/icons',
-                secondaryColor: 'transparent'
+                secondaryColor: 'transparent',
+                tools: [
+                    LC.tools.Rectangle,
+                    LC.tools.Polygon,
+                ],
+                strokeWidths: [
+                    2,
+                    5
+                ]
             },
         );
         img = new Image;
