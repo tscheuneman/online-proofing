@@ -65,6 +65,14 @@
     @endif
     $(document).ready(function() {
         populateCanvas(returnValues);
+        window.items.forEach(function(elm) {
+            elm.on('drawingChange', function() {
+                let val = JSON.stringify(elm.getSnapshot());
+                console.log(val);
+            });
+
+        });
+
         $('div#comment').on('click', function() {
             let currEntry = $('div.entry.submissionEntry');
             let currImg = $('div.image.active', currEntry);

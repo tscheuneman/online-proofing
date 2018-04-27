@@ -75,12 +75,9 @@ Route::group(['middleware' => ['user']], function () {
 
     Route::post('user/files', 'UserProjectController@userFiles');
     Route::post('user/image', 'UserController@image');
+
+    Route::get('info/project/{id}', 'UserProjectController@getProjectData');
 });
 
-
-
-
-
-//Auth::routes();
 
 

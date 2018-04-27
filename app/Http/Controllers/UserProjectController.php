@@ -112,10 +112,11 @@ class UserProjectController extends UserSideParentController
                         }
                     }
                     if($isUser) {
-                        ActivityLogic::create($thisProject, Auth::user(), 'Customer Viewed Project');
-                        return view('main.project.index',
+                        //ActivityLogic::create($thisProject, Auth::user(), 'Customer Viewed Project');
+                        return view('main.projectSecondary.index',
                             [
                                 'project' => $thisProject,
+                                'number' => $this->val
 
                             ]);
                     }
@@ -249,5 +250,9 @@ class UserProjectController extends UserSideParentController
         }
 
         return $request;
+    }
+
+    public function getProjectData($id) {
+        return Project::where('file_path', '=', $id)->with('order', 'entries.user', 'order.users.user', 'order.admins.admin.user')->first();
     }
 }
