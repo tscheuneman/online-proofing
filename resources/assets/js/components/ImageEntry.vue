@@ -126,6 +126,9 @@
                 function handleMouseDown(e) {
                     e.preventDefault();
                     e.stopPropagation();
+                    if (e.button === 2) {
+                        return;
+                    }
 
                     if(!readyToClick) {
                         return;
@@ -160,6 +163,9 @@
                 function handleMouseUp(e) {
                     e.preventDefault();
                     e.stopPropagation();
+                    if (e.button === 2) {
+                        return;
+                    }
 
                     if(!readyToClick) {
                         return;
@@ -168,16 +174,18 @@
                     // the drag is over, clear the dragging flag
                     isDown = false;
                     readyToClick = false;
-                    
+
                     if(confirm('Keep?')) {
                         alert('Started:  X: ' + startX + '  Y: ' + startY + '\nFinal Dimensions Width: '+finalWidth+' Height: '+finalHeight);
                         canvases.getContext("2d").drawImage(canvas, 0, 0);
                         $(canvas).remove();
+                        readyToClick = true;
                     }
                     else {
                         $(canvas).remove();
                         canvas = null;
                         ctx = null;
+                        readyToClick = true;
                     }
                 }
 
