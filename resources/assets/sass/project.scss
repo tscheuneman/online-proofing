@@ -37,14 +37,20 @@ body {
 }
 
 #proof {
-  width:75%;
+  width:78%;
   position:fixed;
-  height:calc(100% - 40px);
-  left:0;
-  bottom:0;
+  height: calc(100% - 120px);
+  left: 0;
+  bottom: 60px;
 }
 
 div.proof-entry {
+  .elem {
+    display:none;
+    &:first-child {
+      display:block;
+    }
+  }
 
   div.image {
     margin:0 auto;

@@ -113,8 +113,11 @@
                 let scrollY;
                 let offsetX;
                 let offsetY;
+                let finalWidth;
+                let finalHeight;
                 let canvas;
                 let ctx;
+                let readyToClick = true;
 
                 let isDown = false;
 
@@ -124,6 +127,9 @@
                     e.preventDefault();
                     e.stopPropagation();
 
+                    if(!readyToClick) {
+                        return;
+                    }
                     // get references to the canvas and context
                     canvas = self.createCanvas(elm, width, height, true);
                     ctx = canvas.getContext("2d");
@@ -155,12 +161,16 @@
                     e.preventDefault();
                     e.stopPropagation();
 
+                    if(!readyToClick) {
+                        return;
+                    }
+
                     // the drag is over, clear the dragging flag
                     isDown = false;
-
-
-
+                    readyToClick = false;
+                    
                     if(confirm('Keep?')) {
+                        alert('Started:  X: ' + startX + '  Y: ' + startY + '\nFinal Dimensions Width: '+finalWidth+' Height: '+finalHeight);
                         canvases.getContext("2d").drawImage(canvas, 0, 0);
                         $(canvas).remove();
                     }
@@ -203,6 +213,10 @@
                     // on starting vs current mouse position
                     let width = mouseX - startX;
                     let height = mouseY - startY;
+
+
+                    finalWidth = width;
+                    finalHeight = height;
 
                     // draw a new rect from the start position
                     // to the current mouse position
