@@ -65,12 +65,13 @@ class ConvertPDFSecondary implements ShouldQueue
                     for($x = 0; $x < $numPages; $x++) {
                         $num_padded = sprintf("%02d", $x);
                         $im->setIteratorIndex($x);
-                        $im->thumbnailImage(650, 0);
-                        $d = $im->getImageGeometry();
-                        $im->setImageFormat('png');
                         $im->writeImage($savePath . 'image_' . $num_padded . '.png');
+                        $d = $im->getImageGeometry();
+                        $im->thumbnailImage(200, 0);
+                        $im->setImageFormat('png');
+                        $im->writeImage($savePath . 'thumb_' . $num_padded . '.png');
 
-                        $files[$x]['width'] = 650;
+                        $files[$x]['width'] = $d['width'];
                         $files[$x]['height'] = $d['height'];
                         $files[$x]['file'] = 'image_' . $num_padded . '.png';
                     }
