@@ -9,6 +9,8 @@
 
         <ul class="navContainerRight" v-if="$store.state.needResponse">
             <li v-tooltip="'Submit your revisions'" v-on:click="submitRevisions"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></li>
+            <li v-tooltip="'Upload new Files'" v-on:click="uploadNewFiles"><i class="fa fa-upload" aria-hidden="true"></i></li>
+            <li id="approve" v-tooltip="'Approve Project'" v-on:click="approveProject"><i class="fa fa-thumbs-up" aria-hidden="true"></i></li>
         </ul>
     </div>
 </template>
