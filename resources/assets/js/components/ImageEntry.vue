@@ -315,6 +315,7 @@
                     '</div></div></div></div>';
 
                 $('body').append(displayData);
+                $('#mainModalText').focus();
 
                 $('#saveButton').on('click', function(e){
                     e.preventDefault();
