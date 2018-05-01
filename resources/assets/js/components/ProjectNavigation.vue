@@ -21,7 +21,7 @@
 
         <ul class="navContainer">
             <li v-tooltip="'See all pages'" v-on:click="showSidePictureNavigation"><i class="fa fa-picture-o" aria-hidden="true"></i></li>
-            <li v-tooltip="'Go Home'"><i class="fa fa-home" aria-hidden="true"></i></li>
+            <li v-tooltip="'Go Home'" v-on:click="goHome"><i class="fa fa-home" aria-hidden="true"></i></li>
             <li v-tooltip="'Choose new color'" v-if="$store.state.needResponse" id="colorPick" v-on:click="showColors"><i class="fa fa-eyedropper" aria-hidden="true"></i></li>
         </ul>
         <color-picker v-model="colors" @ok="onOk" />
@@ -54,6 +54,9 @@
             }
         },
         methods: {
+            goHome() {
+                location.assign("/");
+            },
             onOk () {
                $('#colorPick').css('backgroundColor', this.colors.hex);
                this.showColors();
