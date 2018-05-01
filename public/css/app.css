@@ -1191,6 +1191,7 @@ a.pendingLink {
   border-bottom-color: rgba(0, 0, 0, 0.125) !important;
   -webkit-transition: .2s all ease-in-out;
   transition: .2s all ease-in-out;
+  margin-bottom: 10px;
 }
 
 .card .userShowCard .card:hover {
@@ -1199,6 +1200,10 @@ a.pendingLink {
 
 .card .userShowCard .card h5.card-title {
   font-weight: bold;
+}
+
+.card .userShowCard:last-child .card {
+  margin: 0;
 }
 
 .bg-brand {
