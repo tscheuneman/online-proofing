@@ -4,7 +4,7 @@
          v-bind:data-val="keyValue"
     >
 
-        <template v-if="$store.state.needResponse">
+        <template v-if="$store.state.needResponse && proofVal === 0">
             <template v-if="initalVal">
                 <div class="image"
                      :style="{height: elementHeight + 'px', width: elementWidth + 'px'}"
@@ -48,7 +48,8 @@
             image: Object,
             initalVal: Boolean,
             linkVal: String,
-            entry: Object
+            entry: Object,
+            proofVal: Number
         },
         data() {
             return {
@@ -62,7 +63,7 @@
         },
         mounted() {
             let self = this;
-            if(!store.state.needResponse) {
+            if(!store.state.needResponse || self.proofVal > 0) {
                 if(this.entry.m.user_notes !== null) {
                     self.entryVal = JSON.parse(this.entry.m.user_notes);
                 }
