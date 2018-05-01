@@ -1,9 +1,22 @@
 <template>
     <div
-            v-bind:class="[{ isActive: isActive }, 'entry entry_'+numberKey]"
+            v-bind:class="[{ isActive: isActive }, { isAdmin: isAdmin }, 'entry entry_'+numberKey]"
             @click="goToRevision(numberKey)"
             >
-        {{entry.m.user.first_name}} {{entry.m.user.last_name}}
+            <template v-if="hasImage">
+                <div class="userEntry"
+                     :style="{background: ' url(/storage/'+entry.m.user.picture+') center center no-repeat'}"
+                     >
+
+                </div>
+            </template>
+            <template v-else>
+                <div class="userEntry">
+                {{entry.m.user.first_name.charAt(0) + entry.m.user.last_name.charAt(0)}}
+                </div>
+            </template>
+            {{entry.m.user.first_name}} {{entry.m.user.last_name}}
+        <span class="dateTime">{{dateString}}</span>
     </div>
 </template>
 
@@ -16,7 +29,10 @@
         },
         data () {
             return {
-                isActive: false
+                isActive: false,
+                hasImage: false,
+                dateString: '',
+                isAdmin: false,
             }
 
         },
@@ -25,6 +41,15 @@
             if(self.numberKey === 0) {
                 self.isActive = true;
             }
+            if(self.entry.m.user.picture !== null) {
+                self.hasImage = true;
+            }
+            if(self.entry.m.admin) {
+                self.isAdmin = true;
+            }
+            let theData = moment(self.entry.m.created_at);
+
+            self.dateString = theData.format('MMMM Do YYYY, h:mm:ss a');
         },
         methods: {
             goToRevision: function(val) {
