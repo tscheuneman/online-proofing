@@ -97,40 +97,63 @@
                     returnData.push(thisElm);
                 }
 
-                axios.post('/project', {
-                    dataArray: JSON.stringify(returnData),
-                    projectID: store.state.project.id
-                })
-                    .then(function (response) {
-                        let returnData = response.data;
-                        if(returnData.status === "Success") {
-                            location.assign("/");
-                        }
-                        else {
-                            alert(returnData.message);
-                            $('#loader').fadeOut(500);
-                        }
+                $('#loader').fadeIn(500, function() {
+                    axios.post('/project', {
+                        dataArray: JSON.stringify(returnData),
+                        projectID: store.state.project.id
                     })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                        .then(function (response) {
+                            let returnData = response.data;
+                            if (returnData.status === "Success") {
+                                location.assign("/");
+                            }
+                            else {
+                                alert(returnData.message);
+                                $('#loader').fadeOut(500);
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                });
             },
             submitForm() {
                 let customerForm = document.getElementById('customerFileEntry');
                 let formData = new FormData(customerForm);
+                $('#loader').fadeIn(500, function() {
+                    axios.post('/user/files', formData)
+                        .then(function (response) {
+                            location.assign("/");
+                            $('#loader').fadeOut(500);
+                        })
+                        .catch(function (error) {
+                            location.assign("/");
+                            $('#loader').fadeOut(500);
+                        });
 
-                axios.post('/user/files', formData)
-                    .then(function (response) {
-                        console.log(response);
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-
-                console.log(formData);
+                });
             },
             approveProject() {
-                alert('sdfsdf');
+                $('#loader').fadeIn(500, function() {
+                    axios.post('/project/approve', {
+                        projectID: store.state.project.id
+                    })
+                        .then(function (response) {
+                            console.log(response);
+                            let returnData = response.data;
+                            if(returnData.status === "Success") {
+                                alert(returnData.message);
+                                location.assign("/");
+                            }
+                            else {
+                                alert(returnData.message);
+                                $('#loader').fadeOut(500);
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                });
             }
         },
         name: "project-navigation"
