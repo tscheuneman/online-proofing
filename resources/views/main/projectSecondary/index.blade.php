@@ -16,7 +16,7 @@
         <pages-left>
 
         </pages-left>
-        <actions>
+        <actions :active="false">
 
         </actions>
 

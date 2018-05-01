@@ -7,19 +7,28 @@
     </div>
     <div id="app">
 
-        <project-navigation-guest>
+        <project-navigation-admin>
 
-        </project-navigation-guest>
+        </project-navigation-admin>
         <proof-guest :user="'{{Auth::id()}}'" :project="'{{$project->file_path}}'">
 
         </proof-guest>
         <pages-left>
 
         </pages-left>
-        <actions :active="false">
 
-        </actions>
+        <div id="sidebar">
+            <comments-admin>
+
+            </comments-admin>
+
+            <revisions-admin :active="true">
+
+            </revisions-admin>
+
+        </div>
+
 
     </div>
-    <script src="{{ asset('js/userProject.js') }}"></script>
+    <script src="{{ asset('js/adminProject.js') }}"></script>
 @endsection

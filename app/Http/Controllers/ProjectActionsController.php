@@ -123,7 +123,7 @@ class ProjectActionsController extends Controller
 
                 $messages = MessageLogic::getThreads($project->get());
 
-                return view('admin.projectActions.index',
+                return view('admin.projectActionsSecondary.index',
                     [
                         'project' => $projectData,
                         'logs' => $logs,
