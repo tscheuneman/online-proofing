@@ -47,7 +47,15 @@ Vue.component('eachEntry', require('./components/EachNavigation.vue'));
 
 Vue.component('commentEntry', require('./components/CommentEntry.vue'));
 
+//Guest / Admin
+Vue.component('project-navigation-guest', require('./components/AdminGuest/ProjectNavigationGuest.vue'));
+Vue.component('proof-guest', require('./components/AdminGuest/ProofGuest.vue'));
+Vue.component('proofEntryGuest', require('./components/AdminGuest/ProofEntryGuest.vue'));
+Vue.component('imageEntryGuest', require('./components/AdminGuest/imageEntryGuest.vue'));
+
 const app = new Vue({
     el: '#app',
     store
 });
+
+
