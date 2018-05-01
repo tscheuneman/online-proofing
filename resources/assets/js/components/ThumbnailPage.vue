@@ -1,9 +1,9 @@
 <template>
             <img
-                  v-bind:class="[{ isActive: isActive }, 'thumbnailImage thumb_'+keyValue]"
-                 :src="link"
-                  :clickable="true"
-                  @click="goToProject(keyValue)"
+                    v-bind:class="[{ isActive: isActive }, 'thumbnailImage thumb_'+keyValue]"
+                    :src="link"
+                    :clickable="true"
+                    @click="goToProject(keyValue)"
             />
 </template>
 
@@ -14,7 +14,7 @@
         props: {
             keyValue: Number,
             image: Object,
-            linkVal: String
+            linkVal: String,
         },
         data() {
             return {
@@ -22,7 +22,7 @@
                 elementHeight: null,
                 link: null,
                 showModal:false,
-                isActive: false
+                isActive: false,
             }
         },
         mounted() {
