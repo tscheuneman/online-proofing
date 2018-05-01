@@ -1,5 +1,10 @@
 @extends('layouts.viewer.app')
 @section('content')
+    <div id="loader">
+        <div class="loader">
+
+        </div>
+    </div>
     <div id="app">
 
         <project-navigation>
