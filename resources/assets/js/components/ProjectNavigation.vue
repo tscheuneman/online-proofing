@@ -1,5 +1,24 @@
 <template>
     <div id="projectNavigation">
+        <template v-if="$store.state.needResponse">
+            <div id="customerFiles">
+                <div id="closeFiles"><i class="fa fa-times"></i></div>
+                <h4>
+                    Upload Files
+                </h4>
+                <hr>
+                <form id="customerFileEntry" enctype="multipart/form-data" @submit.prevent="submitForm">
+                    <input type="hidden" name="project_id" :value="$store.state.project.id">
+                    <input class="form-control" type="file" id="files" name="files[]" multiple required />
+                    <br />
+                    <textarea name="comments" class="form-control" id="" cols="30" rows="10"></textarea>
+                    <br>
+                    <button id="submitFileUpload" class="btn btn-secondary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Submit</button>
+                </form>
+
+            </div>
+        </template>
+
         <ul class="navContainer">
             <li v-tooltip="'See all pages'" v-on:click="showSidePictureNavigation"><i class="fa fa-picture-o" aria-hidden="true"></i></li>
             <li v-tooltip="'Go Home'"><i class="fa fa-home" aria-hidden="true"></i></li>
@@ -21,7 +40,7 @@
     export default {
         data () {
             return {
-                colors: Array
+                colors: Array,
             }
 
         },
@@ -53,6 +72,9 @@
                     });
                 }
 
+            },
+            uploadNewFiles() {
+                $('#customerFiles').fadeIn(500);
             },
             submitRevisions() {
                 if(store.state.revisionEntries.length <= 0) {
@@ -92,6 +114,23 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+            },
+            submitForm() {
+                let customerForm = document.getElementById('customerFileEntry');
+                let formData = new FormData(customerForm);
+
+                axios.post('/user/files', formData)
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
+                console.log(formData);
+            },
+            approveProject() {
+                alert('sdfsdf');
             }
         },
         name: "project-navigation"
