@@ -123,7 +123,7 @@ class UserProjectController extends UserSideParentController
 
                 }
                 if(!$thisProject->order->hidden) {
-                    return view('main.project.guest',
+                    return view('main.projectSecondary.guest',
                         [
                             'project' => $thisProject,
 
