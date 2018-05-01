@@ -11,6 +11,7 @@
                     :clickable="true"
                     @click="goToEntry(m,i)"
                     :entry="{m}"
+                    :numberKey="i"
             />
         </div>
 
@@ -38,9 +39,6 @@
         },
         created() {
             let self = this;
-            Vue.bus.on('loadEntries', function() {
-                console.log(store.state);
-            });
         },
         name: "actions-component"
     }

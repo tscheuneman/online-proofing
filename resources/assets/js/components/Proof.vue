@@ -5,6 +5,7 @@
                 v-for="(m,i) in $store.state.entries"
                 :clickable="true"
                 :entry="{m}"
+                :proofEntry="i"
         />
     </div>
 </template>
@@ -20,7 +21,6 @@
             return {
 
             }
-
         },
         mounted() {
             let project_id = this.project;
@@ -36,6 +36,51 @@
                     alert("Failed to initialize cart");
                     console.log(error);
                 });
+        },
+        created() {
+            Vue.bus.on('goToEntry', function(elm) {
+                if(elm === store.state.currentElm) {
+                    alert('That is the current page');
+                    return false;
+                }
+                $('.proof-entry.isActive .isActive').fadeOut(250, function() {
+                    $(this).removeClass('isActive');
+                    $('.proof-entry.isActive .elem_'+elm).fadeIn(250, function() {
+                        $(this).addClass('isActive');
+                        store.commit('changeActiveElm', elm);
+                    });
+                    $('.thumbnailImage').removeClass('isActive');
+                    $('.thumb_'+elm).addClass('isActive');
+                });
+
+            });
+
+            Vue.bus.on('goToRevision', function(elm) {
+                if(elm === store.state.currentProof) {
+                    alert('That is the current revision');
+                    return false;
+                }
+
+                $('.proof-entry.isActive').fadeOut(250, function() {
+                    $(this).removeClass('isActive');
+                    $('.proof-entry.proof_'+elm).fadeIn(250, function() {
+                        $(this).addClass('isActive');
+                        store.commit('changeCurrentProof', elm);
+
+                        $('.entry').removeClass('isActive');
+                        $('.entry_'+elm).addClass('isActive');
+
+                        $('.navigation-entry').removeClass('isActive');
+                        $('.nav_'+elm).addClass('isActive');
+
+                        let active_elm = $('.proof-entry.isActive .elem.isActive').data('val');
+
+                        $('.navigation-entry.isActive .thumbnailImage').removeClass('isActive');
+                        $('.navigation-entry.isActive .thumb_'+active_elm).addClass('isActive');
+                    });
+                });
+
+            });
         },
         methods: {
             loadInEntries: function() {

@@ -1,22 +1,20 @@
 <template>
-    <div v-bind:class="[{ isActive: isActive }, {isAdmin: adminLast}, 'proof-entry proof_' + proofEntry]">
-        <imageEntry
+    <div v-bind:class="[{ isActive: isActive }, {isAdmin: adminLast}, 'navigation-entry nav_' + proofEntry]">
+        <pageEntry
                 :key="i"
                 v-for="(z,i) in images"
                 :image="{z}"
-                :initalVal = initalValue
                 :linkVal = linkVal
-                :keyValue="i"
-                :entry="entry"
-        >
-        </imageEntry>
+                :keyValue="i">
+
+        </pageEntry>
     </div>
 </template>
 
 <script>
     import { store } from './store';
     export default {
-        name: "proof-entry",
+        name: "each-navigation",
         props: {
             entry: Object,
             proofEntry: Number
@@ -40,10 +38,6 @@
             let self = this;
             let date = moment(store.state.project.created_at);
 
-            if(this.entry.m.id === store.state.entries[0].id && this.entry.m.admin) {
-                self.adminLast = true;
-                store.state.needResponse = true;
-            }
             self.images = JSON.parse(this.entry.m.files);
             self.initalValue = true;
             self.linkVal = 'http://localhost:8000/storage/projects/' + date.format('YYYY') + '/' + date.format('MMMM') + '/' + store.state.project.file_path + '/' + this.entry.m.path + '/images';

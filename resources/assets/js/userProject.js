@@ -6,10 +6,14 @@
  */
 
 require('./bootstrap');
+
 window.Vue = require('vue');
 window.VueBus = require('vue-bus');
+window.VToolTip = require('v-tooltip');
 
 Vue.use(VueBus);
+Vue.use(VToolTip);
+
 /**
  * Next, we will create a fresh React component instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -25,11 +29,23 @@ import {store} from './components/store';
 
 import {LC} from './scripts/literallyCanvas';
 
+import { Photoshop } from 'vue-color'
+
+
+Vue.component('projectNavigation', require('./components/ProjectNavigation.vue'));
+
 Vue.component('actions', require('./components/ActionsComponent.vue'));
+Vue.component('pages-left', require('./components/Allpages.vue'));
 Vue.component('proof', require('./components/Proof.vue'));
 Vue.component('entry', require('./components/Entry.vue'));
 Vue.component('proofEntry', require('./components/ProofEntry.vue'));
 Vue.component('imageEntry', require('./components/ImageEntry.vue'));
+Vue.component('color-picker', require('vue-color/src/components/Photoshop.vue'));
+
+Vue.component('pageEntry', require('./components/ThumbnailPage.vue'));
+Vue.component('eachEntry', require('./components/EachNavigation.vue'));
+
+Vue.component('commentEntry', require('./components/CommentEntry.vue'));
 
 const app = new Vue({
     el: '#app',

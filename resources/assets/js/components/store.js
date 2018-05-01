@@ -7,6 +7,11 @@ export const store = new Vuex.Store({
         project: [],
         entries: [],
         canvasItems: [],
+        revisionEntries: [],
+        color: '#000000',
+        currentElm: 0,
+        currentProof: 0,
+        needResponse: false
     },
     getters: {
 
@@ -20,6 +25,18 @@ export const store = new Vuex.Store({
         },
         addCanvas (state, value) {
             state.canvasItems.push(value);
+        },
+        changeColor(state, value) {
+            state.color = value;
+        },
+        changeActiveElm(state, value) {
+            state.currentElm = value;
+        },
+        changeCurrentProof(state, value) {
+            state.currentProof = value;
+        },
+        addRevision (state, value) {
+            state.revisionEntries.push(value);
         },
     }
 });

@@ -1,22 +1,6 @@
 function submitRevision(imgs, id) {
     $('#loader').fadeIn(500, function() {
-        axios.post('/project', {
-            dataArray: JSON.stringify(imgs),
-            projectID: id
-        })
-            .then(function (response) {
-                let returnData = response.data;
-                if(returnData.status === "Success") {
-                    location.assign("/");
-                }
-                else {
-                    alert(returnData.message);
-                    $('#loader').fadeOut(500);
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+
     });
 }
 
