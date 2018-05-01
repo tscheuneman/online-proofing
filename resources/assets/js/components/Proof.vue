@@ -75,6 +75,8 @@
 
                         let active_elm = $('.proof-entry.isActive .elem.isActive').data('val');
 
+                        store.commit('changeActiveElm', active_elm);
+
                         $('.navigation-entry.isActive .thumbnailImage').removeClass('isActive');
                         $('.navigation-entry.isActive .thumb_'+active_elm).addClass('isActive');
                     });
