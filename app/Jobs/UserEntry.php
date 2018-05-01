@@ -52,21 +52,21 @@ class UserEntry implements ShouldQueue
         try {
             if(File::makeDirectory( public_path('/storage/' . $this->dir . '/images'), 0777, true)) {
                 try {
-                    $files = array();
+                    $returnFiles = array();
                     $num_padded = 0;
                     $savePath = public_path('/storage/' . $this->dir . '/images/');
                     foreach($this->files as $file) {
                         $manager = new ImageManager();
                         $img = $manager->make(file_get_contents($file))->save($savePath . 'image_' . $num_padded . '.png');
 
-                        $files[$num_padded]['width'] = $img->width();
-                        $files[$num_padded]['height'] = $img->height();
-                        $files[$num_padded]['file'] = 'image_' . $num_padded . '.png';
+                        $returnFiles[$num_padded]['width'] = $img->width();
+                        $returnFiles[$num_padded]['height'] = $img->height();
+                        $returnFiles[$num_padded]['file'] = 'image_' . $num_padded . '.png';
                         $num_padded++;
                     }
 
                     $this->entry->active = true;
-                    $this->entry->files = json_encode($files);
+                    $this->entry->files = json_encode($returnFiles);
                     $this->entry->user_notes = json_encode($this->comments);
                     $this->entry->save();
 
