@@ -7,6 +7,7 @@
     </div>
     <div id="app">
 
+
         <project-navigation-admin>
 
         </project-navigation-admin>
@@ -27,7 +28,9 @@
             </revisions-admin>
 
         </div>
+        <messaging>
 
+        </messaging>
 
     </div>
     <script src="{{ asset('js/adminProject.js') }}"></script>
