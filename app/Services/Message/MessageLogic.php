@@ -75,7 +75,7 @@ class MessageLogic {
     }
 
     public static function getData(MessageThread $thread) {
-        return Message::with('user')->where('thread_id', $thread->id)->latest()->get();
+        return Message::with('user')->where('thread_id', $thread->id)->oldest()->get();
     }
 
 
