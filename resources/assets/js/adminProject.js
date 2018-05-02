@@ -45,7 +45,7 @@ Vue.component('commentEntry', require('./components/CommentEntry.vue'));
 //Guest / Admin
 Vue.component('project-navigation-admin', require('./components/AdminGuest/ProjectNavigationAdmin.vue'));
 Vue.component('proof-guest', require('./components/AdminGuest/ProofGuest.vue'));
-Vue.component('proofEntryGuest', require('./components/AdminGuest/ProofEntryGuest.vue'));
+Vue.component('proofEntryGuest', require('./components/AdminGuest/ProofEntryAdmin.vue'));
 Vue.component('imageEntryGuest', require('./components/AdminGuest/imageEntryGuest.vue'));
 
 Vue.component('revisions-admin', require('./components/AdminGuest/RevisionsAdmin.vue'));

@@ -5,6 +5,16 @@
             <div class="fileUpload">
                 <h5 class="title">{{entry.m.user.first_name + ' ' + entry.m.user.last_name}} uploaded {{numberOfFiles}} file(s)</h5>
                 <small>Upload On {{dateString}}</small>
+                <br />
+                <br />
+                <button
+                        :key="i"
+                        v-for="(z,i) in fileData"
+                        v-bind:class="['getLink btn btn-primary', 'btn_'+i]"
+                        @click="GenerateLink(z.path, $store.state.project.file_path)"
+                >
+                    {{z.name}}
+                </button>
             </div>
         </template>
 
@@ -27,7 +37,7 @@
 <script>
     import { store } from '../store';
     export default {
-        name: "proof-entry-guest",
+        name: "proof-entry-admin",
         props: {
             entry: Object,
             proofEntry: Number
@@ -52,6 +62,27 @@
             }
             self.numberOfFiles = JSON.parse(self.entry.m.files).length;
         },
+        methods: {
+            GenerateLink: function(val, proj) {
+                axios.post('/admin/project/link', {
+                    val: val,
+                    project_id: proj
+                })
+                    .then(function (response) {
+                        let returnData = response.data;
+                        if(returnData.status === "Success") {
+                            location.assign(returnData.message);
+                        }
+                        else {
+                            alert(returnData.message);
+                            $('#loader').fadeOut(500);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        },
         created() {
             let self = this;
             let date = moment(store.state.project.created_at);
@@ -65,6 +96,7 @@
                 self.dateString = theData.format('MMMM Do YYYY, h:mm:ss a');
 
                 self.isFileUpload = true;
+                self.fileData = JSON.parse(this.entry.m.files);
             }
             else {
                 self.images = JSON.parse(this.entry.m.files);
