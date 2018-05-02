@@ -1,6 +1,6 @@
 <template>
     <div
-            class="commentEntry"
+            v-bind:class="['commentEntry', 'comm_'+keyEntry]"
             :style="{
             height: itemEntry.x.height + 'px',
             width: itemEntry.x.width + 'px',
@@ -19,7 +19,8 @@
 
     export default {
         props: {
-            itemEntry: Object
+            itemEntry: Object,
+            keyEntry: Number
         },
         data () {
             return {

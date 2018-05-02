@@ -20,6 +20,7 @@
                                 v-for="(x,i) in entryVal[keyValue]"
                                 :clickable="true"
                                 :itemEntry="{x}"
+                                :keyEntry="i"
                         >
                         </commentEntry>
                     </template>
