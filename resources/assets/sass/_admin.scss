@@ -22,6 +22,34 @@ div#loader {
   }
 }
 
+div#customerFiles {
+  background:#fff;
+  padding:15px;
+  box-shadow:0 0 15px rgba(0,0,0,.4);
+  width:550px;
+  position:fixed;
+  z-index:9999;
+  left:calc(50% - 250px);
+  display:none;
+  margin-top: 50px;
+
+  @media screen and (max-width: $break-small) {
+    width:90%;
+    left:calc(50% - 45%);
+  }
+
+
+  form {
+
+  }
+
+  #closeFiles {
+    float:right;
+    font-size:20px;
+    cursor:pointer;
+
+  }
+}
 
 .loader, .loaderSecond {
   border: 7px solid #000;
