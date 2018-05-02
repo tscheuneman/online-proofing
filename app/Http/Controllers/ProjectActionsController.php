@@ -136,6 +136,7 @@ class ProjectActionsController extends Controller
                     return 'Output Pending';
                 }
                 else {
+
                     $otherProjects = $project->getProductsInOrder();
 
                     $projectData = $project->get();

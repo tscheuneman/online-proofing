@@ -28,7 +28,7 @@ class HomeController extends UserSideParentController
         return view('home',
             [
                 'orders' => $orders,
-                'number' => $this->val
+                'number' => json_decode($this->val)
             ]);
     }
 
@@ -39,7 +39,7 @@ class HomeController extends UserSideParentController
             [
                 'admin' => $admin->user(),
                 'oldOrders' => $oldOrders,
-                'number' => $this->val
+                'number' => json_decode($this->val)
             ]
         );
     }

@@ -54,7 +54,7 @@
                                             <p class="title"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                                                  Awating Action</p>
                                             <div class="dropdown-divider"></div>
-                                                @foreach(json_decode($number) as $proj)
+                                                @foreach($number as $proj)
                                                     <a class="dropdown-item" href="{{url('/project') . '/' . $proj->file_path}}">{{$proj->order->job_id}} | {{$proj->project_name}}</a>
                                                 @endforeach
                                         </div>
