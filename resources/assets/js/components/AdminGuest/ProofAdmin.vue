@@ -36,6 +36,7 @@
                     }
                     store.commit('addEntries', entries);
                     self.loadInEntries();
+                    self.loadMessages();
                 })
                 .catch(function (error) {
                     alert("Failed to initialize cart");
