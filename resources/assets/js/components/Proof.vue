@@ -29,7 +29,11 @@
                 .then(function (response) {
                     let returnData = response.data;
                     store.commit('addProject', returnData);
-                    store.commit('addEntries', returnData.entries);
+                    let entries = returnData.entries;
+                        if(returnData.completed) {
+                            entries.unshift('approved');
+                        }
+                    store.commit('addEntries', entries);
                     self.loadInEntries();
                 })
                 .catch(function (error) {

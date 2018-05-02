@@ -55,12 +55,6 @@
         },
         mounted() {
             let self = this;
-            Vue.bus.on('loadEntries', function() {
-                let date = moment(store.state.project.created_at);
-                self.images = JSON.parse(store.state.entries[0].files);
-                self.linkVal = 'http://localhost:8000/storage/projects/' + date.format('YYYY') + '/' + date.format('MMMM') + '/' + store.state.project.file_path + '/' +store.state.entries[0].path + '/images';
-
-            });
         },
         name: "all-pages"
     }

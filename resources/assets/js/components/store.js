@@ -11,7 +11,11 @@ export const store = new Vuex.Store({
         color: '#000000',
         currentElm: 0,
         currentProof: 0,
-        needResponse: false
+        needResponse: false,
+        messages: [],
+        activeThread: null,
+        activeMessages: null,
+        userID: null
     },
     getters: {
 
@@ -37,6 +41,15 @@ export const store = new Vuex.Store({
         },
         addRevision (state, value) {
             state.revisionEntries.push(value);
+        },
+        popMessages (state, value) {
+            state.messages = value;
+        },
+        changeActiveMessages (state, value) {
+            state.activeMessages = value;
+        },
+        setActiveThread (state, value) {
+            state.activeThread = value;
         },
     }
 });

@@ -10,6 +10,12 @@
                 {{notes}}
             </div>
         </template>
+        <template v-else-if="entry.m === 'approved'">
+            <div class="adminUploadComment">
+                Approved
+            </div>
+        </template>
+
         <template v-else>
             <pageCommentEntry
                     :key="i"
@@ -50,23 +56,26 @@
         },
         created() {
             let self = this;
-            if(this.entry.m.admin) {
-                self.adminLast = true
-                self.notes = this.entry.m.notes;
+            if(self.entry.m !== 'approved') {
+                if(this.entry.m.admin) {
+                    self.adminLast = true
+                    self.notes = this.entry.m.notes;
 
+                }
+                if(self.entry.m.path === null) {
+                    self.isFileUpload = true;
+                    self.notes = this.entry.m.notes;
+                }
+                if(self.entry.m.path === null) {
+                    self.isFileUpload = true;
+                    self.notes = this.entry.m.notes;
+                }
+                if(this.entry.m.user_notes !== null) {
+                    self.entryVal = JSON.parse(this.entry.m.user_notes);
+                    self.numPages = self.entryVal.length;
+                }
             }
-            if(self.entry.m.path === null) {
-                self.isFileUpload = true;
-                self.notes = this.entry.m.notes;
-            }
-            if(self.entry.m.path === null) {
-                self.isFileUpload = true;
-                self.notes = this.entry.m.notes;
-            }
-            if(this.entry.m.user_notes !== null) {
-                self.entryVal = JSON.parse(this.entry.m.user_notes);
-                self.numPages = self.entryVal.length;
-            }
+
 
         }
     }

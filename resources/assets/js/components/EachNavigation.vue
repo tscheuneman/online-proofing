@@ -42,7 +42,7 @@
             let self = this;
             let date = moment(store.state.project.created_at);
 
-            if(self.entry.m.path === null) {
+            if(self.entry.m.path === null ||self.entry.m === 'approved') {
                 self.isFileUpload = true;
             }
             else {

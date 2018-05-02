@@ -4,7 +4,7 @@
          v-bind:data-val="keyValue"
     >
 
-        <template v-if="$store.state.needResponse && proofVal === 0">
+        <template v-if="$store.state.needResponse && proofVal === 0 && !$store.state.project.completed">
             <template v-if="initalVal">
                 <div class="image"
                      :style="{height: elementHeight + 'px', width: elementWidth + 'px'}"
