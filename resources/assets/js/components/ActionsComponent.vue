@@ -1,5 +1,6 @@
 <template>
-    <div id="sidebar">
+    <div id="sidebar"
+         v-bind:class="[{ dontShow: active }]">
         <div class="sidebarHeadings">
             <h2>{{$store.state.project.project_name}}</h2>
             <hr>
@@ -23,10 +24,10 @@
     import { store } from './store';
 
     export default {
+        props: {
+            active: Boolean
+        },
         data () {
-            return {
-
-            }
 
         },
         mounted() {
