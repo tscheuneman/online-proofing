@@ -27,9 +27,6 @@
         props: {
             active: Boolean
         },
-        data () {
-
-        },
         mounted() {
 
         },
