@@ -23,6 +23,7 @@
             }
         },
         mounted() {
+            store.state.userID = this.user;
             let project_id = this.project;
             let self = this;
             axios.get('/info/project/'+project_id)
@@ -57,6 +58,10 @@
                     $('.thumb_'+elm).addClass('isActive');
                 });
 
+                $('.userCommentPageRevision').removeClass('isActive');
+                $('.commentEntry ').removeClass('active');
+                $('#commentOverlay').remove();
+
             });
 
             Vue.bus.on('goToRevision', function(elm) {
@@ -83,6 +88,10 @@
 
                         $('.navigation-entry.isActive .thumbnailImage').removeClass('isActive');
                         $('.navigation-entry.isActive .thumb_'+active_elm).addClass('isActive');
+
+                        $('.userCommentPageRevision').removeClass('isActive');
+                        $('.commentEntry ').removeClass('active');
+                        $('#commentOverlay').remove();
                     });
                 });
 
@@ -92,11 +101,25 @@
             loadInEntries: function() {
                 Vue.bus.emit('loadEntries');
             },
-            loadInFirstEntry: function() {
-
+            loadMessages: function() {
+                axios.get('/admin/message/thread/' + store.state.project.file_path, {
+                })
+                    .then(function (response) {
+                        let returnData = response.data;
+                        if(returnData.status === "Success") {
+                            let threadData = returnData.message;
+                            store.commit('popMessages', threadData);
+                        }
+                        else {
+                            alert(returnData.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             },
         },
-        name: "proof-guest"
+        name: "proof-admin"
     }
 </script>
 

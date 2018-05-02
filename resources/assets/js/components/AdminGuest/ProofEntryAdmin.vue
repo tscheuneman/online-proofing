@@ -18,6 +18,13 @@
             </div>
         </template>
 
+        <template v-else-if="entry.m === 'approved'">
+            <div class="fileUpload">
+                <h5 class="title">Approved!</h5>
+                <small>Approved by {{$store.state.project.approval.user.first_name + ' ' + $store.state.project.approval.user.last_name}} on {{dateString}}</small>
+            </div>
+        </template>
+
         <template v-else>
             <imageEntryGuest
                     :key="i"
@@ -60,7 +67,7 @@
             if(self.proofEntry === store.state.currentProof) {
                 self.isActive = true;
             }
-            self.numberOfFiles = JSON.parse(self.entry.m.files).length;
+
         },
         methods: {
             GenerateLink: function(val, proj) {
@@ -97,11 +104,21 @@
 
                 self.isFileUpload = true;
                 self.fileData = JSON.parse(this.entry.m.files);
+
+                self.numberOfFiles = JSON.parse(self.entry.m.files).length;
             }
             else {
-                self.images = JSON.parse(this.entry.m.files);
-                self.initalValue = true;
-                self.linkVal = 'http://localhost:8000/storage/projects/' + date.format('YYYY') + '/' + date.format('MMMM') + '/' + store.state.project.file_path + '/' + this.entry.m.path + '/images';
+                if(this.entry.m !== "approved") {
+                    self.images = JSON.parse(this.entry.m.files);
+                    self.initalValue = true;
+                    self.linkVal = 'http://localhost:8000/storage/projects/' + date.format('YYYY') + '/' + date.format('MMMM') + '/' + store.state.project.file_path + '/' + this.entry.m.path + '/images';
+                }
+            }
+
+            if(this.entry.m === "approved") {
+                let theData = moment(store.state.project.approval.created_at);
+                self.dateString = theData.format('MMMM Do YYYY, h:mm:ss a');
+
             }
 
         }
