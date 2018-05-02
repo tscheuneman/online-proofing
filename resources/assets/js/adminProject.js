@@ -11,6 +11,9 @@ window.Vue = require('vue');
 window.VueBus = require('vue-bus');
 window.VToolTip = require('v-tooltip');
 
+import VueDraggableResizable from 'vue-draggable-resizable';
+
+
 Vue.use(VueBus);
 Vue.use(VToolTip);
 
@@ -40,13 +43,13 @@ Vue.component('entry', require('./components/Entry.vue'));
 Vue.component('pageEntry', require('./components/ThumbnailPage.vue'));
 Vue.component('eachEntry', require('./components/EachNavigation.vue'));
 
-Vue.component('commentEntry', require('./components/CommentEntry.vue'));
+Vue.component('commentEntry', require('./components/AdminGuest/CommentEntryAdmin.vue'));
 
 //Guest / Admin
 Vue.component('project-navigation-admin', require('./components/AdminGuest/ProjectNavigationAdmin.vue'));
-Vue.component('proof-guest', require('./components/AdminGuest/ProofGuest.vue'));
+Vue.component('proof-guest', require('./components/AdminGuest/ProofAdmin.vue'));
 Vue.component('proofEntryGuest', require('./components/AdminGuest/ProofEntryAdmin.vue'));
-Vue.component('imageEntryGuest', require('./components/AdminGuest/imageEntryGuest.vue'));
+Vue.component('imageEntryGuest', require('./components/AdminGuest/ImageEntryAdmin.vue'));
 
 Vue.component('revisions-admin', require('./components/AdminGuest/RevisionsAdmin.vue'));
 Vue.component('comments-admin', require('./components/AdminGuest/RevisionComments.vue'));
@@ -54,6 +57,13 @@ Vue.component('comments-admin', require('./components/AdminGuest/RevisionComment
 Vue.component('revisionsComments', require('./components/AdminGuest/RevisionCommentEach.vue'));
 Vue.component('pageCommentEntry', require('./components/AdminGuest/PageCommentEntry.vue'));
 Vue.component('revisionPageComment', require('./components/AdminGuest/RevisionPageComment.vue'));
+
+
+Vue.component('messaging', require('./components/AdminGuest/Messaging.vue'));
+Vue.component('messageThread', require('./components/AdminGuest/MessageThread.vue'));
+Vue.component('messageEntry', require('./components/AdminGuest/MessageEntry.vue'));
+
+Vue.component('drag-resize', VueDraggableResizable);
 
 const app = new Vue({
     el: '#app',
