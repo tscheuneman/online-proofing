@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\Entry\EntryLogic;
 use App\Jobs\UserEntry;
 
+use App\Services\Approval\ApprovalLogic;
+
 use App\Services\Users\UserLogic;
 
 class UserProjectLogic {
@@ -123,6 +125,8 @@ class UserProjectLogic {
     public function approve() {
         $this->project->completed = true;
         $this->project->save();
+
+        ApprovalLogic::create(Auth::user(), $this->project);
 
         return true;
     }

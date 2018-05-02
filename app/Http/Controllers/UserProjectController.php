@@ -101,7 +101,7 @@ class UserProjectController extends UserSideParentController
         $project = Project::where('file_path', '=', $id)->first();
         if($project != null) {
             if($project->active) {
-                $thisProject = Project::where('file_path', '=', $id)->with('order', 'entries.user', 'order.users.user', 'order.admins.admin.user')->first();
+                $thisProject = Project::where('file_path', '=', $id)->first();
 
                 if(Auth::check()) {
                     $isUser = false;
@@ -253,6 +253,6 @@ class UserProjectController extends UserSideParentController
     }
 
     public function getProjectData($id) {
-        return Project::where('file_path', '=', $id)->with('order', 'entries.user', 'order.users.user', 'order.admins.admin.user')->first();
+        return Project::where('file_path', '=', $id)->with('order', 'entries.user', 'order.users.user', 'order.admins.admin.user', 'approval.user')->first();
     }
 }

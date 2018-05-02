@@ -78,6 +78,6 @@ Route::group(['middleware' => ['user']], function () {
 
     Route::get('info/project/{id}', 'UserProjectController@getProjectData');
 });
-
+Route::get('info/project/{id}', 'UserProjectController@getProjectData');
 
 
