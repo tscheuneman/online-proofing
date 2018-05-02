@@ -53,7 +53,7 @@ Vue.component('comments-admin', require('./components/AdminGuest/RevisionComment
 
 Vue.component('revisionsComments', require('./components/AdminGuest/RevisionCommentEach.vue'));
 Vue.component('pageCommentEntry', require('./components/AdminGuest/PageCommentEntry.vue'));
-
+Vue.component('revisionPageComment', require('./components/AdminGuest/RevisionPageComment.vue'));
 
 const app = new Vue({
     el: '#app',
