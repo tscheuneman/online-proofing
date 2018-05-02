@@ -3,6 +3,7 @@
         <ul class="navContainer">
             <li v-tooltip="'See all pages'" v-on:click="showSidePictureNavigation"><i class="fa fa-picture-o" aria-hidden="true"></i></li>
             <li v-tooltip="'Go Home'" v-on:click="goHome"><i class="fa fa-home" aria-hidden="true"></i></li>
+            <li v-if="!$store.state.needResponse && !$store.state.project.completed" v-tooltip="'Create New Revision'" v-on:click="newRevision" id="revise"><i class="fa fa-plus" aria-hidden="true"></i></li>
         </ul>
 
         <ul class="navContainerRight">
@@ -50,6 +51,9 @@
             goHome() {
                 location.assign("/");
             },
+            newRevision() {
+                location.assign("/admin/project/add/" + store.state.project.file_path);
+            },
             showSidePictureNavigation() {
                 if(!$('#pagesLeft').hasClass('active')) {
                     $('#pagesLeft').animate({
@@ -62,7 +66,7 @@
 
             },
             viewMessaging() {
-                alert('hi Message');
+                $('#messageContainer').fadeIn(500);
             },
             hideAll(_callback) {
                 $('#revisions, #comments, #messaging').fadeOut(300, function() {
