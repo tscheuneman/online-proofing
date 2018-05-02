@@ -2,7 +2,6 @@
     <div
             v-bind:class="['userCommentPageRevision']"
             v-bind:data-classActivator="keyValue"
-            v-on="mouseover=showCommentRevision"
             :style="{
             borderColor: entryVal.color,
             }"
@@ -27,7 +26,6 @@
         },
         mounted() {
             let self = this;
-            console.log(self.entryVal);
         },
         methods: {
             showCommentRevision: function() {
