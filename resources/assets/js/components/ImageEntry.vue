@@ -7,7 +7,12 @@
         <template v-if="$store.state.needResponse && proofVal === 0 && !$store.state.project.completed">
             <template v-if="initalVal">
                 <div class="image"
-                     :style="{height: elementHeight + 'px', width: elementWidth + 'px'}"
+                     :style="{
+                     height: elementHeight + 'px',
+                     width: elementWidth + 'px',
+                     overflow: 'hidden',
+                     position: 'relative'
+                     }"
                      ref="canvasElm"
                 >
                 </div>
@@ -31,6 +36,8 @@
                             :clickable="true"
                             :itemEntry="{x}"
                             :keyEntry="i"
+                            :image="image"
+                            :currentWidth="elementWidth"
                     >
                     </commentEntry>
                 </template>
@@ -59,7 +66,9 @@
                 link: null,
                 showModal:false,
                 isActive: false,
-                entryVal: null
+                entryVal: null,
+                imageWidth: null,
+                imageHeight: null,
             }
         },
         mounted() {
@@ -109,6 +118,9 @@
                 }
 
             this.link = this.linkVal + '/' + this.image.z.file;
+                this.imageWidth = this.image.z.width;
+                this.imageHeight = this.image.z.height;
+
             if(store.state.needResponse) {
                 self.populateCanvas();
             }
@@ -118,8 +130,8 @@
         methods: {
             populateCanvas: function () {
                 let self = this;
-                let globWidth = this.elementWidth;
-                let globHeight = this.elementHeight;
+                let globWidth = this.imageWidth;
+                let globHeight = this.imageHeight;
 
                 let canvasImage = new Image(globWidth, globHeight);
                 canvasImage.onload = function () {
@@ -136,6 +148,10 @@
                 let containerElement = containerEl;
                 let canvas = document.createElement('canvas');
                 canvas.style['position'] = 'absolute';
+                canvas.style['top'] = '0px';
+                canvas.style['left'] = '0px';
+                canvas.style['height'] = '100%';
+                canvas.style['width'] = '100%';
                 canvas.setAttribute('id', 'canvas_'+keyVal);
                 canvas.setAttribute('height', height);
                 canvas.setAttribute('width', width);
@@ -164,6 +180,14 @@
                 let canvas;
                 let ctx;
                 let readyToClick = true;
+                let chnagedLeft;
+                let changedTop;
+                let styles = {
+                    top : '0px',
+                    left: '0px'
+                };
+
+                let modifer = width / $(canvases).width();
 
                 let isDown = false;
 
@@ -179,30 +203,57 @@
                     if(!readyToClick) {
                         return;
                     }
-                    // get references to the canvas and context
-                    canvas = self.createCanvas(elm, width, height, true);
-                    ctx = canvas.getContext("2d");
 
-                    // style the context
-                    ctx.strokeStyle = store.state.color;
-                    ctx.lineWidth = 3;
+                    if(!store.state.moveElement) {
 
-                    // calculate where the canvas is on the window
-                    // (used to help calculate mouseX/mouseY)
-                    let $canvas = $(canvas);
-                    let canvasOffset = $canvas.offset();
-                    offsetX = canvasOffset.left;
-                    offsetY = canvasOffset.top;
-                    scrollX = $canvas.scrollLeft();
-                    scrollY = $canvas.scrollTop();
+                        modifer = width / $(canvases).width();
 
-                    // save the starting x/y of the rectangle
-                    startX = parseInt(e.clientX - offsetX);
-                    startY = parseInt(e.clientY - offsetY);
+                        // get references to the canvas and context
+                        canvas = self.createCanvas(elm, width, height, true);
+                        canvas.style['height'] = $(canvases).height() + 'px';
+                        canvas.style['width'] = $(canvases).width() + 'px';
 
-                    // set a flag indicating the drag has begun
+                        $(canvas).css(styles);
 
-                    isDown = true;
+                        ctx = canvas.getContext("2d");
+
+                        // style the context
+                        ctx.strokeStyle = store.state.color;
+                        ctx.lineWidth = 3;
+
+                        // calculate where the canvas is on the window
+                        // (used to help calculate mouseX/mouseY)
+                        let $canvas = $(canvas);
+                        let canvasOffset = $canvas.offset();
+                        offsetX = canvasOffset.left;
+                        offsetY = canvasOffset.top;
+                        scrollX = $canvas.scrollLeft();
+                        scrollY = $canvas.scrollTop();
+
+                        // save the starting x/y of the rectangle
+                        startX = parseInt(e.clientX - offsetX);
+                        startY = parseInt(e.clientY - offsetY);
+
+                        // set a flag indicating the drag has begun
+
+                        isDown = true;
+                    } else {
+                        let canvasOffset = $(elm).offset();
+
+                        offsetX = canvasOffset.left;
+                        offsetY = canvasOffset.top;
+
+                        startX = parseInt(e.clientX - offsetX);
+                        startY = parseInt(e.clientY - offsetY);
+
+
+                         changedTop = parseInt($(canvases).css('top'), 10);
+                         chnagedLeft = parseInt($(canvases).css('left'), 10);
+
+                        isDown = true;
+                    }
+
+
                 }
 
                 function handleMouseUp(e) {
@@ -216,11 +267,15 @@
                         return;
                     }
 
-                    // the drag is over, clear the dragging flag
-                    isDown = false;
-                    readyToClick = false;
+                    if(!store.state.moveElement) {
+                        // the drag is over, clear the dragging flag
+                        isDown = false;
+                        readyToClick = false;
 
-                    let value = self.promptUserInput();
+                        let value = self.promptUserInput();
+                    } else {
+                        isDown = false;
+                    }
 
                 }
 
@@ -229,7 +284,12 @@
                     e.stopPropagation();
 
                     // the drag is over, clear the dragging flag
-                    isDown = false;
+                    if(!store.state.moveElement) {
+                        isDown = false;
+                    } else {
+                        isDown = false;
+                    }
+
                 }
 
                 function handleMouseMove(e) {
@@ -241,27 +301,44 @@
                         return;
                     }
 
-                    // get the current mouse position
-                    let mouseX = parseInt(e.clientX - offsetX);
-                    let mouseY = parseInt(e.clientY - offsetY);
+                    if(!store.state.moveElement) {
+                        // get the current mouse position
+                        let mouseX = parseInt(e.clientX - offsetX);
+                        let mouseY = parseInt(e.clientY - offsetY);
 
-                    // Put your mousemove stuff here
+                        // Put your mousemove stuff here
 
-                    // clear the canvas
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        // clear the canvas
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                    // calculate the rectangle width/height based
-                    // on starting vs current mouse position
-                    let width = mouseX - startX;
-                    let height = mouseY - startY;
+                        // calculate the rectangle width/height based
+                        // on starting vs current mouse position
+                        let widthElm = (mouseX * modifer - startX * modifer);
+                        let heightElm = (mouseY * modifer - startY * modifer);
+
+                        console.log(modifer);
+
+                        finalWidth = widthElm;
+                        finalHeight = heightElm;
+
+                        // draw a new rect from the start position
+                        // to the current mouse position
+                        ctx.strokeRect(startX * modifer, startY * modifer, widthElm, heightElm);
+                    } else {
+                        let mouseX = parseInt(e.clientX - offsetX);
+                        let mouseY = parseInt(e.clientY - offsetY);
+
+                        let elmWidth = (mouseX - startX);
+                        let elmHeight = (mouseY - startY);
 
 
-                    finalWidth = width;
-                    finalHeight = height;
+                        styles = {
+                            top : changedTop + elmHeight + 'px',
+                            left: chnagedLeft + elmWidth + 'px'
+                        };
 
-                    // draw a new rect from the start position
-                    // to the current mouse position
-                    ctx.strokeRect(startX, startY, width, height);
+                        $(canvases).css(styles);
+                    }
                 }
 
                 Vue.bus.on('deleteCanvasLayer', function() {
@@ -276,8 +353,8 @@
                         canvases.getContext("2d").drawImage(canvas, 0, 0);
                         $(canvas).remove();
                         let data = {
-                            startX: startX,
-                            startY: startY,
+                            startX: startX * modifer,
+                            startY: startY * modifer,
                             width: finalWidth,
                             height: finalHeight,
                             comment: elm,
