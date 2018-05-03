@@ -22,6 +22,14 @@
             <div class="fileUpload">
                 <h5 class="title">Approved!</h5>
                 <small>Approved by {{$store.state.project.approval.user.first_name + ' ' + $store.state.project.approval.user.last_name}} on {{dateString}}</small>
+                <br />
+                <br />
+                <button
+                        v-bind:class="['getLink btn btn-primary']"
+                        @click="GenerateLink(finalFilePath, $store.state.project.file_path)"
+                >
+                    Download Final PDF Proof
+                </button>
             </div>
         </template>
 
@@ -59,13 +67,18 @@
                 isFileUpload: false,
                 numberOfFiles: 0,
                 dateString: null,
-                fileData: null
+                fileData: null,
+                finalFilePath: null
             }
         },
         mounted() {
             let self = this;
             if(self.proofEntry === store.state.currentProof) {
                 self.isActive = true;
+            }
+
+            if(self.entry.m === 'approved') {
+                self.finalFilePath = store.state.project.entries[1].pdf_path;
             }
 
         },
