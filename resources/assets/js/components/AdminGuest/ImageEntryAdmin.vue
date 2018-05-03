@@ -22,6 +22,9 @@
                             :itemEntry="{x}"
                             :keyEntry="i"
                             :link="link"
+                            :image="image"
+                            :currentWidth="elementWidth"
+                            :currentHeight="elementHeight"
                     >
                     </commentEntry>
                 </template>
