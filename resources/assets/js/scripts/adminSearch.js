@@ -85,7 +85,9 @@ function getImage(elm) {
     let fileInfo = JSON.parse(elm.inital_image[0].files);
     let createdAt = new Date(elm.created_at);
 
-    return '<img src="/storage/projects/'+createdAt.getFullYear()+'/'+mL[createdAt.getMonth()]+'/'+elm.file_path+'/'+elm.inital_image[0].path+'/images/'+fileInfo[0].file+'" />';
+    console.log(fileInfo);
+
+    return '<img src="/storage/projects/'+createdAt.getFullYear()+'/'+mL[createdAt.getMonth()]+'/'+elm.file_path+'/'+elm.inital_image[0].path+'/images/thumb_00.png" />';
 }
 function messageToggle() {
     let messageElm = $('#messages');
