@@ -2,14 +2,14 @@
     <div
             v-bind:class="['commentEntry', 'comm_'+keyEntry]"
             :style="{
-            height: itemEntry.x.height + 'px',
-            width: itemEntry.x.width + 'px',
-            top: itemEntry.x.startY + 'px',
-            left: itemEntry.x.startX + 'px',
+            height: itemHeight + 'px',
+            width: itemWidth + 'px',
+            top: positionTop + 'px',
+            left: positionLeft + 'px',
             background: '#fff url('+link+') no-repeat',
-            backgroundSize: 'initial',
-            backgroundPositionX: '-' + itemEntry.x.startX + 'px',
-            backgroundPositionY: '-' + itemEntry.x.startY + 'px',
+            backgroundPositionX: '-' + positionLeft + 'px',
+            backgroundPositionY: '-' + positionTop + 'px',
+            backgroundSize: currentWidth + 'px ' + currentHeight + 'px',
             }"
     >
         <div class="commentInfo">
@@ -25,16 +25,33 @@
         props: {
             itemEntry: Object,
             keyEntry: Number,
-            link: String
+            link: String,
+            image: Object,
+            currentWidth: Number,
+            currentHeight: Number
         },
         data () {
             return {
                 linkVal: null,
+                positionTop: null,
+                positionLeft: null,
+                itemWidth: null,
+                itemHeight: null,
             }
 
         },
         mounted() {
             let self = this;
+
+            console.log(self.currentWidth + ' | ' + self.currentHeight);
+
+            let ratio = self.image.z.width / self.currentWidth;
+
+            self.positionTop = self.itemEntry.x.startY / ratio;
+            self.positionLeft = self.itemEntry.x.startX / ratio;
+
+            self.itemWidth = self.itemEntry.x.width / ratio;
+            self.itemHeight = self.itemEntry.x.height / ratio;
         },
         methods: {
 
