@@ -505,7 +505,7 @@ div#projectNavigation {
     float:left;
     li {
       display:inline-block;
-      margin-right:15px;
+      margin-right:5px;
       color:#f4f4f4;
       cursor:pointer;
       font-size: 20px;
@@ -513,6 +513,10 @@ div#projectNavigation {
       height:50px;
       width:50px;
       text-align:center;
+
+      &.clicked {
+        background:$brand-primary;
+      }
     }
     #colorPick {
       background:#000;
@@ -524,7 +528,7 @@ div#projectNavigation {
       }
     }
     #approve {
-      color:$btn-submission-color-hover;
+      background:$btn-submission-color-hover;
     }
   }
   ul.navContainerRight {

@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
         messages: [],
         activeThread: null,
         activeMessages: null,
+        moveElement: false,
         userID: null
     },
     getters: {

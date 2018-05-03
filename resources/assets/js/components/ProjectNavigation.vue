@@ -23,6 +23,10 @@
             <li v-tooltip="'See all pages'" v-on:click="showSidePictureNavigation"><i class="fa fa-picture-o" aria-hidden="true"></i></li>
             <li v-tooltip="'Go Home'" v-on:click="goHome"><i class="fa fa-home" aria-hidden="true"></i></li>
             <li v-tooltip="'Choose new color'" v-if="$store.state.needResponse && !$store.state.project.completed" id="colorPick" v-on:click="showColors"><i class="fa fa-eyedropper" aria-hidden="true"></i></li>
+            <li v-tooltip="'Move Element'" v-if="$store.state.needResponse && !$store.state.project.completed" id="moveELm" v-on:click="moveElm"><i class="fa fa-arrows" aria-hidden="true"></i></li>
+            <li v-tooltip="'Zoom Out Element'" v-if="$store.state.needResponse && !$store.state.project.completed" v-on:click="zoomElmMinus"><i class="fa fa-search-minus" aria-hidden="true"></i></li>
+            <li v-tooltip="'Zoom In Element'" v-if="$store.state.needResponse && !$store.state.project.completed" v-on:click="zoomElmPlus"><i class="fa fa-search-plus" aria-hidden="true"></i></li>
+
         </ul>
         <color-picker v-model="colors" @ok="onOk" />
 
@@ -56,6 +60,27 @@
         methods: {
             goHome() {
                 location.assign("/");
+            },
+            moveElm() {
+                if(store.state.moveElement) {
+                    $('#moveELm').removeClass('clicked');
+                    store.state.moveElement = false;
+                }
+                else {
+                    $('#moveELm').addClass('clicked');
+                    store.state.moveElement = true;
+                }
+
+            },
+            zoomElmPlus() {
+                let elm = $('.proof-entry.isActive .elem.isActive canvas');
+                elm.width(elm.width() * 1.25);
+                elm.height(elm.height() * 1.25);
+            },
+            zoomElmMinus() {
+                let elm = $('.proof-entry.isActive .elem.isActive canvas');
+                elm.width(elm.width() * .75);
+                elm.height(elm.height() * .75);
             },
             onOk () {
                $('#colorPick').css('backgroundColor', this.colors.hex);

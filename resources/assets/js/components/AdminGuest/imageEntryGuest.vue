@@ -21,6 +21,8 @@
                                 :clickable="true"
                                 :itemEntry="{x}"
                                 :keyEntry="i"
+                                :image="image"
+                                :currentWidth="elementWidth"
                         >
                         </commentEntry>
                     </template>
