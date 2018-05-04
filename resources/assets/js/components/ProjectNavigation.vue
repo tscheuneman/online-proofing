@@ -26,7 +26,7 @@
             <li v-tooltip="'Move Element'" v-if="$store.state.needResponse && !$store.state.project.completed" id="moveELm" v-on:click="moveElm"><i class="fa fa-arrows" aria-hidden="true"></i></li>
             <li v-tooltip="'Zoom Out Element'" v-if="$store.state.needResponse && !$store.state.project.completed" v-on:click="zoomElmMinus"><i class="fa fa-search-minus" aria-hidden="true"></i></li>
             <li v-tooltip="'Zoom In Element'" v-if="$store.state.needResponse && !$store.state.project.completed" v-on:click="zoomElmPlus"><i class="fa fa-search-plus" aria-hidden="true"></i></li>
-            <li v-tooltip="'Center Element'" v-if="$store.state.needResponse && !$store.state.project.completed" v-on:click="centerElement">♥</li>
+            <li v-tooltip="'Center Element'" v-if="$store.state.needResponse && !$store.state.project.completed" v-on:click="centerElement"><i class="fa fa-bullseye" aria-hidden="true"></i></li>
 
         </ul>
         <color-picker v-model="colors" @ok="onOk" />
