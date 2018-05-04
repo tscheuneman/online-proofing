@@ -10,6 +10,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 window.VueBus = require('vue-bus');
 window.VToolTip = require('v-tooltip');
+window.markdown = require('markdown').markdown;
 
 Vue.use(VueBus);
 Vue.use(VToolTip);

@@ -26,7 +26,7 @@ Vue.use(VToolTip);
 
 window.axios = require('axios');
 window.moment = require('moment');
-
+window.markdown = require('markdown').markdown;
 
 import {store} from './components/store';
 
