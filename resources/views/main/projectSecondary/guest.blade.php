@@ -16,9 +16,16 @@
         <pages-left>
 
         </pages-left>
-        <actions :active="false">
+        <div id="sidebar">
+            <comments>
 
-        </actions>
+            </comments>
+
+            <revisions :active="true">
+
+            </revisions>
+
+        </div>
 
     </div>
     <script src="{{ asset('js/userProject.js') }}"></script>
