@@ -32,8 +32,8 @@
 
         <ul class="navContainerRight" v-if="$store.state.needResponse && !$store.state.project.completed">
             <li v-tooltip="'Submit your revisions'" v-on:click="submitRevisions"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></li>
-            <li v-tooltip="'Upload new Files'" v-on:click="uploadNewFiles"><i class="fa fa-upload" aria-hidden="true"></i></li>
-            <li id="approve" v-tooltip="'Approve Project'" v-on:click="approveProject"><i class="fa fa-thumbs-up" aria-hidden="true"></i></li>
+            <li v-if="$store.state.revisionEntries.length === 0" v-tooltip="'Upload new Files'" v-on:click="uploadNewFiles"><i class="fa fa-upload" aria-hidden="true"></i></li>
+            <li v-if="$store.state.revisionEntries.length === 0" id="approve" v-tooltip="'Approve Project'" v-on:click="approveProject"><i class="fa fa-thumbs-up" aria-hidden="true"></i></li>
         </ul>
     </div>
 </template>
@@ -73,14 +73,36 @@
 
             },
             zoomElmPlus() {
-                let elm = $('.proof-entry.isActive .elem.isActive canvas');
-                elm.width(elm.width() * 1.25);
-                elm.height(elm.height() * 1.25);
+                let parentElm = $('.proof-entry.isActive .elem.isActive');
+                let maxHeight = $('canvas', parentElm).attr('height');
+                let maxWidth = $('canvas', parentElm).attr('width');
+                let elm = $('canvas', parentElm);
+                let newWidth = elm.width() * 1.25;
+                let newHeight = elm.height() * 1.25;
+
+                if(newWidth > maxWidth || newHeight > maxHeight) {
+                    newWidth = maxWidth;
+                    newHeight = maxHeight;
+                }
+
+                elm.width(newWidth);
+                elm.height(newHeight);
             },
             zoomElmMinus() {
-                let elm = $('.proof-entry.isActive .elem.isActive canvas');
-                elm.width(elm.width() * .75);
-                elm.height(elm.height() * .75);
+                let parentElm = $('.proof-entry.isActive .elem.isActive');
+                let minHeight = $('.image', parentElm).height();
+                let minWidth = $('.image', parentElm).width();
+                let elm = $('canvas', parentElm);
+                let newWidth = elm.width() * .75;
+                let newHeight = elm.height() * .75;
+
+                if(newWidth < minWidth || newHeight < minHeight) {
+                    newWidth = minWidth;
+                    newHeight = minHeight;
+                }
+
+                elm.width(newWidth);
+                elm.height(newHeight);
             },
             onOk () {
                $('#colorPick').css('backgroundColor', this.colors.hex);
