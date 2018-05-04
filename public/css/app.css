@@ -1098,7 +1098,7 @@ div.userProjects a.projectLink .project .lastAction {
 }
 
 img#logo {
-  height: 45px;
+  height: 30px;
   margin-right: 15px;
 }
 
@@ -1146,6 +1146,10 @@ a.pendingLink {
     max-width: 90% !important;
     margin: 0 auto;
   }
+}
+
+.container.larger {
+  max-width: 1500px;
 }
 
 .dropdown-menu.block {

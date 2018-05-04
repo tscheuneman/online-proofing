@@ -18,9 +18,9 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <img id="logo" src="{{url('/assets/logo.png')}}" alt="" />
+            <div class="container larger">
                 <a class="navbar-brand" href="{{ url('/') }}">
+                     <img id="logo" src="{{url('/assets/logo.png')}}" alt="" />
                     {{ ENV('APP_NAME', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

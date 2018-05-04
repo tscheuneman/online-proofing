@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container larger">
     @if(Session::has('flash_deleted'))
         <div class="alert alert-warning"><span class="glyphicon glyphicon-remove-circle"></span><em> {!! session('flash_deleted') !!}</em></div>
     @endif
