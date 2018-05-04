@@ -55,6 +55,7 @@
                     });
                     $('.thumbnailImage').removeClass('isActive');
                     $('.thumb_'+elm).addClass('isActive');
+
                 });
 
             });
@@ -83,6 +84,14 @@
 
                         $('.navigation-entry.isActive .thumbnailImage').removeClass('isActive');
                         $('.navigation-entry.isActive .thumb_'+active_elm).addClass('isActive');
+
+                        $('.userCommentPageRevision').removeClass('isActive');
+                        $('.commentEntry ').removeClass('active');
+                        $('#commentOverlay').remove();
+
+                        $('.revision-comment').removeClass('isActive');
+                        $('.revcom_'+elm).addClass('isActive');
+
                     });
                 });
 
