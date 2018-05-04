@@ -21,11 +21,12 @@
 
         <ul class="navContainer">
             <li v-tooltip="'See all pages'" v-on:click="showSidePictureNavigation"><i class="fa fa-picture-o" aria-hidden="true"></i></li>
-            <li v-tooltip="'Go Home'" v-on:click="goHome"><i class="fa fa-home" aria-hidden="true"></i></li>
+            <li v-tooltip="'Go Home'" id="lastLeft" v-on:click="goHome"><i class="fa fa-home" aria-hidden="true"></i></li>
             <li v-tooltip="'Choose new color'" v-if="$store.state.needResponse && !$store.state.project.completed" id="colorPick" v-on:click="showColors"><i class="fa fa-eyedropper" aria-hidden="true"></i></li>
             <li v-tooltip="'Move Element'" v-if="$store.state.needResponse && !$store.state.project.completed" id="moveELm" v-on:click="moveElm"><i class="fa fa-arrows" aria-hidden="true"></i></li>
             <li v-tooltip="'Zoom Out Element'" v-if="$store.state.needResponse && !$store.state.project.completed" v-on:click="zoomElmMinus"><i class="fa fa-search-minus" aria-hidden="true"></i></li>
             <li v-tooltip="'Zoom In Element'" v-if="$store.state.needResponse && !$store.state.project.completed" v-on:click="zoomElmPlus"><i class="fa fa-search-plus" aria-hidden="true"></i></li>
+            <li v-tooltip="'Center Element'" v-if="$store.state.needResponse && !$store.state.project.completed" v-on:click="centerElement">♥</li>
 
         </ul>
         <color-picker v-model="colors" @ok="onOk" />
@@ -80,13 +81,29 @@
                 let newWidth = elm.width() * 1.25;
                 let newHeight = elm.height() * 1.25;
 
+                let diffX = elm.width() * .25;
+                    diffX = (parseInt(elm.css('left'), 10) - (diffX / 2));
+
+                let diffY = elm.height() * .25;
+                    diffY = (parseInt(elm.css('top'), 10) - (diffY / 2));
+
                 if(newWidth > maxWidth || newHeight > maxHeight) {
                     newWidth = maxWidth;
                     newHeight = maxHeight;
+                    diffX = parseInt(elm.css('left'), 10) - ((newWidth - elm.width()) / 2);
+                    diffY = parseInt(elm.css('top'), 10) - ((newHeight - elm.height()) / 2);
                 }
 
                 elm.width(newWidth);
                 elm.height(newHeight);
+
+                let styles = {
+                    top : diffY + 'px',
+                    left: diffX + 'px'
+                };
+                elm.css(styles)
+
+
             },
             zoomElmMinus() {
                 let parentElm = $('.proof-entry.isActive .elem.isActive');
@@ -95,14 +112,48 @@
                 let elm = $('canvas', parentElm);
                 let newWidth = elm.width() * .75;
                 let newHeight = elm.height() * .75;
+                let setNormal = false;
+
+
+
+                let diffX = elm.width() * .25;
+                    diffX = (parseInt(elm.css('left'), 10) + (diffX / 2));
+
+                let diffY = elm.height() * .25;
+                    diffY = (parseInt(elm.css('top'), 10) + (diffY / 2));
 
                 if(newWidth < minWidth || newHeight < minHeight) {
                     newWidth = minWidth;
                     newHeight = minHeight;
+                    diffX = parseInt(elm.css('left'), 10);
+                    diffY = parseInt(elm.css('top'), 10);
+                    setNormal = true;
                 }
 
                 elm.width(newWidth);
                 elm.height(newHeight);
+
+                let styles = {
+                    top : diffY + 'px',
+                    left: diffX + 'px'
+                };
+                elm.css(styles);
+
+                if(setNormal) {
+                    this.centerElement();
+                }
+            },
+            centerElement() {
+                let parentElm = $('.proof-entry.isActive .elem.isActive');
+                let elm = $('canvas', parentElm);
+
+                let elmWidth = elm.width();
+                let elmHeight = elm.height();
+                let styles = {
+                    top : 'calc(50% - '+elmHeight / 2+'px)',
+                    left: 'calc(50% - '+elmWidth / 2+'px)'
+                };
+                elm.css(styles);
             },
             onOk () {
                $('#colorPick').css('backgroundColor', this.colors.hex);
