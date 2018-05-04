@@ -1,7 +1,7 @@
 <template>
     <div v-bind:class="[{ isActive: isActive }, {isAdmin: adminLast}, 'revision-comment revcom_' + numberKey]">
         <template v-if="adminLast">
-            <div class="adminUploadComment">
+            <div v-html="notes" class="adminUploadComment">
                 {{notes}}
             </div>
         </template>
@@ -58,8 +58,8 @@
             let self = this;
             if(self.entry.m !== 'approved') {
                 if(this.entry.m.admin) {
-                    self.adminLast = true
-                    self.notes = this.entry.m.notes;
+                    self.adminLast = true;
+                    self.notes = markdown.toHTML(this.entry.m.notes);
 
                 }
                 if(self.entry.m.path === null) {
