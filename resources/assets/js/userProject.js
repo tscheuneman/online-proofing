@@ -54,6 +54,10 @@ Vue.component('proof-guest', require('./components/AdminGuest/ProofGuest.vue'));
 Vue.component('proofEntryGuest', require('./components/AdminGuest/ProofEntryGuest.vue'));
 Vue.component('imageEntryGuest', require('./components/AdminGuest/imageEntryGuest.vue'));
 
+Vue.component('revisions', require('./components/AdminGuest/RevisionsAdmin.vue'));
+Vue.component('comments', require('./components/AdminGuest/RevisionComments.vue'));
+Vue.component('revisionsComments', require('./components/RevisionCommentEachUser.vue'));
+
 const app = new Vue({
     el: '#app',
     store
