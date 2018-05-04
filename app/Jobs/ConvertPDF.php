@@ -72,7 +72,7 @@ class ConvertPDF implements ShouldQueue
                         $num_padded = sprintf("%02d", $x);
                         $im->setIteratorIndex($x);
                         $d = $im->getImageGeometry();
-                        if($d['width'] > 3000 || $d['height' > 3000]) {
+                        if($d['width'] > 3000 || $d['height'] > 3000) {
                             $im->thumbnailImage(3000, 3000, true);
                             $d = $im->getImageGeometry();
                         }
