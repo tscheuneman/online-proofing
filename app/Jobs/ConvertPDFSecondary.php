@@ -68,6 +68,7 @@ class ConvertPDFSecondary implements ShouldQueue
                         $d = $im->getImageGeometry();
                         if($d['width'] > 3000 || $d['height' > 3000]) {
                             $im->thumbnailImage(3000, 3000, true);
+                            $d = $im->getImageGeometry();
                         }
                         $im->writeImage($savePath . 'image_' . $num_padded . '.png');
 
