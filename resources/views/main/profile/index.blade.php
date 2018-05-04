@@ -9,7 +9,7 @@
     @if(Session::has('flash_created'))
         <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_created') !!}</em></div>
     @endif
-    <div class="container">
+    <div class="container larger">
         <div id="customerFiles">
             <div id="closeFiles"><i class="fa fa-times"></i></div>
             <h4>

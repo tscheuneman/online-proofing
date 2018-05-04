@@ -1,5 +1,5 @@
 @foreach(json_decode($orders) as $order)
-    <div class="col-md-4 left">
+    <div class="col-md-3 left">
         <div class="card userShow">
             <div class="card-header bg-brand userShow">
                 {{$order->job_id}}
