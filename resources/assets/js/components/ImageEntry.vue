@@ -197,7 +197,7 @@
                     e.preventDefault();
                     e.stopPropagation();
                     if (e.button === 2) {
-                        return;
+                        store.state.moveElement = true;
                     }
 
                     if(!readyToClick) {
@@ -260,6 +260,9 @@
                     e.preventDefault();
                     e.stopPropagation();
                     if (e.button === 2) {
+                        isDown = false;
+                        readyToClick = true;
+                        store.state.moveElement = false;
                         return;
                     }
 
@@ -288,6 +291,7 @@
                         isDown = false;
                     } else {
                         isDown = false;
+                        store.state.moveElement = false;
                     }
 
                 }
@@ -372,6 +376,10 @@
                 $(elm).mousemove(function(e){handleMouseMove(e);});
                 $(elm).mouseup(function(e){handleMouseUp(e);});
                 $(canvas).mouseout(function(e){handleMouseOut(e);});
+                $(elm).bind('contextmenu', function(e){
+                    return false;
+                });
+
 
             },
             promptUserInput: function() {
