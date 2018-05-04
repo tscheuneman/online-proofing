@@ -35,9 +35,6 @@
                 self.isYou = true;
             }
 
-            console.log('test');
-            console.log(self.message);
-
             let theData = moment(self.message.m.created_at);
 
             self.dateString = theData.format('MMMM Do, h:mm a');

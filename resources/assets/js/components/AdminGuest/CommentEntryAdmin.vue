@@ -43,8 +43,6 @@
         mounted() {
             let self = this;
 
-            console.log(self.currentWidth + ' | ' + self.currentHeight);
-
             let ratio = self.image.z.width / self.currentWidth;
 
             self.positionTop = self.itemEntry.x.startY / ratio;
