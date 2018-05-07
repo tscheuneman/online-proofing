@@ -65,6 +65,8 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('admin/message/{id}', 'MessageController@show');
 
+    Route::post('admin/validate/spec', 'ValidatorController@spec');
+
 });
 
 Route::group(['middleware' => ['user']], function () {
