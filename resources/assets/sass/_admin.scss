@@ -387,6 +387,9 @@ div.addedAdmins, div.addedUsers{
 
 //Admin Profile
 div#profile {
+  #show1 {
+    width:100%;
+  }
   div.profileImage {
     width:25%;
     padding:15px;
@@ -452,6 +455,26 @@ div#profile {
       &.active {
         display:table;
       }
+    }
+    #editFirstName, #editLastName {
+      float: right;
+      background: $brand-primary;
+      color: #fff;
+      text-align: center;
+      line-height: 25px;
+      border-radius: 3px;
+      cursor: pointer;
+      padding: 6px;
+      transition:.5s all;
+
+      &:hover {
+        background: $brand-primary-hover;
+      }
+    }
+    .profileEdit {
+      position: absolute;
+      width: auto;
+      display:none;
     }
   }
 }

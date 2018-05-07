@@ -444,6 +444,10 @@ div.addedUsers .theUser {
   width: auto;
 }
 
+div#profile #show1 {
+  width: 100%;
+}
+
 div#profile div.profileImage {
   width: 25%;
   padding: 15px;
@@ -518,6 +522,31 @@ div#profile div.profileInfo .showElm {
 
 div#profile div.profileInfo .showElm.active {
   display: table;
+}
+
+div#profile div.profileInfo #editFirstName,
+div#profile div.profileInfo #editLastName {
+  float: right;
+  background: #8C1D40;
+  color: #fff;
+  text-align: center;
+  line-height: 25px;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 6px;
+  -webkit-transition: .5s all;
+  transition: .5s all;
+}
+
+div#profile div.profileInfo #editFirstName:hover,
+div#profile div.profileInfo #editLastName:hover {
+  background: #cd224f;
+}
+
+div#profile div.profileInfo .profileEdit {
+  position: absolute;
+  width: auto;
+  display: none;
 }
 
 div.topStats {
