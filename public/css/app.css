@@ -1166,6 +1166,10 @@ a.pendingLink {
   transition: .5s all;
 }
 
+#chooseVals {
+  padding: 15px;
+}
+
 .nav-item {
   position: relative;
 }
