@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\Specification\SpecificationLogic;
+
 
 class SpecificationSchemaController extends Controller
 {
@@ -23,7 +25,10 @@ class SpecificationSchemaController extends Controller
      */
     public function create()
     {
-        return view('admin.specifications.schema.create');
+        $specs = SpecificationLogic::getAll();
+        return view('admin.specifications.schema.create', [
+            'specs' => $specs
+        ]);
     }
 
     /**
