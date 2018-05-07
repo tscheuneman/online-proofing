@@ -44,6 +44,9 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('admin/search/projects', 'SearchController@findProjects');
 
     Route::get('admin/profile', 'ProfileController@index');
+
+    Route::post('admin/profile', 'ProfileController@update');
+
     Route::get('admin', 'AdminIndexController@index');
 
     Route::post('admin/project/link', 'ProjectActionsController@getLink');
@@ -70,6 +73,7 @@ Route::group(['middleware' => ['user']], function () {
     Route::post('project', 'UserProjectController@store');
 
     Route::get('profile', 'HomeController@userIndex');
+    Route::post('profile', 'ProfileController@updateUser');
 
     Route::post('project/approve', 'UserProjectController@approve');
 

@@ -9,6 +9,7 @@
     @if(Session::has('flash_created'))
         <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_created') !!}</em></div>
     @endif
+    <input type="hidden" id="user" value="{{Auth::id()}}">
     <div class="container larger">
         <div id="customerFiles">
             <div id="closeFiles"><i class="fa fa-times"></i></div>
@@ -51,59 +52,68 @@
                         <a onClick="show('2', this)" class="nav-link show2" href="#">Completed Projects</a>
                     </li>
                 </ul>
+                <div id="show1" class="showElm active">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <td colspan="2">
+                                Contact Info
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                First Name
+                            </td>
+                            <td>
+                                <input id="firstName" type="text" value="{{$admin->first_name}}" class="profileEdit form-control" />
+                                {{$admin->first_name}}
+                                <span class="editProfileField" id="editFirstName"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Last Name
+                            </td>
+                            <td>
+                                <input id="lastName" type="text" value="{{$admin->last_name}}" class="profileEdit form-control" />
+                                {{$admin->last_name}}
+                                <span class="editProfileField" id="editLastName"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Email
+                            </td>
+                            <td>
+                                {{$admin->email}}
+                            </td>
+                        </tr>
+                        </tbody>
+                        <thead>
+                        <tr>
+                            <td colspan="2">
+                                Additional Info
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                Organization
+                            </td>
+                            <td>
+                                {{$admin->org}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-                <table id="show1" class="table showElm active">
-                    <thead>
-                    <tr>
-                        <td colspan="2">
-                            Contact Info
-                        </td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            First Name
-                        </td>
-                        <td>
-                            {{$admin->first_name}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Last Name
-                        </td>
-                        <td>
-                            {{$admin->last_name}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Email
-                        </td>
-                        <td>
-                            {{$admin->email}}
-                        </td>
-                    </tr>
-                    </tbody>
-                    <thead>
-                    <tr>
-                        <td colspan="2">
-                            Additional Info
-                        </td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            Organization
-                        </td>
-                        <td>
-                            {{$admin->org}}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                    <button id="saveProfileInfo" class="btn btn-primary">
+                        Save
+                    </button>
+                </div>
 
                 <table id="show2" class="table showElm">
                     @foreach($oldOrders as $ord)
@@ -148,6 +158,37 @@
             }, function() {
                 $('.addImage', this).stop().fadeOut(200);
             });
+
+            $('.editProfileField').on('click', function() {
+                let parent = $(this).parent();
+                $('input', parent).show(5).focus();
+            });
+
+            $('#saveProfileInfo').on('click', function() {
+                let fName = $('#firstName').val();
+                let lName = $('#lastName').val();
+                let user = $('#user').val();
+
+                axios.post('/profile', {
+                    first_name: fName,
+                    last_name: lName,
+                    user: user
+                })
+                    .then(function (response) {
+                        let returnData = response.data;
+                        if (returnData.status === "Success") {
+                            alert(returnData.message);
+                            location.reload();
+                        }
+                        else {
+                            alert(returnData.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            });
+
         });
 
         function showProfileImage() {
