@@ -42,6 +42,15 @@
                     alert("Failed to initialize cart");
                     console.log(error);
                 });
+
+            axios.get('/admin/logs/'+project_id)
+                .then(function (response) {
+                    store.commit('addLogs', response.data);
+                })
+                .catch(function (error) {
+                    alert("Failed to initialize cart");
+                    console.log(error);
+                });
         },
         created() {
             Vue.bus.on('goToEntry', function(elm) {
