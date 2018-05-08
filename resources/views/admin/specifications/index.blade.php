@@ -16,5 +16,66 @@
     <a class="btn btn-primary" href="/admin/specifications/create"><i class="fa fa-plus" aria-hidden="true"></i> Create Specification</a>
     <br class="clear" />
     <br />
-
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Specifications</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        Type
+                    </td>
+                    <td>
+                        Default
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                    @foreach($specs as $spec)
+                        <tr>
+                            <td>
+                                {{$spec->name}}
+                            </td>
+                            <td>
+                                {{$spec->type}}
+                            </td>
+                            <td>
+                                {{$spec->default}}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h3>Schemas</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        Number of fields
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($schemas as $schema)
+                    <tr>
+                        <td>
+                            {{$schema->name}}
+                        </td>
+                        <td>
+                            {{count($schema->specs)}}
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 @endsection
