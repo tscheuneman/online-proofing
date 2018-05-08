@@ -63,6 +63,8 @@ Vue.component('messaging', require('./components/AdminGuest/Messaging.vue'));
 Vue.component('messageThread', require('./components/AdminGuest/MessageThread.vue'));
 Vue.component('messageEntry', require('./components/AdminGuest/MessageEntry.vue'));
 
+Vue.component('logs', require('./components/AdminGuest/Logs.vue'));
+
 Vue.component('drag-resize', VueDraggableResizable);
 
 const app = new Vue({
