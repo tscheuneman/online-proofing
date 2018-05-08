@@ -17,17 +17,17 @@ class ValidateLogic {
             switch($type) {
                 case "number":
                     $rules = array(
-                        'id' => 'required|numeric',
+                        'value' => 'required|numeric',
                     );
                     break;
                 case "textarea":
                     $rules = array(
-                        'id' => 'required|string',
+                        'value' => 'required|string',
                     );
                     break;
                 default:
                     $rules = array(
-                        'id' => 'required|string',
+                        'value' => 'required|string',
                     );
             }
 
