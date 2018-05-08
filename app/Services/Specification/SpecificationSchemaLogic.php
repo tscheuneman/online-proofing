@@ -35,7 +35,7 @@ class SpecificationSchemaLogic{
      * @return SpecificationSchema
      */
     public static function getAll() {
-        return SpecificationSchema::get();
+        return SpecificationSchema::with('specs')->get();
     }
 
     public static function create($name) {
