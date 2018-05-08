@@ -38,6 +38,12 @@ class SpecificationSchemaLogic{
         return SpecificationSchema::with('specs')->get();
     }
 
+    /**
+     * Create a new schema
+     *
+     * @param String $name
+     * @return SpecificationSchemaLogic
+     */
     public static function create($name) {
         $schema = new SpecificationSchema();
         $schema->name = $name;
@@ -46,6 +52,12 @@ class SpecificationSchemaLogic{
         return new SpecificationSchemaLogic($schema);
     }
 
+    /**
+     * Create Check a list of entries
+     *
+     * @param string $jsonData
+     * @return boolean
+     */
     public static function checkEntries($jsonData) {
         $json = json_decode($jsonData);
 
@@ -60,6 +72,12 @@ class SpecificationSchemaLogic{
 
     }
 
+    /**
+     * Create entries
+     *
+     * @param String $jsonData
+     * @return void
+     */
     public function createEntries($jsonData) {
         $json = json_decode($jsonData);
         foreach($json as $spec) {
@@ -67,6 +85,11 @@ class SpecificationSchemaLogic{
         }
     }
 
+    /**
+     * Return the schema id
+     *
+     * @return String
+     */
     public function returnID() {
         return $this->specifiction->id;
     }

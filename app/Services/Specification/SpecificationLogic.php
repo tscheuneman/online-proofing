@@ -23,10 +23,22 @@ class SpecificationLogic {
         $this->specifiction = $specifiction;
     }
 
+    /**
+     * Get all specifications
+     *
+     * @return App/Specification
+     */
+
     public static function getAll() {
         return Specification::get();
     }
 
+    /**
+     * Create a specification
+     *
+     * @param Request $request
+     * @return SpecificationLogic
+     */
     public static function create(Request $request) {
 
         $spec = new Specification();

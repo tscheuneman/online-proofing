@@ -21,6 +21,13 @@ class SpecificationEntryLogic{
         $this->specifiction = $specifiction;
     }
 
+    /**
+     * Create Specificatin Entry
+     *
+     * @param SpecificationSchema $schema
+     * @param Object $data
+     * @return SpecificationEntryLogic
+     */
     public static function create(SpecificationSchema $schema, $data) {
         $id = $data->id;
         $value = $data->value;
