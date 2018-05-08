@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Specification\SpecificationEntryLogic;
+use App\Services\Specification\SpecificationSchemaLogic;
 use Illuminate\Http\Request;
+use App\Http\Requests\SpecificationSchemaRequest;
 use App\Services\Specification\SpecificationLogic;
 
 
@@ -37,9 +40,20 @@ class SpecificationSchemaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SpecificationSchemaRequest $request)
     {
-        //
+        if(SpecificationSchemaLogic::verify($request->jsonSpecs)) {
+            if(SpecificationSchemaLogic::checkEntries($request->jsonSpecs)) {
+                $schema = SpecificationSchemaLogic::create($request->spec_name);
+                $schema->createEntries($request->jsonSpecs);
+
+                \Session::flash('flash_created','Schema has been created');
+                return redirect('/admin/specifications');
+            }
+
+        }
+        \Session::flash('flash_deleted','Failed to create schema');
+        return redirect('/admin/specifications/schema/create');
     }
 
     /**
