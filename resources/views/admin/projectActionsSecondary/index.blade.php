@@ -31,6 +31,9 @@
         <messaging>
 
         </messaging>
+        <logs>
+
+        </logs>
 
     </div>
     <script src="{{ asset('js/adminProject.js') }}"></script>
