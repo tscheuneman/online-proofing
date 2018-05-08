@@ -8,6 +8,7 @@ export const store = new Vuex.Store({
         entries: [],
         canvasItems: [],
         revisionEntries: [],
+        logs: [],
         color: '#000000',
         currentElm: 0,
         currentProof: 0,
@@ -51,6 +52,9 @@ export const store = new Vuex.Store({
         },
         setActiveThread (state, value) {
             state.activeThread = value;
+        },
+        addLogs (state, value) {
+            state.logs = value;
         },
     }
 });
