@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Specification\SpecificationSchemaLogic;
 use App\Specification;
 use Illuminate\Http\Request;
 
@@ -19,8 +20,10 @@ class SpecificationController extends Controller
     public function index()
     {
         $specs = SpecificationLogic::getAll();
+        $schemas = SpecificationSchemaLogic::getAll();
         return view('admin.specifications.index', [
-            'specs' => $specs
+            'specs' => $specs,
+            'schemas' => $schemas
         ]);
     }
 
