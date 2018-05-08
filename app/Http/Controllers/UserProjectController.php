@@ -112,7 +112,7 @@ class UserProjectController extends UserSideParentController
                         }
                     }
                     if($isUser) {
-                        //ActivityLogic::create($thisProject, Auth::user(), 'Customer Viewed Project');
+                        ActivityLogic::create($thisProject, Auth::user(), 'Viewed Project');
                         return view('main.projectSecondary.index',
                             [
                                 'project' => $thisProject,
