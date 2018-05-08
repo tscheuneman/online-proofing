@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Activity;
 use Illuminate\Http\Request;
+use App\Services\Activity\ActivityLogic;
+use App\Services\Project\ProjectLogic;
 
 class ActivityController extends Controller
 {
@@ -81,5 +83,10 @@ class ActivityController extends Controller
     public function destroy(Activity $activity)
     {
         //
+    }
+
+    public function get($id) {
+        $project = ProjectLogic::find_path($id);
+        return ActivityLogic::getFromProject($project);
     }
 }
