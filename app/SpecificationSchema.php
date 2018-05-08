@@ -10,4 +10,9 @@ class SpecificationSchema extends Model
     use Uuids;
 
     public $incrementing = false;
+
+    public function specs()
+    {
+        return $this->hasMany('App\SpecificationEntry', 'schema_id','id');
+    }
 }
