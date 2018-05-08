@@ -1060,3 +1060,18 @@ a.pendingLink {
 strong#dropdown_name_spec {
   font-size: 16px;
 }
+
+.specElement {
+  background: #fff;
+  float: left;
+  padding: 15px;
+  box-shadow: 1px 2px 2px rgba(0,0,0,.15);
+  margin-bottom:25px;
+  margin-right:25px;
+}
+.removeSpec {
+  float: right;
+  font-size: 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
