@@ -26,7 +26,7 @@ class SpecificationRequest extends FormRequest
         return [
             'spec_name' => 'required|string',
             'content_type' => 'required|string',
-            'default_value' => 'required|string'
+            'default_value' => 'string|nullable'
         ];
     }
 }
