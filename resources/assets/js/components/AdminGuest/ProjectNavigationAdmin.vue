@@ -7,6 +7,7 @@
         </ul>
 
         <ul class="navContainerRight">
+            <li v-tooltip="'View Logs'" v-on:click="viewLogs"><i class="fa fa-info-circle" aria-hidden="true"></i></li>
             <li v-tooltip="'View Messaging'" v-on:click="viewMessaging"><i class="fa fa-comments" aria-hidden="true"></i></li>
         </ul>
     </div>
@@ -67,6 +68,9 @@
             },
             viewMessaging() {
                 $('#messageContainer').fadeIn(500);
+            },
+            viewLogs() {
+                $('#logsContainer').fadeIn(500);
             },
             hideAll(_callback) {
                 $('#revisions, #comments, #messaging').fadeOut(300, function() {
