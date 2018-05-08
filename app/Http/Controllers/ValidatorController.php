@@ -26,9 +26,11 @@ class ValidatorController extends Controller
         }
 
         if(ValidateLogic::checkSpecification($request)) {
-            return true;
+            $returnData['status'] = 'Success';
+            $returnData['message'] = 'Valid Entry';
+            return json_encode($returnData);
         }
 
-        return false;
+        return 'bye';
     }
 }
