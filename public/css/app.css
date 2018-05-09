@@ -1232,6 +1232,7 @@ strong#dropdown_name_spec {
   color: #ffffff;
   font-weight: 900;
   font-size: 17px;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .card.userShow .card-body {
@@ -1271,7 +1272,7 @@ strong#dropdown_name_spec {
 }
 
 @media screen and (max-width: 1200px) {
-  .col-md-4,
+  .col-md-3,
   .col-md-8 {
     -webkit-box-flex: 0 !important;
         -ms-flex: 0 0 100% !important;
@@ -1280,7 +1281,7 @@ strong#dropdown_name_spec {
   }
 }
 
-.col-md-4.left {
+.col-md-3.left {
   float: left;
 }
 

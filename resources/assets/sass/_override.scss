@@ -34,6 +34,7 @@
       color:$brand-primary-color;
       font-weight: 900;
       font-size: 17px;
+      text-shadow: 0 0 5px rgba(0,0,0,.5);
     }
     .card-body {
       padding:.7rem;
@@ -69,13 +70,13 @@
   background-color:$brand-primary !important;
 }
 
-.col-md-4, .col-md-8 {
+.col-md-3, .col-md-8 {
   @media screen and (max-width: $neededBreak) {
     flex: 0 0 100% !important;
     max-width: 100% !important;
   }
 }
-.col-md-4.left {
+.col-md-3.left {
   float:left;
 }
 .navbar-brand {
