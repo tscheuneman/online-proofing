@@ -12,6 +12,7 @@
 
     @include('admin.projectActions.includes.status')
     <br>
+
     <div id="messages">
         <div class="messageOverallContainer">
             <div class="message_controls">

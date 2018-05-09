@@ -172,7 +172,6 @@
                         $(this).addClass('active');
                     });
                 }
-
             },
             uploadNewFiles() {
                 $('#customerFiles').fadeIn(500);
