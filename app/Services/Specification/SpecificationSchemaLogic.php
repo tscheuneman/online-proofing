@@ -39,6 +39,19 @@ class SpecificationSchemaLogic{
     }
 
     /**
+     * Get all secification schemas
+     *
+     * @return SpecificationSchema
+     */
+    public static function getAllName() {
+        return SpecificationSchema::get();
+    }
+
+    public static function getSpecData($id) {
+        return SpecificationSchema::with('specs.spec')->where('id', $id)->first();
+    }
+
+    /**
      * Create a new schema
      *
      * @param String $name
