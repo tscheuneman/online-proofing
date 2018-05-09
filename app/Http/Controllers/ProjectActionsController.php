@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Message;
+use App\Services\Specification\SpecificationSchemaLogic;
 use Illuminate\Http\Request;
 
 use App\Services\Project\ProjectLogic;
@@ -138,13 +139,14 @@ class ProjectActionsController extends Controller
                 else {
 
                     $otherProjects = $project->getProductsInOrder();
-
                     $projectData = $project->get();
+                    $specs = SpecificationSchemaLogic::getAllName();
 
                     return view('admin.projectActions.create',
                         [
                             'project' => $projectData,
-                            'otherProjects' => $otherProjects
+                            'otherProjects' => $otherProjects,
+                            'specs' => $specs
                         ]
                     );
                 }
