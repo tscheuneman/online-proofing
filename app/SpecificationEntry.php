@@ -10,4 +10,9 @@ class SpecificationEntry extends Model
     use Uuids;
 
     public $incrementing = false;
+
+    public function spec()
+    {
+        return $this->hasOne('App\Specification', 'id','specification_id');
+    }
 }
