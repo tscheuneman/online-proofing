@@ -59,6 +59,7 @@
             if(self.entry.m !== 'approved') {
                 if(this.entry.m.admin) {
                     self.adminLast = true;
+
                     self.notes = markdown.toHTML(this.entry.m.notes);
 
                 }

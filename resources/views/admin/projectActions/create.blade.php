@@ -86,9 +86,9 @@
                     getSpecData(val, function(elm) {
                         if(elm) {
                             let specData = elm.specs;
-                            let returnData = '###Specifications' + "\n\n";
+                            let returnData = '###Specifications' + "   \n";
                             specData.forEach(function(elm) {
-                                returnData += elm.spec.name + ': ' + elm.value + "\n";
+                                returnData += elm.spec.name + ': ' + elm.value + " \n";
                             });
 
                             $('#comments').val(returnData);
