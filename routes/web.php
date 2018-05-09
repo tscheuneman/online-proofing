@@ -69,6 +69,8 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::post('admin/validate/spec', 'ValidatorController@spec');
 
+    Route::get('admin/specs/schema/{id}', 'API\SchemaController@getInfo');
+
 });
 
 Route::group(['middleware' => ['user']], function () {
