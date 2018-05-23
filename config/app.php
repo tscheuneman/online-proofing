@@ -165,7 +165,7 @@ return [
         Subfission\Cas\CasServiceProvider::class,
         Tjscheuneman\Quoting\QuotingServiceProvider::class,
         Tjscheuneman\Proofing\ProofingServiceProvider::class,
-
+        Tjscheuneman\ActivityEvents\ActivityEventsServiceProvider::class
 
     ],
 
