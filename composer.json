@@ -34,7 +34,8 @@
             "database/factories"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Tjscheuneman\\Quoting\\": "packages/tjscheuneman/quoting/src"
         }
     },
     "autoload-dev": {

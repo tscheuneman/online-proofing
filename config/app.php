@@ -163,6 +163,7 @@ return [
         Emadadly\LaravelUuid\LaravelUuidServiceProvider::class,
         App\Providers\DropBoxServiceProvider::class,
         Subfission\Cas\CasServiceProvider::class,
+        Tjscheuneman\Quoting\QuotingServiceProvider::class,
 
 
     ],
