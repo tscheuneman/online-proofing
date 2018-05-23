@@ -52,11 +52,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('admin', 'AdminIndexController@index');
 
     Route::post('admin/project/link', 'ProjectActionsController@getLink');
-    Route::resource('admin/project', 'ProjectActionsController');
-
-    Route::get('admin/project/add/{id}', 'ProjectActionsController@createRevision');
-
-    Route::get('admin/logs/{id}', 'ActivityController@get');
+    //Route::resource('admin/project', 'ProjectActionsController');
 
     Route::resource('admin/orders', 'OrderController');
 
@@ -83,13 +79,10 @@ Route::group(['middleware' => ['user']], function () {
     Route::get('profile', 'HomeController@userIndex');
     Route::post('profile', 'ProfileController@updateUser');
 
-    Route::post('project/approve', 'UserProjectController@approve');
 
     Route::post('user/files', 'UserProjectController@userFiles');
     Route::post('user/image', 'UserController@image');
 
-    Route::get('info/project/{id}', 'UserProjectController@getProjectData');
 });
-Route::get('info/project/{id}', 'UserProjectController@getProjectData');
 
 
