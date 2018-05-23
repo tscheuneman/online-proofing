@@ -132,26 +132,6 @@ class UserProjectLogic {
     }
 
     /**
-     * Send approval email
-     *
-     * @return void
-     */
-
-    public function mail() {
-        $orderVals = $this->project->with('order')->where('id', $this->project->id)->first();
-
-        if($orderVals->order->notify_admins) {
-            $users = AdminAssign::with('admin.user')->where('order_id', $orderVals->order->id)->get();
-            foreach($users as $user) {
-                $adminUser = UserLogic::findUser($user->admin->user->id);
-                $approver = UserLogic::findUser(Auth::id());
-
-                Mail::to($user->admin->user->email)->send(new UserApproval($adminUser->user(), $this->project, $approver->user()));
-            }
-        }
-    }
-
-    /**
      * Send user revision email
      *
      * @return void
