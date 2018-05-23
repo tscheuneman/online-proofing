@@ -14,3 +14,4 @@ yarn-error.log
 /storage/logs*
 /public/css
 /public/js
+/packages

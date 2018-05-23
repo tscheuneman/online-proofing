@@ -35,7 +35,8 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "Tjscheuneman\\Quoting\\": "packages/tjscheuneman/quoting/src"
+            "Tjscheuneman\\Quoting\\": "packages/tjscheuneman/quoting/src",
+            "Tjscheuneman\\Proofing\\": "packages/tjscheuneman/proofing/src"
         }
     },
     "autoload-dev": {

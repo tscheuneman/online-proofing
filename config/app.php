@@ -164,6 +164,7 @@ return [
         App\Providers\DropBoxServiceProvider::class,
         Subfission\Cas\CasServiceProvider::class,
         Tjscheuneman\Quoting\QuotingServiceProvider::class,
+        Tjscheuneman\Proofing\ProofingServiceProvider::class,
 
 
     ],
