@@ -90,52 +90,6 @@ class UserProjectController extends UserSideParentController
         return json_encode($returnData);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $project = Project::where('file_path', '=', $id)->first();
-        if($project != null) {
-            if($project->active) {
-                $thisProject = Project::where('file_path', '=', $id)->first();
-
-                if(Auth::check()) {
-                    $isUser = false;
-                    foreach($thisProject->order->users as $user) {
-                        if($user->user->id == Auth::id()) {
-                            $isUser = true;
-                            break;
-                        }
-                    }
-                    if($isUser) {
-                        ActivityLogic::create($thisProject, Auth::user(), 'Viewed Project');
-                        return view('main.projectSecondary.index',
-                            [
-                                'project' => $thisProject,
-                                'number' => $this->val
-
-                            ]);
-                    }
-
-                }
-                if(!$thisProject->order->hidden) {
-                    return view('main.projectSecondary.guest',
-                        [
-                            'project' => $thisProject,
-
-                        ]);
-                }
-                return abort(404, 'cannot find');
-
-            }
-        } else {
-            return redirect()->back();
-        }
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -148,41 +102,7 @@ class UserProjectController extends UserSideParentController
         //
     }
 
-    public function approve(Request $request) {
-        $rules = array(
-            'projectID' => 'required|exists:projects,id'
-        );
 
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            $returnData['status'] = 'Failure';
-            $returnData['message'] = 'We have failed to approve the project, please try again';
-            return json_encode($returnData);
-        }
-
-        if($project = UserProjectLogic::find($request->projectID)) {
-
-            if(!$project->isApproved()) {
-                ActivityLogic::create($project->get(), Auth::user(), "Approved Project");
-                $project->approve();
-                $project->mail();
-
-                $returnData['status'] = 'Success';
-                $returnData['message'] = 'Hey it works bruh';
-                return json_encode($returnData);
-            }
-
-            $returnData['status'] = 'Failure';
-            $returnData['message'] = 'We have failed to approve the project, please try again';
-            return json_encode($returnData);
-
-        }
-        $returnData['status'] = 'Failure';
-        $returnData['message'] = 'We have failed to approve the project, please try again';
-        return json_encode($returnData);
-
-    }
 
     /**
      * Update the specified resource in storage.
@@ -252,7 +172,4 @@ class UserProjectController extends UserSideParentController
         return $request;
     }
 
-    public function getProjectData($id) {
-        return Project::where('file_path', '=', $id)->with('order', 'entries.user', 'order.users.user', 'order.admins.admin.user', 'approval.user')->first();
-    }
 }

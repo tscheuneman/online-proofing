@@ -196,23 +196,5 @@ class ProjectActionsController extends Controller
         return json_encode($returnData);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $id
-     * @return \Illuminate\Http\Response
-     */
 
-    public function createRevision($id) {
-        $project = ProjectLogic::find_path($id);
-        if($project->readyForAdmin()) {
-            $projectData = $project->get();
-            return view('admin.projectActions.add',
-                [
-                    'project' => $projectData,
-                ]
-            );
-        }
-        return 'fail';
-    }
 }
