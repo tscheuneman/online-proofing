@@ -16,7 +16,7 @@
                                 <tr>
                                     <td>
                                         <h1>Hi {{$user->first_name}}</h1>
-                                        <p>You have been registered as a new customer at the Print and Imaging Lab's proofing system</p>
+                                        <p>You have been registered as a new customer with the Print and Imaging Lab's new Job Management and Proofing System</p>
                                         <p>Your email is: <strong>{{$user->email}}</strong></p>
                                         <p>Here is your inital password: <strong>{{$pw}}</strong></p>
                                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">

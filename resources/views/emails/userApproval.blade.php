@@ -25,7 +25,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td> <a href="{{ENV('APP_URL')}}/project/6Ys8PiQbwyaB" target="_blank">Link to Project</a> </td>
+                                                            <td> <a href="{{ENV('APP_URL')}}/project/{{$project->file_path}}" target="_blank">Link to Project</a> </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
