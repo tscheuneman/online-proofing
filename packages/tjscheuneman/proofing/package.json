@@ -1,0 +1,36 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch-poll": "npm run watch -- --watch-poll",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "devDependencies": {
+    "axios": "^0.18.0",
+    "babel-preset-react": "^6.24.1",
+    "bootstrap": "^4.1.1",
+    "cross-env": "^5.1",
+    "jquery": "^3.3.1",
+    "laravel-mix": "^2.0",
+    "lodash": "^4.17.10",
+    "popper.js": "^1.14.3",
+    "vue": "^2.5.7"
+  },
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "markdown": "^0.5.0",
+    "moment": "^2.22.1",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "v-tooltip": "^2.0.0-rc.31",
+    "vinyl-fs": "^3.0.2",
+    "vue-bus": "^1.1.0",
+    "vue-color": "^2.4.6",
+    "vue-draggable-resizable": "^1.7.1",
+    "vuex": "^3.0.1"
+  }
+}
