@@ -6,7 +6,7 @@
             </div>
             <div class="card-body">
                 @foreach($order->projects as $proj)
-                    <a class="userShowCard" href="{{ url('/project') . '/' . $proj->file_path }}">
+                    <a class="userShowCard" href="{{ url('/proof/project') . '/' . $proj->file_path }}">
                         @if(isset($proj->admin_entries[0]))
                             @php $addClass = ""; $text = "" @endphp
                             @if(!$proj->admin_entries[0]->active)

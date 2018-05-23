@@ -24,7 +24,7 @@
          <br class="clear" />
          <br>
          @foreach($order->projects as $proj)
-             <a href="{{ url('/admin/project') . '/' . $proj->file_path }}">
+             <a href="{{ url('/admin/proof/project') . '/' . $proj->file_path }}">
                  <div class="project">
                      <p class="projectTitle">{{$proj->project_name}}</p>
                      <p class="statusText">
