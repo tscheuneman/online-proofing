@@ -1,0 +1,19 @@
+{
+    "name": "tjscheuneman/quoting",
+    "description": "A quoting package",
+    "authors": [
+        {
+            "name": "Thomas Scheuneman",
+            "email": "thomas@tswebvisions.com"
+        }
+    ],
+    "require": {
+        "emadadly/laravel-uuid": "^1.2"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations",
+            "src/models"
+        ]
+    }
+}
