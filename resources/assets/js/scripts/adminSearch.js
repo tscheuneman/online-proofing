@@ -15,7 +15,7 @@ function populateSearch(data) {
         data.forEach(function(elm) {
             let image = getImage(elm);
             console.log(elm);
-            let returnData = '<a class="linkResult" href="/admin/project/'+elm.file_path+'">' +
+            let returnData = '<a class="linkResult" href="/proof/admin/project/'+elm.file_path+'">' +
                 '<div class="result">' +
                 '<div class="image">' +
                 image +
