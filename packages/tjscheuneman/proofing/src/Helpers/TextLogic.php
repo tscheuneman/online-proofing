@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Text;
+namespace Tjscheuneman\Proofing\Helpers;
 
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
-use App\Text;
+use Tjscheuneman\Proofing\Text;
 use App\Project;
 
 class TextLogic {
@@ -15,7 +15,7 @@ class TextLogic {
     /**
      * TextLogic Constructor
      *
-     * @param \App\Text $text
+     * @param Text $text
      * @return void
      */
     public function __construct(Text $text)

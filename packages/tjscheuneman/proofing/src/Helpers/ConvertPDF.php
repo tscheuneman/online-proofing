@@ -19,8 +19,6 @@ use Tjscheuneman\Proofing\Entry;
 use App\Project;
 use App\UserAssign;
 
-use App\Services\Text\TextLogic;
-
 use thiagoalessio\TesseractOCR\TesseractOCR;
 
 use Mockery\Exception;
