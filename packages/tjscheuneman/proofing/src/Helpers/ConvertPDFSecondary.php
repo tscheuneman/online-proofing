@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace Tjscheuneman\Proofing\Helpers;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -9,23 +9,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 use Illuminate\Support\Facades\Mail;
-use App\Mail\UserNotify;
+use App\Mail\UserNotifyRevision;
 
 use Storage;
 use File;
 use Imagick;
 
-use App\Entry;
+use Tjscheuneman\Proofing\Entry;
 use App\Project;
 use App\UserAssign;
 
-use App\Services\Text\TextLogic;
-
-use thiagoalessio\TesseractOCR\TesseractOCR;
-
 use Mockery\Exception;
 
-class ConvertPDF implements ShouldQueue
+class ConvertPDFSecondary implements ShouldQueue
 {
     public $tries = 3;
     public $timeout = 500;
@@ -66,8 +62,6 @@ class ConvertPDF implements ShouldQueue
                     $im->readimage($realPath);
                     $numPages = $im->getNumberImages();
 
-                    $pdfText = array();
-
                     for($x = 0; $x < $numPages; $x++) {
                         $num_padded = sprintf("%02d", $x);
                         $im->setIteratorIndex($x);
@@ -77,13 +71,10 @@ class ConvertPDF implements ShouldQueue
                             $d = $im->getImageGeometry();
                         }
                         $im->writeImage($savePath . 'image_' . $num_padded . '.png');
+
                         $im->thumbnailImage(200, 0);
                         $im->setImageFormat('png');
                         $im->writeImage($savePath . 'thumb_' . $num_padded . '.png');
-                        if($numPages < 5) {
-                            $ocrData = (new TesseractOCR($savePath . 'image_' . $num_padded . '.png'))->run();
-                            $pdfText['page'.$num_padded] = $ocrData;
-                        }
 
                         $files[$x]['width'] = $d['width'];
                         $files[$x]['height'] = $d['height'];
@@ -120,15 +111,12 @@ class ConvertPDF implements ShouldQueue
 
                         $this->entry->files = json_encode($files);
                         $this->entry->save();
-                        if($numPages < 5) {
-                            TextLogic::create($this->project, json_encode($pdfText));
-                        }
 
 
                         if($orderVals->order->notify_users) {
                             $users = UserAssign::with('user')->where('order_id', $orderVals->order->id)->get();
                             foreach($users as $user) {
-                                Mail::to($user->user->email)->send(new UserNotify($user->user->id, $this->project));
+                                Mail::to($user->user->email)->send(new UserNotifyRevision($user->user->id, $this->project));
                             }
                         }
                     }

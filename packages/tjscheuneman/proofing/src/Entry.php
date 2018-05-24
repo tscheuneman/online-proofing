@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Tjscheuneman\Proofing;
 
 use Illuminate\Database\Eloquent\Model;
 use Emadadly\LaravelUuid\Uuids;
