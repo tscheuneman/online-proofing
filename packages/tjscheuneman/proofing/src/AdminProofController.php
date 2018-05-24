@@ -15,6 +15,8 @@ use Tjscheuneman\ActivityEvents\ActivityEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
+use Tjscheuneman\Proofing\Helpers\EntryManagement;
+
 use Validator;
 use Redirect;
 
@@ -70,6 +72,76 @@ class AdminProofController extends Controller
             return redirect()->back();
         }
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function store(Request $request)
+    {
+        $rules = array(
+            'project_id' => 'required|exists:projects,id',
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+        if(!$project = ProjectLogic::find($request->project_id)) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+
+        if($project->isActive()) {
+            if($project->readyForAdmin()) {
+                $rules = array(
+                    'comments' => 'required|string',
+                    'pdf' => 'required|file|mimes:pdf',
+                );
+                $validator = Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->withInput($request->all());
+                }
+                if(EntryManagement::makeFolder($request, true, $project)) {
+                    ActivityEvent::create($project->get(), Auth::user(), 'Created Revision');
+                    \Session::flash('flash_created','Upload was created for ' . $project->getName());
+                    return redirect('/admin');
+                }
+
+                return redirect()->back()->withErrors(array('failed'))->withInput($request->all());
+            }
+            return redirect()->back()->withErrors(array('Cannot accept a revision at this time'))->withInput($request->all());
+        }
+        else {
+            $rules = array(
+                'comments' => 'required|string',
+                'pdf' => 'required|file|mimes:pdf',
+            );
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput($request->all());
+            }
+
+            if($project->makeFolder($request)) {
+
+                $otherProjects = $project->getProductsInOrder();
+                ActivityEvent::create($project->get(), Auth::user(), 'Created Initial Upload');
+                if(!empty($otherProjects)) {
+                    \Session::flash('flash_created','Initial Upload was created for ' . $project->getName());
+                    return redirect('/admin/project/' . $otherProjects[0]->file_path);
+                }
+                \Session::flash('flash_created','Wow');
+                return redirect('/admin');
+            }
+
+            return redirect()->back()->withErrors(array('failed'))->withInput($request->all());
+        }
+
+    }
+
 
     /**
      * Display the specified resource.

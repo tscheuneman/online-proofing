@@ -240,58 +240,9 @@ class ProjectLogic {
         }
     }
 
-    /**
-     * Create folder for an entry
-     *
-     * @param \Illuminate\Http\Request $request
-     * @pararm boolean $secondary
-     * @return mixed
-     */
-    public function makeFolder($request, $secondary = false) {
-        $proj_year = date('Y', strtotime($this->project->created_at));
-        $proj_month = date('F', strtotime($this->project->created_at));
-        $projectPath = $proj_year . '/' . $proj_month . '/' . $this->project->file_path;
-
-        $rand = str_random(12);
-
-        $folderPath = '/storage/' . 'projects/' . $projectPath . '/' . $rand;
-
-        if(File::makeDirectory(public_path($folderPath), 0775, true)) {
-            $dir = 'projects/' . $projectPath . '/' . $rand;
-
-            return $this->storeFile($request, $dir, $folderPath, $rand, $secondary);
-        }
-        return false;
-
-    }
-
-    /**
-     * Store a file, create entry, and then run convert job
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param string $dir
-     * @param string $rand
-     * @param boolean $secondary
-     * @return boolean
-     */
-    public function storeFile($request, $dir, $folderPath, $rand, $secondary) {
-        if($path = Storage::disk('public')->put($dir . '/pdf', $request->file('pdf'), 'public')) {
-            $storageName = basename($path);
-            $entry = EntryLogic::createAdmin($this->project->id, Auth::id(), $rand, $request->comments);
-
-            if($secondary) {
-                ConvertPDFSecondary::dispatch($dir, $storageName, 500, $this->get(), $entry->get());
-            }
-            else {
-                ConvertPDF::dispatch($dir, $storageName, 500, $this->get(), $entry->get());
-            }
 
 
-            return true;
-        }
-        File::deleteDirectory(public_path($folderPath));
-        return false;
-    }
+
 
     /**
      * Get the dropbox link given the path
