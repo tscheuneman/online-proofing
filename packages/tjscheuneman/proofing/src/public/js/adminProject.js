@@ -63479,7 +63479,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Vue.bus.emit('loadEntries');
         },
         loadMessages: function loadMessages() {
-            axios.get('/admin/message/thread/' + __WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.project.file_path, {}).then(function (response) {
+            axios.get('/message/api/thread/' + __WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.project.file_path, {}).then(function (response) {
                 var returnData = response.data;
                 if (returnData.status === "Success") {
                     var threadData = returnData.message;
@@ -64917,7 +64917,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var self = this;
             var threadName = this.$refs.threadName.value;
 
-            axios.post('/admin/message/thread', {
+            axios.post('/message/api/thread', {
                 thread_name: threadName,
                 project_id: __WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.project.file_path
             }).then(function (response) {
@@ -64934,7 +64934,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         createMessage: function createMessage() {
             var self = this;
             var message = this.$refs.message.value;
-            axios.post('/admin/message', {
+            axios.post('/message/api', {
                 thread: __WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.activeThread.id,
                 message: message
             }).then(function (response) {
@@ -64956,7 +64956,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.reloadAllThreads();
         },
         reloadAllThreads: function reloadAllThreads() {
-            axios.get('/admin/message/thread/' + __WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.project.file_path, {}).then(function (response) {
+            axios.get('/message/api/thread/' + __WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.project.file_path, {}).then(function (response) {
                 var returnData = response.data;
                 if (returnData.status === "Success") {
                     var threadData = returnData.message;
@@ -64969,7 +64969,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         reloadMessages: function reloadMessages() {
-            axios.get('/admin/message/' + __WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.activeThread.id, {}).then(function (response) {
+            axios.get('/message/api/' + __WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.activeThread.id, {}).then(function (response) {
                 var returnData = response.data;
                 if (returnData.status === "Success") {
                     var threadData = returnData.message;
@@ -65412,7 +65412,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         populateMessages: function populateMessages(elm) {
             var self = this;
-            axios.get('/admin/message/' + elm, {}).then(function (response) {
+            axios.get('/message/api/' + elm, {}).then(function (response) {
                 var returnData = response.data;
                 if (returnData.status === "Success") {
                     var threadData = returnData.message;

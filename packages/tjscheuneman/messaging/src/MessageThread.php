@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Tjscheuneman\Messaging;
 
 use Illuminate\Database\Eloquent\Model;
 use Emadadly\LaravelUuid\Uuids;
@@ -13,6 +13,6 @@ class MessageThread extends Model
 
     public function msg_cnt()
     {
-        return $this->hasMany('App\Message', 'thread_id','id')->select('id', 'thread_id');
+        return $this->hasMany('Tjscheuneman\Messaging\Message', 'thread_id','id')->select('id', 'thread_id');
     }
 }

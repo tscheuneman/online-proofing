@@ -2,12 +2,11 @@
 
 namespace Tjscheuneman\Proofing;
 
-use App\Message;
+
 use App\Services\Specification\SpecificationSchemaLogic;
 use Illuminate\Http\Request;
 
 use App\Services\Project\ProjectLogic;
-use App\Services\Message\MessageLogic;
 
 
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +14,7 @@ use App\Http\Controllers\Controller;
 
 use Tjscheuneman\Proofing\Helpers\EntryManagement;
 use Tjscheuneman\ActivityEvents\ActivityEvent;
+use Tjscheuneman\Messaging\MessageLogic;
 
 use Validator;
 use Redirect;

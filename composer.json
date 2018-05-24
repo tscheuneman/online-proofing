@@ -37,7 +37,8 @@
             "App\\": "app/",
             "Tjscheuneman\\Quoting\\": "packages/tjscheuneman/quoting/src",
             "Tjscheuneman\\Proofing\\": "packages/tjscheuneman/proofing/src",
-            "Tjscheuneman\\ActivityEvents\\": "packages/tjscheuneman/activity/src"
+            "Tjscheuneman\\ActivityEvents\\": "packages/tjscheuneman/activity/src",
+            "Tjscheuneman\\Messaging\\": "packages/tjscheuneman/messaging/src"
         }
     },
     "autoload-dev": {

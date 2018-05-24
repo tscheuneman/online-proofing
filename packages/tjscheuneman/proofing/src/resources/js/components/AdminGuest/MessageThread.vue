@@ -29,7 +29,7 @@
         methods: {
             populateMessages: function(elm) {
                 let self = this;
-                axios.get('/admin/message/' + elm, {
+                axios.get('/message/api/' + elm, {
                 }).then(function (response) {
                     let returnData = response.data;
                     if(returnData.status === "Success") {

@@ -178,7 +178,7 @@
                 let self = this;
                 let threadName = this.$refs.threadName.value;
 
-                axios.post('/admin/message/thread', {
+                axios.post('/message/api/thread', {
                     thread_name: threadName,
                     project_id: store.state.project.file_path
                 })
@@ -199,7 +199,7 @@
             createMessage: function() {
                 let self = this;
                 let message = this.$refs.message.value;
-                axios.post('/admin/message', {
+                axios.post('/message/api', {
                     thread: store.state.activeThread.id,
                     message: message
                 })
@@ -224,7 +224,7 @@
                 self.reloadAllThreads();
             },
             reloadAllThreads: function() {
-                    axios.get('/admin/message/thread/' + store.state.project.file_path, {
+                    axios.get('/message/api/thread/' + store.state.project.file_path, {
                     })
                         .then(function (response) {
                             let returnData = response.data;
@@ -241,7 +241,7 @@
                         });
             },
             reloadMessages: function() {
-                axios.get('/admin/message/' + store.state.activeThread.id, {
+                axios.get('/message/api/' + store.state.activeThread.id, {
                 }).then(function (response) {
                     let returnData = response.data;
                     if(returnData.status === "Success") {

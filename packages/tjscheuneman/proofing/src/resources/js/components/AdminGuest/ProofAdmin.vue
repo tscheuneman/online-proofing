@@ -112,7 +112,7 @@
                 Vue.bus.emit('loadEntries');
             },
             loadMessages: function() {
-                axios.get('/admin/message/thread/' + store.state.project.file_path, {
+                axios.get('/message/api/thread/' + store.state.project.file_path, {
                 })
                     .then(function (response) {
                         let returnData = response.data;

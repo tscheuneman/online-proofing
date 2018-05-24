@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Services\Message;
+namespace Tjscheuneman\Messaging;
 
 use App\Project;
-use App\MessageThread;
-use App\Message;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +24,7 @@ class MessageLogic {
      * Create all message threads in a project
      *
      * @param \App\Project $project
-     * @return \App\MessageThread[]
+     * @return MessageThread[]
      */
 
     public static function getThreads(Project $project) {

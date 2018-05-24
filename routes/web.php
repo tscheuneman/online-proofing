@@ -51,13 +51,6 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::resource('admin/orders', 'OrderController');
 
-    Route::post('admin/message', 'MessageController@store');
-
-    Route::post('admin/message/thread', 'MessageController@storeThread');
-    Route::get('admin/message/thread/{id}', 'MessageController@showThread');
-
-    Route::get('admin/message/{id}', 'MessageController@show');
-
     Route::post('admin/validate/spec', 'ValidatorController@spec');
 
     Route::get('admin/specs/schema/{id}', 'API\SchemaController@getInfo');
