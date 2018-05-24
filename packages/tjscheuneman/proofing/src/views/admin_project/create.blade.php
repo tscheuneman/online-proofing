@@ -26,7 +26,7 @@
                 <div class="card-header">
                     <p class="title">Other Awaiting Products in Order</p>
                    @foreach($otherProjects as $prod)
-                        <a class="btn btn-secondary" href="{{url('admin/proof/project') . '/' . $prod->file_path}}">{{$prod->project_name}}</a>
+                        <a class="btn btn-secondary" href="{{url('/proof/admin/project') . '/' . $prod->file_path}}">{{$prod->project_name}}</a>
                    @endforeach
                 </div>
             </div>
@@ -40,7 +40,7 @@
                         Create Initial Upload for <span class="name_bg">{{$project->project_name}}</span>
                     </h2>
                     <br>
-                    <form method="POST" action="{{ url('/admin/project') }}" enctype="multipart/form-data" id="submit">
+                    <form method="POST" action="{{ url('/proof/admin/project') }}" enctype="multipart/form-data" id="submit">
                         {{csrf_field()}}
 
                         <input type="hidden" name="project_id" value="{{$project->id}}">
