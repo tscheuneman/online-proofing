@@ -82,6 +82,15 @@ class UserProjectLogic {
     }
 
     /**
+     * Get created date
+     *
+     * @return string
+     */
+    public function created() {
+        return $this->project->created_at;
+    }
+
+    /**
      * Get project
      *
      * @return \App\Project
@@ -118,6 +127,15 @@ class UserProjectLogic {
     }
 
     /**
+     * Get project file path
+     *
+     * @return string
+     */
+    public function path() {
+        return $this->project->file_path;
+    }
+
+    /**
      * Approve Project
      *
      * @return boolean
@@ -149,43 +167,7 @@ class UserProjectLogic {
         }
     }
 
-    /**
-     * Create user entry directory.  Gather image data, send to be processed
-     *
-     * @return boolean
-     */
-    public function createDirectory($request) {
-        $rand = str_random(12);
-        $proj_year = date('Y', strtotime($this->project->created_at));
-        $proj_month = date('F', strtotime($this->project->created_at));
-        $projectPath = $proj_year . '/' . $proj_month . '/' . $this->project->file_path;
 
-        if(File::makeDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand), 0777, true)) {
-            try {
-                $dir = 'projects/' . $projectPath . '/' . $rand;
-
-                $files = [];
-                $comments = [];
-                $data = json_decode($request->dataArray);
-
-                foreach($data as $val) {
-                    $files[] = $val->data;
-                    $comments[] = $val->comments;
-                }
-
-                $entry = EntryLogic::createUser($this->project->id, Auth::id(), $rand);
-
-                UserEntry::dispatch($comments, $files, $entry->get(), $dir, $this->project);
-
-                return true;
-            } catch (Exception $e) {
-                return false;
-            }
-
-
-        }
-        return false;
-    }
 
 
     /**

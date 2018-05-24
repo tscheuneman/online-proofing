@@ -241,19 +241,6 @@ class ProjectLogic {
     }
 
 
-
-
-
-    /**
-     * Get the dropbox link given the path
-     *
-     * $param string $val
-     * @return string
-     */
-    public static function getDropboxLink($val) {
-        return Storage::disk('dropbox')->getAdapter()->getTemporaryLink($val);
-    }
-
 }
 
 ?>

@@ -4,11 +4,11 @@ namespace Tjscheuneman\Proofing\Helpers;
 
 use App\Project;
 use App\Services\Project\ProjectLogic;
+use App\Services\Project\UserProjectLogic;
 
 use File;
 use Storage;
 
-use App\Services\Entry\EntryLogic;
 use App\Jobs\ConvertPDF;
 use App\Jobs\ConvertPDFSecondary;
 
@@ -67,6 +67,44 @@ class EntryManagement
             return true;
         }
         File::deleteDirectory(public_path($folderPath));
+        return false;
+    }
+
+    /**
+     * Create user entry directory.  Gather image data, send to be processed
+     *
+     * @return boolean
+     */
+    public static function createDirectory($request, UserProjectLogic $project) {
+        $rand = str_random(12);
+        $proj_year = date('Y', strtotime($project->created()));
+        $proj_month = date('F', strtotime($project->created()));
+        $projectPath = $proj_year . '/' . $proj_month . '/' . $project->path();
+
+        if(File::makeDirectory(public_path('/storage/' . 'projects/' . $projectPath . '/' . $rand), 0777, true)) {
+            try {
+                $dir = 'projects/' . $projectPath . '/' . $rand;
+
+                $files = [];
+                $comments = [];
+                $data = json_decode($request->dataArray);
+
+                foreach($data as $val) {
+                    $files[] = $val->data;
+                    $comments[] = $val->comments;
+                }
+
+                $entry = EntryLogic::createUser($project->id(), Auth::id(), $rand);
+
+                UserEntry::dispatch($comments, $files, $entry->get(), $dir, $project->get());
+
+                return true;
+            } catch (Exception $e) {
+                return false;
+            }
+
+
+        }
         return false;
     }
 

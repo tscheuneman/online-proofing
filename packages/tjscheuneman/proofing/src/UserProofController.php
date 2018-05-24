@@ -8,8 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Project;
 use Illuminate\Support\Facades\Auth;
 
-use Tjscheuneman\ActivityEvents\ActivityEvent;
+use App\Services\Project\UserProjectLogic;
 
+use Tjscheuneman\ActivityEvents\ActivityEvent;
+use Tjscheuneman\Proofing\Helpers\EntryManagement;
+
+use Validator;
 
 class UserProofController extends Controller {
 
@@ -57,5 +61,50 @@ class UserProofController extends Controller {
         } else {
             return redirect()->back();
         }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $rules = array(
+            'dataArray' => 'required|json',
+            'projectID' => 'required|exists:projects,id'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $returnData['status'] = 'Failure';
+            $returnData['message'] = 'Input error';
+            return json_encode($returnData);
+        }
+
+        $project = UserProjectLogic::find($request->projectID);
+        ActivityEvent::create($project->get(), Auth::user(), 'Submitted a Revision');
+        $latest = $project->getLatestEntry();
+
+
+        if(!$latest->admin_entries[0]->admin) {
+            $returnData['status'] = 'Failure';
+            $returnData['message'] = 'We have already received your submission';
+            return json_encode($returnData);
+        }
+        if(!$project->isApproved()) {
+            if(EntryManagement::createDirectory($request, $project)) {
+                $returnData['status'] = 'Success';
+                $returnData['message'] = 'Uploaded';
+                return json_encode($returnData);
+
+            }
+        }
+
+        $returnData['status'] = 'Failure';
+        $returnData['message'] = 'Failed to upload';
+        return json_encode($returnData);
     }
 }
