@@ -124,13 +124,13 @@ class AdminProofController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput($request->all());
             }
 
-            if($project->makeFolder($request)) {
+            if(EntryManagement::makeFolder($request, false, $project)) {
 
                 $otherProjects = $project->getProductsInOrder();
                 ActivityEvent::create($project->get(), Auth::user(), 'Created Initial Upload');
                 if(!empty($otherProjects)) {
                     \Session::flash('flash_created','Initial Upload was created for ' . $project->getName());
-                    return redirect('/admin/project/' . $otherProjects[0]->file_path);
+                    return redirect('/proof/admin/project/' . $otherProjects[0]->file_path);
                 }
                 \Session::flash('flash_created','Wow');
                 return redirect('/admin');
