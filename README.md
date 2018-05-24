@@ -43,4 +43,7 @@ These are the rough installation instructions as of now.  Eventually I want to w
 
 ## Screenshots
 
-![](.github/head.png?raw=true)
+<div style="float:left; width:48%;>
+    ![](.github/head.png?raw=true)
+</div>
+
