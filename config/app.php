@@ -166,7 +166,8 @@ return [
         Tjscheuneman\Quoting\QuotingServiceProvider::class,
         Tjscheuneman\Proofing\ProofingServiceProvider::class,
         Tjscheuneman\ActivityEvents\ActivityEventsServiceProvider::class,
-        Tjscheuneman\Messaging\MessagingServiceProvider::class
+        Tjscheuneman\Messaging\MessagingServiceProvider::class,
+        Tjscheuneman\Tracking\TrackingServiceProvider::class
 
     ],
 
