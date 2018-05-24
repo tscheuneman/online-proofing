@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Activity\ActivityLogic;
+use Tjscheuneman\ActivityEvents\ActivityEvent;
 use App\Services\Profile\ProfileLogic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +15,7 @@ class ProfileController extends Controller
     {
 
         $admin = User::find(Auth::id());
-        $activity = ActivityLogic::getAllFromUser(Auth::id());
+        $activity = ActivityEvent::getAllFromUser(Auth::id());
 
         return view('admin.profile.index',
             [

@@ -2,7 +2,7 @@
 
 namespace Tjscheuneman\Proofing\Helpers;
 
-use App\Entry;
+use Tjscheuneman\Proofing\Entry;
 
 class EntryLogic {
     protected $entry;
@@ -10,7 +10,7 @@ class EntryLogic {
     /**
      * EntryLogic constructor
      *
-     * @param  \App\Entry $entry
+     * @param  \Tjscheuneman\Proofing\Entry $entry
      * @return void
      */
     public function __construct(Entry $entry)
@@ -76,7 +76,7 @@ class EntryLogic {
     /**
      * Get the current entry
      *
-     * @return \App\Entry
+     * @return \Tjscheuneman\Proofing\Entry
      */
     public function get() {
         return $this->entry;

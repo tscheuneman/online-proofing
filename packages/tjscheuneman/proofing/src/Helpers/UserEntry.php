@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 use App\Project;
-use App\Entry;
+use Tjscheuneman\Proofing\Entry;
 use App\AdminAssign;
 
 use File;

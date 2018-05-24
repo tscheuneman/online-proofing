@@ -2,7 +2,7 @@
 
 namespace App\Services\Approval;
 
-use App\Approval;
+use Tjscheuneman\Proofing\Approval;
 use App\User;
 use App\Project;
 
