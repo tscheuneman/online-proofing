@@ -35,6 +35,8 @@ These are the rough installation instructions as of now.  Eventually I want to w
 1. Navigate to project root folder
 1. Copy `.env.example` into an `.env` file.  Adjust values as needed.  Ensure you properly fill out database and smtp connection info
 1. Run `composer install` to install all packages
+1. Run `npm install` to install all js packages
+1. Run `php artisan vendor:publish` to generate all vendor package files needed
 1. Run `php artisan migrate` to create databases
 1. Run `php artisan db:seed` to bring in initial admin.
 1. Run `php artisan queue:listen` to start job listener.  If deploying use some sort of worker
