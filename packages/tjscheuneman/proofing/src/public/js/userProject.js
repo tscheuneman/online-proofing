@@ -58604,7 +58604,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
 
             $('#loader').fadeIn(500, function () {
-                axios.post('/project', {
+                axios.post('/proof/api/project', {
                     dataArray: JSON.stringify(returnData),
                     projectID: __WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.project.id
                 }).then(function (response) {
@@ -58624,7 +58624,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var customerForm = document.getElementById('customerFileEntry');
             var formData = new FormData(customerForm);
             $('#loader').fadeIn(500, function () {
-                axios.post('/user/files', formData).then(function (response) {
+                axios.post('/proof/api/files', formData).then(function (response) {
                     location.assign("/");
                     $('#loader').fadeOut(500);
                 }).catch(function (error) {

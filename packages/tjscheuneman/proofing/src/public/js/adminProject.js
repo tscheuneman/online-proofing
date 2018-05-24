@@ -63708,7 +63708,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         GenerateLink: function GenerateLink(val, proj) {
-            axios.post('/admin/project/link', {
+            axios.post('/proof/api/link', {
                 val: val,
                 project_id: proj
             }).then(function (response) {

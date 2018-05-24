@@ -198,7 +198,7 @@
                 }
 
                 $('#loader').fadeIn(500, function() {
-                    axios.post('/project', {
+                    axios.post('/proof/api/project', {
                         dataArray: JSON.stringify(returnData),
                         projectID: store.state.project.id
                     })
@@ -221,7 +221,7 @@
                 let customerForm = document.getElementById('customerFileEntry');
                 let formData = new FormData(customerForm);
                 $('#loader').fadeIn(500, function() {
-                    axios.post('/user/files', formData)
+                    axios.post('/proof/api/files', formData)
                         .then(function (response) {
                             location.assign("/");
                             $('#loader').fadeOut(500);

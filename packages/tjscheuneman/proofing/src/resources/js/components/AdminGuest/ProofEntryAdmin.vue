@@ -84,7 +84,7 @@
         },
         methods: {
             GenerateLink: function(val, proj) {
-                axios.post('/admin/project/link', {
+                axios.post('/proof/api/link', {
                     val: val,
                     project_id: proj
                 })
