@@ -2,15 +2,11 @@
 
 namespace Tjscheuneman\Proofing\Helpers;
 
-use App\Project;
 use App\Services\Project\ProjectLogic;
 use App\Services\Project\UserProjectLogic;
 
 use File;
 use Storage;
-
-use App\Jobs\ConvertPDF;
-use App\Jobs\ConvertPDFSecondary;
 
 use Auth;
 

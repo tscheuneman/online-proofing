@@ -9,14 +9,10 @@ use File;
 use Storage;
 
 use Illuminate\Support\Facades\Mail;
-use App\Mail\UserApproval;
+
 use App\Mail\AdminNotify;
 
 use Illuminate\Support\Facades\Auth;
-
-use App\Services\Entry\EntryLogic;
-use App\Jobs\UserEntry;
-
 use App\Services\Approval\ApprovalLogic;
 
 use App\Services\Users\UserLogic;

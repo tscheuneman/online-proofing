@@ -2,17 +2,11 @@
 
 namespace App\Services\Project;
 
-use App\Order;
 use App\Project;
 use App\Services\Order\OrderLogic;
 use File;
 use Storage;
 
-use Illuminate\Support\Facades\Auth;
-
-use App\Services\Entry\EntryLogic;
-use App\Jobs\ConvertPDF;
-use App\Jobs\ConvertPDFSecondary;
 
 class ProjectLogic {
     protected $project;
