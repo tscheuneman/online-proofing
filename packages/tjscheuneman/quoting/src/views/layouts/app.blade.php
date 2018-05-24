@@ -19,7 +19,7 @@
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
-            <h2>Quoting</h2>
+            <h3>Quoting</h3>
         </div>
 
     </nav>

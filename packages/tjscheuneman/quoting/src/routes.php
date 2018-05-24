@@ -6,4 +6,17 @@
  * Time: 1:28 PM
  */
 
-Route::get('quotes', 'Tjscheuneman\Quoting\QuotingController@index');
+
+
+
+Route::group(['middleware' => 'web'], function () {
+    Route::get('quotes', 'Tjscheuneman\Quoting\QuotingController@index');
+
+
+    Route::group(['middleware' => ['admin']], function () {
+        Route::get('admin/quotes/builder', 'Tjscheuneman\Quoting\BuildingController@index');
+    });
+
+});
+
+
