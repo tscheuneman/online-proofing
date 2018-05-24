@@ -42,4 +42,4 @@ These are the rough installation instructions as of now.  Eventually I want to w
 1. Run `php artisan queue:listen` to start job listener.  If deploying use some sort of worker
 
 ## Screenshots
-<img style="float: right; width:50%;" src=".github/head.png">
+<img style="float: right; width:50%;" src=".github/home.png">
