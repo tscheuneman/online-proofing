@@ -7,15 +7,14 @@ use App\Services\Specification\SpecificationSchemaLogic;
 use Illuminate\Http\Request;
 
 use App\Services\Project\ProjectLogic;
-
 use App\Services\Message\MessageLogic;
 
-use Tjscheuneman\ActivityEvents\ActivityEvent;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
 use Tjscheuneman\Proofing\Helpers\EntryManagement;
+use Tjscheuneman\ActivityEvents\ActivityEvent;
 
 use Validator;
 use Redirect;
