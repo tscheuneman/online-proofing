@@ -33,15 +33,15 @@ class Project extends Model
     public $incrementing = false;
 
     public function admin_entries() {
-        return $this->hasMany('App\Entry', 'project_id','id')->select('id', 'project_id', 'admin', 'active', 'created_at')->latest();
+        return $this->hasMany('Tjscheuneman\Proofing\Entry', 'project_id','id')->select('id', 'project_id', 'admin', 'active', 'created_at')->latest();
     }
 
     public function inital_image() {
-        return $this->hasMany('App\Entry', 'project_id','id')->select('id', 'path', 'project_id', 'files')->oldest();
+        return $this->hasMany('Tjscheuneman\Proofing\Entry', 'project_id','id')->select('id', 'path', 'project_id', 'files')->oldest();
     }
 
     public function entries() {
-        return $this->hasMany('App\Entry', 'project_id','id')->where('active',true)->latest();
+        return $this->hasMany('Tjscheuneman\Proofing\Entry', 'project_id','id')->where('active',true)->latest();
     }
     public function order()
     {
@@ -49,7 +49,7 @@ class Project extends Model
     }
 
     public function entryInfo() {
-        return $this->hasMany('App\Entry', 'project_id','id')->select('id', 'project_id', 'admin', 'active', 'created_at', 'pdf_path')->latest();
+        return $this->hasMany('Tjscheuneman\Proofing\Entry', 'project_id','id')->select('id', 'project_id', 'admin', 'active', 'created_at', 'pdf_path')->latest();
     }
 
     public function order_name() {
@@ -57,7 +57,7 @@ class Project extends Model
     }
 
     public function approval() {
-        return $this->hasOne('App\Approval');
+        return $this->hasOne('Tjscheuneman\Proofing\Approval');
     }
 }
 
