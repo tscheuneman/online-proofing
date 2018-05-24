@@ -320,8 +320,6 @@
                         let widthElm = (mouseX * modifer - startX * modifer);
                         let heightElm = (mouseY * modifer - startY * modifer);
 
-                        console.log(modifer);
-
                         finalWidth = widthElm;
                         finalHeight = heightElm;
 
