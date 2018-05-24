@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Entry;
+namespace Tjscheuneman\Proofing\Helpers;
 
 use App\Entry;
 
@@ -25,7 +25,7 @@ class EntryLogic {
      * @param string $user_id
      * @param string $path
      * @param string $comments
-     * @return \App\Services\Entry\EntryLogic
+     * @return EntryLogic
      */
     public static function createAdmin($id, $user_id, $path, $comments) {
         $entry = new Entry();
@@ -45,7 +45,7 @@ class EntryLogic {
      * @param  string $id
      * @param string $user_id
      * @param string $path
-     * @return \App\Services\Entry\EntryLogic
+     * @return EntryLogic
      */
     public static function createUser($id, $user_id, $path) {
         $entry = new Entry();
