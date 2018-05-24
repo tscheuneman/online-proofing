@@ -16,7 +16,7 @@ Route::group(['middleware' => 'web'], function () {
 
 
     Route::group(['middleware' => ['admin']], function () {
-        Route::resource('admin/proof/project', 'Tjscheuneman\Proofing\AdminProofController');
+        Route::resource('/proof/admin/project', 'Tjscheuneman\Proofing\AdminProofController');
 
         Route::get('admin/proof/project/add/{id}', 'Tjscheuneman\Proofing\AdminProofController@createRevision');
 
