@@ -2,13 +2,12 @@
 
 namespace Tjscheuneman\Messaging;
 
+use Validator;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
+use App\Http\Controllers\Controller;
 use App\Services\Project\ProjectLogic;
 
-
-use Validator;
 
 class Messaging extends Controller
 {

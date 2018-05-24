@@ -2,14 +2,12 @@
 
 namespace Tjscheuneman\Proofing\Helpers;
 
-use App\Services\Project\ProjectLogic;
-use App\Services\Project\UserProjectLogic;
-
 use File;
 use Storage;
-
 use Auth;
 
+use App\Services\Project\ProjectLogic;
+use App\Services\Project\UserProjectLogic;
 
 class EntryManagement
 {

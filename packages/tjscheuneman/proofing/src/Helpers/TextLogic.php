@@ -2,12 +2,10 @@
 
 namespace Tjscheuneman\Proofing\Helpers;
 
-
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use App\Project;
 
 use Tjscheuneman\Proofing\Text;
-use App\Project;
+
 
 class TextLogic {
     protected $text;

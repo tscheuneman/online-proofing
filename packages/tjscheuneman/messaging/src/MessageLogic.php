@@ -2,9 +2,9 @@
 
 namespace Tjscheuneman\Messaging;
 
-use App\Project;
-
 use Illuminate\Support\Facades\Auth;
+
+use App\Project;
 
 class MessageLogic {
     protected $message;

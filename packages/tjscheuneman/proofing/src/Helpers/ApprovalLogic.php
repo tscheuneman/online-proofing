@@ -2,15 +2,12 @@
 
 namespace Tjscheuneman\Proofing\Helpers;
 
-use App\Project;
-use App\AdminAssign;
-
 use Illuminate\Support\Facades\Mail;
-use App\Mail\UserApproval;
-
 use Illuminate\Support\Facades\Auth;
 
-
+use App\Project;
+use App\AdminAssign;
+use App\Mail\UserApproval;
 use App\Services\Users\UserLogic;
 
 class ApprovalLogic

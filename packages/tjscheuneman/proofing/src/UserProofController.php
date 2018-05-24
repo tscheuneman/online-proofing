@@ -3,11 +3,10 @@
 namespace Tjscheuneman\Proofing;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
-use App\Project;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\Controller;
+use App\Project;
 use App\Services\Project\UserProjectLogic;
 
 use Tjscheuneman\ActivityEvents\ActivityEvent;

@@ -2,22 +2,18 @@
 
 namespace Tjscheuneman\Proofing;
 
-
-use App\Services\Specification\SpecificationSchemaLogic;
+use Validator;
+use Redirect;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-use App\Services\Project\ProjectLogic;
-
-
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Services\Project\ProjectLogic;
+use App\Services\Specification\SpecificationSchemaLogic;
 
 use Tjscheuneman\Proofing\Helpers\EntryManagement;
 use Tjscheuneman\ActivityEvents\ActivityEvent;
 use Tjscheuneman\Messaging\MessageLogic;
-
-use Validator;
-use Redirect;
 
 
 class AdminProofController extends Controller

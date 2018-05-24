@@ -2,24 +2,24 @@
 
 namespace Tjscheuneman\Proofing\Helpers;
 
+use Storage;
+use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-
 use Illuminate\Support\Facades\Mail;
+
 use App\Mail\UserNotifyRevision;
-
-use Storage;
-use File;
-use Imagick;
-
-use Tjscheuneman\Proofing\Entry;
 use App\Project;
 use App\UserAssign;
 
+use Imagick;
 use Mockery\Exception;
+
+use Tjscheuneman\Proofing\Entry;
+
 
 class ConvertPDFSecondary implements ShouldQueue
 {

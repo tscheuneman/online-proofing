@@ -4,7 +4,6 @@ namespace Tjscheuneman\Proofing\Helpers;
 
 use File;
 use Storage;
-
 use Auth;
 
 

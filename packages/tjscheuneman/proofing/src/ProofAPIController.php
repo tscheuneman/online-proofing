@@ -2,22 +2,21 @@
 
 namespace Tjscheuneman\Proofing;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
-use App\Project;
+use Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
+use App\Http\Controllers\Controller;
+use App\Services\Project\UserProjectLogic;
+use App\Services\Project\ProjectLogic;
+use App\Project;
+
 
 use Tjscheuneman\ActivityEvents\ActivityEvent;
 use Tjscheuneman\Proofing\Helpers\ApprovalLogic;
 use Tjscheuneman\Proofing\Helpers\EntryLogic;
 use Tjscheuneman\Proofing\Helpers\LinkManagment;
 
-use App\Services\Project\UserProjectLogic;
-use App\Services\Project\ProjectLogic;
-
-
-use Validator;
 
 class ProofAPIController extends Controller {
 
