@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::resource('login', 'LoginController');
 
 Route::post('logout', 'LoginController@logout');
@@ -46,9 +45,6 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('admin', 'AdminIndexController@index');
 
-
-    //Route::resource('admin/project', 'ProjectActionsController');
-
     Route::resource('admin/orders', 'OrderController');
 
     Route::post('admin/validate/spec', 'ValidatorController@spec');
@@ -58,11 +54,7 @@ Route::group(['middleware' => ['admin']], function () {
 });
 
 Route::group(['middleware' => ['user']], function () {
-
-
     Route::get('/', 'HomeController@index');
-
-
 
     Route::get('profile', 'HomeController@userIndex');
     Route::post('profile', 'ProfileController@updateUser');
