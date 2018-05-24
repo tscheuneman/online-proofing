@@ -26,7 +26,7 @@
                 <div class="card-header">
                     <p class="title">Other Awaiting Products in Order</p>
                    @foreach($otherProjects as $prod)
-                        <a class="btn btn-secondary" href="{{url('admin/project') . '/' . $prod->file_path}}">{{$prod->project_name}}</a>
+                        <a class="btn btn-secondary" href="{{url('admin/proof/project') . '/' . $prod->file_path}}">{{$prod->project_name}}</a>
                    @endforeach
                 </div>
             </div>

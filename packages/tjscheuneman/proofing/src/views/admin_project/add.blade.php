@@ -23,7 +23,7 @@
                         Create Revision for <span class="name_bg">{{$project->project_name}}</span>
                     </h2>
                     <br>
-                    <form method="POST" action="{{ url('/admin/project') }}" enctype="multipart/form-data" id="submit">
+                    <form method="POST" action="{{ url('/admin/proof/project') }}" enctype="multipart/form-data" id="submit">
                         {{csrf_field()}}
 
                         <input type="hidden" name="project_id" value="{{$project->id}}">
