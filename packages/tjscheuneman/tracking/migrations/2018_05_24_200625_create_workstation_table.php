@@ -19,6 +19,8 @@ class CreateWorkstationTable extends Migration
 
             $table->string('name')->nullable(false);
             $table->string('icon')->nullable(false);
+
+            $table->timestamps();
         });
     }
 

@@ -19,6 +19,11 @@ class CreateStationActionsTable extends Migration
 
             $table->uuid('station_id');
             $table->foreign('station_id')->references('id')->on('workstations')->delete('cascade');
+
+            $table->string('url')->nullable(false);
+            $table->json('headers')->nullable(false);
+            $table->json('payload')->nullable(false);
+            $table->timestamps();
         });
     }
 

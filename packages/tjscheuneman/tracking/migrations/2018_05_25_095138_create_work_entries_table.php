@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubStationsTable extends Migration
+class CreateWorkEntriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,11 @@ class CreateSubStationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_stations', function (Blueprint $table) {
+        Schema::create('work_entries', function (Blueprint $table) {
             $table->uuid('id')->unique();
             $table->primary('id');
 
-            $table->uuid('station_id');
-            $table->foreign('station_id')->references('id')->on('workstations')->delete('cascade');
 
-            $table->string('name')->nullable(false);
-
-            $table->string('abb')->nullable(false);
-
-            $table->string('icon')->nullable(false);
             $table->timestamps();
         });
     }
@@ -36,6 +29,6 @@ class CreateSubStationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_stations');
+        Schema::dropIfExists('work_entries');
     }
 }
