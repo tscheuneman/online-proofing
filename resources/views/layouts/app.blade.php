@@ -55,7 +55,7 @@
                                                  Awating Action</p>
                                             <div class="dropdown-divider"></div>
                                                 @foreach($number as $proj)
-                                                    <a class="dropdown-item" href="{{url('/project') . '/' . $proj->file_path}}">{{$proj->order->job_id}} | {{$proj->project_name}}</a>
+                                                    <a class="dropdown-item" href="{{url('/proof/project') . '/' . $proj->file_path}}">{{$proj->order->job_id}} | {{$proj->project_name}}</a>
                                                 @endforeach
                                         </div>
                                     </div>
