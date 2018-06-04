@@ -30,8 +30,6 @@ window.markdown = require('markdown').markdown;
 
 import {store} from './components/store';
 
-import {LC} from '../../../../../../resources/assets/js/scripts/literallyCanvas';
-
 import { Photoshop } from 'vue-color'
 
 
