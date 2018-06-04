@@ -69,6 +69,8 @@
                 entryVal: null,
                 imageWidth: null,
                 imageHeight: null,
+                heightMain: false,
+                modifer: null,
             }
         },
         mounted() {
@@ -106,6 +108,7 @@
                     }
                 }
                 else {
+                    self.heightMain = true;
                     if (height > overAllHeight) {
                         self.elementWidth = overAllHeight * aspectRatioWidth;
                         self.elementHeight = overAllHeight;
@@ -166,6 +169,7 @@
                 return canvas;
             },
             initDraw: function (canvases, elm, width, height) {
+                let self = this;
 
                 // this flage is true when the user is dragging the mouse
                 // these vars will hold the starting mouse position
@@ -187,11 +191,17 @@
                     left: '0px'
                 };
 
-                let modifer = width / $(canvases).width();
+                if(self.heightMain) {
+                    self.modifer = height / $(canvases).height();
+                }
+                else {
+                    self.modifer = width / $(canvases).width();
+                }
+
 
                 let isDown = false;
 
-                let self = this;
+
 
                 function handleMouseDown(e) {
                     e.preventDefault();
@@ -206,7 +216,12 @@
 
                     if(!store.state.moveElement) {
 
-                        modifer = width / $(canvases).width();
+                        if(self.heightMain) {
+                            self.modifer = height / $(canvases).height();
+                        }
+                        else {
+                            self.modifer = width / $(canvases).width();
+                        }
 
                         // get references to the canvas and context
                         canvas = self.createCanvas(elm, width, height, true);
@@ -317,15 +332,15 @@
 
                         // calculate the rectangle width/height based
                         // on starting vs current mouse position
-                        let widthElm = (mouseX * modifer - startX * modifer);
-                        let heightElm = (mouseY * modifer - startY * modifer);
+                        let widthElm = (mouseX * self.modifer - startX * self.modifer);
+                        let heightElm = (mouseY * self.modifer - startY * self.modifer);
 
                         finalWidth = widthElm;
                         finalHeight = heightElm;
 
                         // draw a new rect from the start position
                         // to the current mouse position
-                        ctx.strokeRect(startX * modifer, startY * modifer, widthElm, heightElm);
+                        ctx.strokeRect(startX * self.modifer, startY * self.modifer, widthElm, heightElm);
                     } else {
                         let mouseX = parseInt(e.clientX - offsetX);
                         let mouseY = parseInt(e.clientY - offsetY);
@@ -355,8 +370,8 @@
                         canvases.getContext("2d").drawImage(canvas, 0, 0);
                         $(canvas).remove();
                         let data = {
-                            startX: startX * modifer,
-                            startY: startY * modifer,
+                            startX: startX * self.modifer,
+                            startY: startY * self.modifer,
                             width: finalWidth,
                             height: finalHeight,
                             comment: elm,
