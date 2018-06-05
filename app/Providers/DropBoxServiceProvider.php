@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Spatie\Dropbox\Client as DropboxClient;
 use Spatie\FlysystemDropbox\DropboxAdapter;
 
-class DropboxServiceProvider extends ServiceProvider
+class DropBoxServiceProvider extends ServiceProvider
 {
     /**
      * Perform post-registration booting of services.
