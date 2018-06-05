@@ -8,7 +8,7 @@ window.searchProjects = function(inputVal){
         .fail(function() {
             alert( "error" );
         });
-}
+};
 function populateSearch(data) {
     $('.searchResults').empty();
     if(data.length > 0) {
@@ -25,7 +25,7 @@ function populateSearch(data) {
                 '<br>'+
                 '<strong>Customer(s): </strong>'+ getCustomers(elm.order_name.users) +
                 '<br>'+
-                '<strong>Project Manager(s): </strong>'+ getAdmins(elm.order_name.admins);
+                '<strong>Project Manager(s): </strong>'+ getAdmins(elm.order_name.admins) +
             '</div></a>';
 
             $('.searchResults').append(returnData);
