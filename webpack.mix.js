@@ -19,7 +19,7 @@ mix.scripts([
     'resources/assets/js/scripts/userActions.js',
 ], 'public/js/project.js');
 
-mix.scripts([
+mix.babel([
     'resources/assets/js/scripts/adminSearch.js',
 ], 'public/js/search.js');
 
