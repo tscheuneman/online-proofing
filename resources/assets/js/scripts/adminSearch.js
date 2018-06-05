@@ -14,7 +14,6 @@ function populateSearch(data) {
     if(data.length > 0) {
         data.forEach(function(elm) {
             let image = getImage(elm);
-            console.log(elm);
             let returnData = '<a class="linkResult" href="/proof/admin/project/'+elm.file_path+'">' +
                 '<div class="result">' +
                 '<div class="image">' +
@@ -82,10 +81,7 @@ function getImage(elm) {
         return '';
     }
     let mL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    let fileInfo = JSON.parse(elm.inital_image[0].files);
     let createdAt = new Date(elm.created_at);
-
-    console.log(fileInfo);
 
     return '<img src="/storage/projects/'+createdAt.getFullYear()+'/'+mL[createdAt.getMonth()]+'/'+elm.file_path+'/'+elm.inital_image[0].path+'/images/thumb_00.png" />';
 }
