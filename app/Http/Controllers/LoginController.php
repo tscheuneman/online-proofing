@@ -75,6 +75,8 @@ class LoginController extends Controller
     public function logout() {
         Session::flush();
         Auth::logout();
-        cas()->logout();
+        if( cas()->isAuthenticated() ) {
+            cas()->logout();
+        }
     }
 }
