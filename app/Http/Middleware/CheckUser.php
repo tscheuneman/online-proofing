@@ -21,29 +21,35 @@ class CheckUser
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            $this->checkUser($request, $next);
+            $user = UserLogic::findUser(Auth::id());
+            if($user) {
+                if($user->returnActive()) {
+                    return $next($request);
+                }
+                return redirect('/password');
+            }
+            return redirect('/');
         }
         else {
-            if(cas()->checkAuthentication()) {
+            if(cas()->isAuthenticated()) {
                 $email = cas()->user() . '@' . ENV('CAS_APPEND');
                 $user = UserLogic::checkUserCAS($email);
                 if($user) {
                     Auth::login($user->user());
-                    $this->checkUser($request, $next);
-                }
-            }
-        }
-        return redirect('/login');
-    }
 
-    public function checkUser($request, Closure $next) {
-        $user = UserLogic::findUser(Auth::id());
-        if($user) {
-            if($user->returnActive()) {
-                return $next($request);
+                    $user = UserLogic::findUser(Auth::id());
+                    if($user) {
+                        if($user->returnActive()) {
+                            return $next($request);
+                        }
+                        return redirect('/password');
+                    }
+                    return redirect('/');
+                }
+                return redirect('/login');
             }
-            return redirect('/password');
+            return redirect('/login');
         }
-        return redirect('/');
+
     }
 }
