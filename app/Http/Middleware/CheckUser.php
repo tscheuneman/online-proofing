@@ -29,13 +29,7 @@ class CheckUser
                 $user = UserLogic::checkUserCAS($email);
                 if($user) {
                     Auth::login($user->user());
-
-                    $user = UserLogic::findUser(Auth::id());
-                    if($user) {
-                        if($user->returnActive()) {
-                            $this->checkUser($request, $next);
-                        }
-                    }
+                    $this->checkUser($request, $next);
                 }
             }
         }
