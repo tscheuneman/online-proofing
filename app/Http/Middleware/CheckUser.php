@@ -29,6 +29,6 @@ class CheckUser
             }
             return redirect('/');
         }
-        return redirect('/login');
+        return redirect('/');
     }
 }
