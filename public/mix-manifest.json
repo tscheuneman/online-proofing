@@ -1,5 +1,6 @@
 {
-    "/js/userProject.js": "/js/userProject.js",
-    "/css/project.css": "/css/project.css",
-    "/js/adminProject.js": "/js/adminProject.js"
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/js/project.js": "/js/project.js",
+    "/js/search.js": "/js/search.js"
 }
