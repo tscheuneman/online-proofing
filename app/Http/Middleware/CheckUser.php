@@ -21,14 +21,7 @@ class CheckUser
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            $user = UserLogic::findUser(Auth::id());
-            if($user) {
-                if($user->returnActive()) {
-                    return $next($request);
-                }
-                return redirect('/password');
-            }
-            return redirect('/');
+            $this->checkUser($request, $next);
         }
         else {
             if(cas()->checkAuthentication()) {
@@ -40,16 +33,23 @@ class CheckUser
                     $user = UserLogic::findUser(Auth::id());
                     if($user) {
                         if($user->returnActive()) {
-                            return $next($request);
+                            $this->checkUser($request, $next);
                         }
-                        return redirect('/password');
                     }
-                    return redirect('/');
                 }
-                return redirect('/login');
             }
-            return redirect('/login');
         }
+        return redirect('/login');
+    }
 
+    public function checkUser($request, Closure $next) {
+        $user = UserLogic::findUser(Auth::id());
+        if($user) {
+            if($user->returnActive()) {
+                return $next($request);
+            }
+            return redirect('/password');
+        }
+        return redirect('/');
     }
 }
