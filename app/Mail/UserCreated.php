@@ -34,7 +34,7 @@ class UserCreated extends Mailable
         return $this->view('emails.userAccount', [
             'user' => $this->user,
             'pw' => $this->pw,
-            'redirect' => '/login?type=admin'
+            'redirect' => ENV('APP_URL') . '/login'
         ]);
     }
 }

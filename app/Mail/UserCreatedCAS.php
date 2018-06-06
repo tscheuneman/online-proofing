@@ -32,7 +32,7 @@ class UserCreatedCAS extends Mailable
     {
         return $this->view('emails.userAccountCAS', [
             'user' => $this->user,
-            'redirect' => '/login?type=admin'
+            'redirect' => ENV('APP_URL') . '/login'
         ]);
     }
 }

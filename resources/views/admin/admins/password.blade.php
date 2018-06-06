@@ -1,4 +1,4 @@
-@extends('packages.tjscheuneman.proofing.src.views.layouts.normal')
+@extends('layouts.normal')
 
 @section('title', 'Set Password')
 
