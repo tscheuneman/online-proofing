@@ -33,8 +33,6 @@ class LoginController extends Controller
         $explodedEmail = explode('@', $request->email);
         $domain = array_pop($explodedEmail);
 
-        return $domain;
-
 
         if($domain == ENV('CAS_APPEND')) {
             cas()->authenticate();
@@ -42,7 +40,7 @@ class LoginController extends Controller
                 $email = cas()->user() . '@' . ENV('CAS_APPEND');
                 $user = UserLogic::checkUserCAS($email);
                 if($user) {
-                    Auth::login($user->user());
+                    Auth::loginUsingId($user->returnID());
                     return redirect('/');
                 }
                 return redirect()->back()->withErrors(array('password' => 'CAS user does not exist'));
