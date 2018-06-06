@@ -35,6 +35,7 @@ class LoginController extends Controller
 
 
         if($domain == ENV('CAS_APPEND')) {
+            cas()->authenticate();
             if(cas()->checkAuthentication()) {
                 $email = cas()->user() . '@' . ENV('CAS_APPEND');
                 $user = UserLogic::checkUserCAS($email);
