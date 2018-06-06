@@ -23,6 +23,8 @@ class UserNotifyRevision extends Mailable
     {
         $this->user = User::find($user);
         $this->project = $project;
+
+        $this->subject('A revision has been made to your project');
     }
 
     /**

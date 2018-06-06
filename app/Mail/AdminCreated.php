@@ -22,6 +22,8 @@ class AdminCreated extends Mailable
     {
         $this->admin = $user;
         $this->pw = $pwReturn;
+
+        $this->subject('Project Approval');
     }
 
     /**

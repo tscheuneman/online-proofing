@@ -22,6 +22,8 @@ class AdminNotify extends Mailable
     {
         $this->user = User::find($user);
         $this->project = $project;
+
+        $this->subject('A change has been made to a project');
     }
 
     /**

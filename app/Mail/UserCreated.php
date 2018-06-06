@@ -22,6 +22,8 @@ class UserCreated extends Mailable
     {
         $this->user = $user;
         $this->pw = $pwReturn;
+
+        $this->subject('Account Creation');
     }
 
     /**

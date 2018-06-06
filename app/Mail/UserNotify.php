@@ -22,6 +22,8 @@ class UserNotify extends Mailable
     {
         $this->user = User::find($user);
         $this->project = $project;
+
+        $this->subject('An update has been made to your project');
     }
 
     /**
