@@ -75,7 +75,7 @@
                 if(this.entry.m !== "approved") {
                     self.images = JSON.parse(this.entry.m.files);
                     self.initalValue = true;
-                    self.linkVal = 'http://localhost:8000/storage/projects/' + date.format('YYYY') + '/' + date.format('MMMM') + '/' + store.state.project.file_path + '/' + this.entry.m.path + '/images';
+                    self.linkVal = store.state.currentURL + '/storage/projects/' + date.format('YYYY') + '/' + date.format('MMMM') + '/' + store.state.project.file_path + '/' + this.entry.m.path + '/images';
                 }
 
             }

@@ -10,7 +10,7 @@
         <project-navigation>
 
         </project-navigation>
-        <proof :user="'{{Auth::id()}}'" :project="'{{$project->file_path}}'">
+        <proof :url="{{ENV('APP_URL')}}" :user="'{{Auth::id()}}'" :project="'{{$project->file_path}}'">
 
         </proof>
         <pages-left>

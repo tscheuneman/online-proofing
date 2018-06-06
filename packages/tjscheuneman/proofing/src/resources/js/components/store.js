@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
         color: '#000000',
         currentElm: 0,
         currentProof: 0,
+        currentURL: null,
         needResponse: false,
         messages: [],
         activeThread: null,

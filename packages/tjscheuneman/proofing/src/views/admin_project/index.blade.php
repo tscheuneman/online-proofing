@@ -11,7 +11,7 @@
         <project-navigation-admin>
 
         </project-navigation-admin>
-        <proof-guest :user="'{{Auth::id()}}'" :project="'{{$project->file_path}}'">
+        <proof-guest :url="{{ENV('APP_URL')}}" :user="'{{Auth::id()}}'" :project="'{{$project->file_path}}'">
 
         </proof-guest>
         <pages-left>
