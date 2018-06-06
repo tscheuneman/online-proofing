@@ -19,6 +19,7 @@ class CheckUser
      */
     public function handle($request, Closure $next)
     {
+        \Log::info(Auth::user());
         if (Auth::check()) {
             $user = UserLogic::findUser(Auth::id());
             if($user) {
