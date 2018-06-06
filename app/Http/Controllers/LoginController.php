@@ -35,20 +35,7 @@ class LoginController extends Controller
 
 
         if($domain == ENV('CAS_APPEND')) {
-            if(cas()->authenticate()) {
-                $email = cas()->user() . '@' . ENV('CAS_APPEND');
-                return $email;
-                $user = UserLogic::checkUserCAS($email);
-                if($user) {
-                    Auth::loginUsingId($user->returnID());
-                    return redirect('/');
-                }
-                return redirect()->back()->withErrors(array('password' => 'CAS user does not exist'));
-            }
-            else {
                 cas()->authenticate();
-            }
-            return $domain;
         }
         elseif($request->email && $request->password) {
             $credentials = $request->only('email', 'password');
