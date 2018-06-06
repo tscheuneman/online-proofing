@@ -63,6 +63,6 @@ class LoginController extends Controller
         Auth::logout();
         cas()->logout();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }
