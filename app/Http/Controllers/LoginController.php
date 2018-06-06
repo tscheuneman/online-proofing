@@ -40,6 +40,7 @@ class LoginController extends Controller
                 $email = cas()->user() . '@' . ENV('CAS_APPEND');
                 $user = UserLogic::checkUserCAS($email);
                 if($user) {
+                    return $user->user();
                     Auth::login($user->user());
                     return redirect('/');
                 }
