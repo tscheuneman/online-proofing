@@ -73,8 +73,8 @@ class LoginController extends Controller
     }
 
     public function logout() {
-        Auth::logout();
         Session::flush();
-        return redirect('https://weblogin.asu.edu/cas/logout?eventSource=myasu');
+        Auth::logout();
+        cas()->logout();
     }
 }
