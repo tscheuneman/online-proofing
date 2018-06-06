@@ -15,7 +15,8 @@
     export default {
         props: {
             project: String,
-            user: String
+            user: String,
+            url: String,
         },
         data () {
             return {
@@ -24,6 +25,7 @@
         },
         mounted() {
             store.state.userID = this.user;
+            store.state.currentURL = this.url;
             let project_id = this.project;
             let self = this;
             axios.get('/proof/api/info/project/'+project_id)
