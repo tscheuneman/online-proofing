@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 
-use App\Services\Users\UserLogic;
+use Illuminate\Support\Facades\Auth;
 
-use Auth;
 
 
 class LoginController extends Controller
@@ -35,7 +34,7 @@ class LoginController extends Controller
 
 
         if($domain == ENV('CAS_APPEND')) {
-                cas()->authenticate();
+            cas()->authenticate();
         }
         elseif($request->email && $request->password) {
             $credentials = $request->only('email', 'password');
@@ -60,6 +59,6 @@ class LoginController extends Controller
     public function logout() {
         Auth::logout();
         cas()->logout();
-        return redirect('login');
+        return redirect('/');
     }
 }
