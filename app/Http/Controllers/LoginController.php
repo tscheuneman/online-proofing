@@ -33,6 +33,7 @@ class LoginController extends Controller
         $explodedEmail = explode('@', $request->email);
         $domain = array_pop($explodedEmail);
 
+        return $domain;
 
 
         if($domain == ENV('CAS_APPEND')) {
