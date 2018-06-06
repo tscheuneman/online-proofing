@@ -8,6 +8,8 @@ use Validator;
 use Illuminate\Support\Facades\Auth;
 use Session;
 
+use App\Services\Users\UserLogic;
+
 
 class LoginController extends Controller
 {
@@ -16,6 +18,16 @@ class LoginController extends Controller
         if (Auth::check()) {
             return redirect('/');
         }
+
+        if(cas()->isAuthenticated()) {
+            $email = cas()->user() . '@' . ENV('CAS_APPEND');
+            $user = UserLogic::checkUserCAS($email);
+            if ($user) {
+                Auth::login($user->user());
+                return redirect('/');
+            }
+        }
+
         return view('auth.login');
     }
 

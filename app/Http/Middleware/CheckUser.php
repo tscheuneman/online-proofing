@@ -30,26 +30,7 @@ class CheckUser
             }
             return redirect('/');
         }
-        else {
-            if(cas()->isAuthenticated()) {
-                $email = cas()->user() . '@' . ENV('CAS_APPEND');
-                $user = UserLogic::checkUserCAS($email);
-                if($user) {
-                    Auth::login($user->user());
-
-                    $user = UserLogic::findUser(Auth::id());
-                    if($user) {
-                        if($user->returnActive()) {
-                            return $next($request);
-                        }
-                        return redirect('/password');
-                    }
-                    return redirect('/');
-                }
-                return redirect('/login');
-            }
-            return redirect('/login');
-        }
+        return redirect('/login');
 
     }
 }
