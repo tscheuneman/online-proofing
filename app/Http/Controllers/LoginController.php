@@ -92,8 +92,6 @@ class LoginController extends Controller
 
         Cookie::queue(Cookie::forget('CASAuth'));
 
-        cas()->logout();
-
         return redirect('/login');
     }
 
