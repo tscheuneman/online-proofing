@@ -95,8 +95,16 @@ class AdminLogic {
      */
     public static function createAdmin($user) {
         try {
+
+            $user = UserLogic::findUser($user);
+
             $admin = new Admin();
             $admin->user_id = $user;
+
+            if($user->returnActive()) {
+                $admin->active = true;
+            }
+
             $admin->save();
 
             return new AdminLogic($admin);
