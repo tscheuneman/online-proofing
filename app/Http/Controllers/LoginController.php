@@ -7,6 +7,7 @@ use Validator;
 
 use Illuminate\Support\Facades\Auth;
 use Session;
+use Cookie;
 
 use App\Services\Users\UserLogic;
 
@@ -87,6 +88,7 @@ class LoginController extends Controller
     public function logout() {
         Session::flush();
         Auth::logout();
+        Cookie::forget('CASAuth');
         return redirect('/login');
     }
 
