@@ -61,7 +61,7 @@ class LoginController extends Controller
             else {
                 cas()->authenticate();
             }
-            \Session::flash('flash_deleted','Login does not match CAS account.  Please log out of you cas account and <a href="https://weblogin.asu.edu/cas/logout">here</a> try again');
+            \Session::flash('flash_deleted','Login does not match CAS account.  Please log out of you cas account <a target="_blank" href="/logout/cas">here</a> and try again');
             return redirect('/login');
         }
         elseif($request->email && $request->password) {
@@ -88,5 +88,9 @@ class LoginController extends Controller
         Session::flush();
         Auth::logout();
         return redirect('/login');
+    }
+
+    public function logoutCas() {
+        cas()->logout();
     }
 }
