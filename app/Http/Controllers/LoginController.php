@@ -24,7 +24,7 @@ class LoginController extends Controller
     }
 
     public function casLogin() {
-        if(cas()->checkAuthentication()) {
+        if(cas()->isAuthenticated()) {
             $email = cas()->user() . '@' . ENV('CAS_APPEND');
             $user = UserLogic::checkUserCAS($email);
             if ($user) {
@@ -53,14 +53,14 @@ class LoginController extends Controller
 
 
         if($domain == ENV('CAS_APPEND')) {
-            if(cas()->checkAuthentication()) {
+            if(cas()->isAuthenticated()) {
                 if($explodedEmail[0] == cas()->user()) {
                     $this->casLogin();
                 }
 
             }
             else {
-                cas()->authenticate();
+                return cas()->authenticate();
             }
             \Session::flash('flash_deleted','Login does not match CAS account.  Please log out of you cas account <a target="_blank" href="/logout/cas">here</a> and try again');
             return redirect('/login');
@@ -92,7 +92,4 @@ class LoginController extends Controller
         return redirect('/login');
     }
 
-    public function logoutCas() {
-        cas()->logout();
-    }
 }
