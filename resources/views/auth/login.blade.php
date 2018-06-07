@@ -2,6 +2,12 @@
 
 @section('content')
 <div class="container">
+    @if(Session::has('flash_deleted'))
+        <div class="alert alert-warning"><span class="glyphicon glyphicon-remove-circle"></span><em> {!! session('flash_deleted') !!}</em></div>
+    @endif
+    @if(Session::has('flash_created'))
+        <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_created') !!}</em></div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

@@ -53,11 +53,16 @@ class LoginController extends Controller
 
         if($domain == ENV('CAS_APPEND')) {
             if(cas()->checkAuthentication()) {
-                return redirect('/caslogin');
+                if($explodedEmail[0] == cas()->user()) {
+                    $this->casLogin();
+                }
+
             }
             else {
                 cas()->authenticate();
             }
+            \Session::flash('flash_deleted','Login does not match CAS account.  Please log out of you cas account and <a href="https://weblogin.asu.edu/cas/logout">here</a> try again');
+            return redirect('/login');
         }
         elseif($request->email && $request->password) {
             $credentials = $request->only('email', 'password');
