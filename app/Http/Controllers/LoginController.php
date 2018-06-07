@@ -57,10 +57,7 @@ class LoginController extends Controller
                 if($explodedEmail[0] == cas()->user()) {
                     $this->casLogin();
                 }
-                else {
-                    \Session::flash('flash_deleted','Login does not match CAS account.  Please log out of you cas account <a target="_blank" href="/logout">here</a> and try again');
-                    return redirect('/login');
-                }
+                return redirect('/');
             }
             else {
                 cas()->authenticate();
@@ -87,12 +84,21 @@ class LoginController extends Controller
     }
 
     public function logout() {
+
+        $user = Auth::user();
+
+        $explodedEmail = explode('@', $user->email);
+        $domain = array_pop($explodedEmail);
+
         Session::flush();
         Auth::logout();
 
         Cookie::queue(Cookie::forget('CASAuth'));
 
-        return redirect('/logout/cas');
+        if($domain == ENV('CAS_APPEND')) {
+            return redirect('/logout/cas');
+        }
+        return redirect('/login');
     }
 
     public function logoutCas() {
