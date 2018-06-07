@@ -96,12 +96,12 @@ class AdminLogic {
     public static function createAdmin($user) {
         try {
 
-            $user = UserLogic::findUser($user);
+            $userVal = UserLogic::findUser($user);
 
             $admin = new Admin();
             $admin->user_id = $user;
 
-            if($user->returnActive()) {
+            if($userVal->returnActive()) {
                 $admin->active = true;
             }
 
