@@ -52,7 +52,12 @@ class LoginController extends Controller
 
 
         if($domain == ENV('CAS_APPEND')) {
-            cas()->authenticate();
+            if(cas()->checkAuthentication()) {
+                return redirect('/caslogin');
+            }
+            else {
+                cas()->authenticate();
+            }
         }
         elseif($request->email && $request->password) {
             $credentials = $request->only('email', 'password');
