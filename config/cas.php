@@ -34,7 +34,7 @@ return [
     | of the Laravel sessions when this is set to false.
     |--------------------------------------------------------------------------
     */
-    'cas_control_session' => env('CAS_CONTROL_SESSIONS', false),
+    'cas_control_session' => env('CAS_CONTROL_SESSIONS', true),
 
     /*
     |--------------------------------------------------------------------------

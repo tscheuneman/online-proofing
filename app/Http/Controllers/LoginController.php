@@ -57,13 +57,14 @@ class LoginController extends Controller
                 if($explodedEmail[0] == cas()->user()) {
                     $this->casLogin();
                 }
-
+                else {
+                    \Session::flash('flash_deleted','Login does not match CAS account.  Please log out of you cas account <a target="_blank" href="/logout/cas">here</a> and try again');
+                    return redirect('/login');
+                }
             }
             else {
                 return cas()->authenticate();
             }
-            \Session::flash('flash_deleted','Login does not match CAS account.  Please log out of you cas account <a target="_blank" href="/logout/cas">here</a> and try again');
-            return redirect('/login');
         }
         elseif($request->email && $request->password) {
             $credentials = $request->only('email', 'password');
