@@ -128,7 +128,7 @@
                             @foreach($ord->projects as $proj)
                                 <tr>
                                     <td>
-                                        <a class="otherProdLink" href="{{url('/project/') . '/' . $proj->file_path}}">{{$proj->project_name}}</a>
+                                        <a class="otherProdLink" href="{{url('/proof/project/') . '/' . $proj->file_path}}">{{$proj->project_name}}</a>
                                     </td>
                                 </tr>
                             @endforeach
