@@ -15,6 +15,7 @@ Route::resource('login', 'LoginController');
 
 Route::post('logout', 'LoginController@logout');
 
+Route::get('caslogin', 'LoginController@casLogin');
 
 Route::get('project/{id}', 'UserProjectController@show');
 

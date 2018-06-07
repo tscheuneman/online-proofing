@@ -19,6 +19,10 @@ class LoginController extends Controller
             return redirect('/');
         }
 
+        return view('auth.login');
+    }
+
+    public function casLogin() {
         if(cas()->checkAuthentication()) {
             $email = cas()->user() . '@' . ENV('CAS_APPEND');
             $user = UserLogic::checkUserCAS($email);
@@ -27,8 +31,7 @@ class LoginController extends Controller
                 return redirect('/');
             }
         }
-
-        return view('auth.login');
+        return redirect('/login');
     }
 
     public function store(Request $request)
@@ -74,8 +77,5 @@ class LoginController extends Controller
     public function logout() {
         Session::flush();
         Auth::logout();
-        if( cas()->isAuthenticated() ) {
-            cas()->logout();
-        }
     }
 }
