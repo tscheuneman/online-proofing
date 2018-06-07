@@ -88,7 +88,9 @@ class LoginController extends Controller
     public function logout() {
         Session::flush();
         Auth::logout();
-        Cookie::forget('CASAuth');
+
+        Cookie::queue(Cookie::forget('CASAuth'));
+
         return redirect('/login');
     }
 
