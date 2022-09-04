@@ -43,6 +43,8 @@ services:
       - ./docker/mysql:/docker-entrypoint-initdb.d
     networks:
       - proofing
+    ports:
+      - 3306:3306
 
 networks:
   proofing:

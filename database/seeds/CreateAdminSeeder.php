@@ -15,7 +15,7 @@ class CreateAdminSeeder extends Seeder
      */
     public function run()
     {
-        $pwReturn = str_random(12);
+        $pwReturn = 'password';
 
         $user = new User();
             $user->first_name = "FirstName";
